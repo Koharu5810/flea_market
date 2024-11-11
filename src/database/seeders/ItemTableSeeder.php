@@ -86,13 +86,19 @@ class ItemTableSeeder extends Seeder
         ];
 
         foreach ($items as $item) {
+            // itemsテーブルへ挿入
             foreach ($conditions as $condition => $conditionId) {
-                DB::table('items')->insert([
+                $itemId = DB::table('items')->insertGetId([
                     'name' => $item['name'],
                     'price' => $item['price'],
                     'description' => $item['description'],
                     'image' => $item['image'],
                     'condition_id' => $conditionId,
+                ]);
+
+                // 中間テーブルへ挿入
+                DB::table('item_category')->insert([
+                    'item_id' => $items,
                 ]);
             }
         }
