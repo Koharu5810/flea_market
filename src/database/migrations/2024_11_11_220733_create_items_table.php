@@ -19,7 +19,7 @@ class CreateItemsTable extends Migration
             $table->string('image');
             $table->foreignId('condition_id')->constrained()->cascadeOnDelete();
             $table->text('description');
-            $table->integer('price');
+            $table->decimal('price', 10, 0);
             $table->timestamps();
         });
     }
