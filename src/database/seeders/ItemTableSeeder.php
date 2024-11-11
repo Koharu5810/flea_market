@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ItemTableSeeder extends Seeder
 {
@@ -24,74 +25,76 @@ class ItemTableSeeder extends Seeder
         $items = [
             [
                 'name' => '腕時計',
-                'price' => '15,000',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'price' => '15000',
+                'description' => 'スタイリッシュなデザインのメンズ腕時計',
+                'image' => 'storage/images/clock.jpg',
             ],
             [
                 'name' => 'HDD',
-                'price' => '5,000',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'price' => '5000',
+                'description' => '高速で信頼性の高いハードディスク',
+                'image' => 'storage/images/HDD.jpg',
             ],
             [
                 'name' => '玉ねぎ3束',
                 'price' => '300',
-                'description' => '',
+                'description' => '新鮮な玉ねぎの3束セット',
                 'image' => '',
-                'conditions' => '',
             ],
             [
                 'name' => '革靴',
-                'price' => '4,000',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'price' => '4000',
+                'description' => 'クラシックなデザインの革靴',
+                'image' => 'storage/images/shoes.jpg',
             ],
             [
                 'name' => 'ノートPC',
-                'price' => '45,000',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'price' => '45000',
+                'description' => '高性能なノートパソコン',
+                'image' => 'storage/images/PC.jpg',
             ],
             [
                 'name' => 'マイク',
-                'price' => '8,000',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'price' => '8000',
+                'description' => '高音質のレコーディング用マイク',
+                'image' => 'storage/images/mic.jpg',
             ],
             [
                 'name' => 'ショルダーバッグ',
-                'price' => '3,500',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'price' => '3500',
+                'description' => 'おしゃれなショルダーバッグ',
+                'image' => 'storage/images/shoulder-bag.jpg',
             ],
             [
                 'name' => 'タンブラー',
                 'price' => '500',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'description' => '使いやすいタンブラー',
+                'image' => 'storage/images/tumbler.jpg',
             ],
             [
                 'name' => 'コーヒーミル',
-                'price' => '4,000',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'price' => '4000',
+                'description' => '手動のコーヒーミル',
+                'image' => 'storage/images/coffee-grinder.jpg',
             ],
             [
                 'name' => 'メイクセット',
-                'price' => '2,500',
-                'description' => '',
-                'image' => '',
-                'conditions' => '',
+                'price' => '2500',
+                'description' => '便利なメイクアップセット',
+                'image' => 'storage/images/makeup-set.jpg',
             ],
         ];
+
+        foreach ($items as $item) {
+            foreach ($conditions as $condition => $conditionId) {
+                DB::table('items')->insert([
+                    'name' => $item['name'],
+                    'price' => $item['price'],
+                    'description' => $item['description'],
+                    'image' => $item['image'],
+                    'condition_id' => $conditionId,
+                ]);
+            }
+        }
     }
 }
