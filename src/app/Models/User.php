@@ -21,6 +21,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Item::class, 'favorites');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 
     /**
      * The attributes that are mass assignable.

@@ -19,4 +19,9 @@ class Item extends Model
     {
         return $this->belongsToMany(User::class, 'favorites');
     }
+    // 出品アイテムが複数のユーザがコメントを投稿する場合のリレーション
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
