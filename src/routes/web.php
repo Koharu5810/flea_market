@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// 会員登録画面
+Route::get('/register', [AuthController::class, 'showRegistrationForm']);
+// ログイン画面
+Route::get('/login', [AuthController::class, 'showLoginForm']);
+
+// Fortify認証
+Route::middleware('auth')->group(function () {
+    Route::get('/', [ItemController::class, 'index']);
 });
-// Fortify認証機能。Controllerの設定要
-// Route::middleware('auth')->group(function () {
-//     Route::get('/', [AuthController::class, 'index']);
-// });
