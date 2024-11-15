@@ -16,7 +16,7 @@
             {{-- ロゴ表示 --}}
             <img class="header__logo" src="{{ asset('storage/images/logo.svg') }}" alt="ロゴ">
 
-            {{-- 会員登録画面・ログイン画面: ロゴのみ --}}
+            {{-- 会員登録画面・ログイン画面 --}}
             @if (request()->is('register') || request()->is('login'))
             {{-- その他画面 --}}
             @else

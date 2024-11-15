@@ -4,4 +4,25 @@
     padding-top: 10px;
     padding-left: 10px;
     height: 50px;
+    display: flex;
+}
+.header__logo {
+}
+.header__menu {
+}
+.header__search {
+}
+.header__search-input {
+}
+.header__logout {
+    color: #ccc;
+}
+.header__logout-button {
+    color: #ccc;
+}
+.header__mypage {
+}
+.header__sell-button {
+    background-color: #fff;
+
 }
