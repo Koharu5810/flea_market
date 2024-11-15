@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // 会員登録画面
-Route::get('/register', [AuthController::class, 'showRegistrationForm']);
+Route::get('register', function() {
+    return view('auth.register');
+});
+// Route::get('/register', [AuthController::class, 'showRegistrationForm']);
 // ログイン画面
 Route::get('/login', [AuthController::class, 'showLoginForm']);
 
