@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+// Fortify認証機能。Controllerの設定要
+// Route::middleware('auth')->group(function () {
+//     Route::get('/', [AuthController::class, 'index']);
+// });
