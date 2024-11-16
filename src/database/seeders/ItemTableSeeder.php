@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Item;
 
 class ItemTableSeeder extends Seeder
 {
@@ -14,14 +15,6 @@ class ItemTableSeeder extends Seeder
      */
     public function run()
     {
-        // // 中間テーブルに挿入するための設定
-        // $conditions = [
-        //     '良好' => 1,
-        //     '目立った傷や汚れなし' => 2,
-        //     'やや傷や汚れあり' => 3,
-        //     '状態が悪い' => 4,
-        // ];
-
         $items = [
             [
                 'name' => '腕時計',
@@ -95,17 +88,17 @@ class ItemTableSeeder extends Seeder
             ],
         ];
 
-        // 中間テーブルに挿入する際、各アイテムに1〜4のコンディションを順番に挿入するための初期値設定
+        // 各アイテムに1〜4のコンディションを順番に挿入するための初期値設定
         $conditionId = 1;
 
         foreach ($items as $item) {
             // itemsテーブルへ挿入
-            $itemId = DB::table('items')->insertGetId([
+            $createdItem = Item::create([
                 'name' => $item['name'],
                 'price' => $item['price'],
                 'description' => $item['description'],
                 'image' => $item['image'],
-                'condition_id' => $conditionId,
+                'item_condition' => $conditionId,
             ]);
 
             // アイテムのコンディションIDを設定（1〜4でローテーション）
@@ -116,10 +109,7 @@ class ItemTableSeeder extends Seeder
 
                 // 中間テーブルへ挿入
                 if ($categoryId) {
-                    DB::table('item_category')->insert([
-                        'item_id' => $itemId,
-                        'category_id' => $categoryId,
-                    ]);
+                    $createdItem->categories()->attach($categoryId);
                 }
             }
         }

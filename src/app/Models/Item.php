@@ -32,7 +32,7 @@ class Item extends Model
     }
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'item_category');
     }
 
     // 出品アイテムが複数のユーザのお気に入りになる場合のリレーション
