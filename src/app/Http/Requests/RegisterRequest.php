@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\PasswordMatch;
 use Psy\CodeCleaner\ReturnTypePass;
 
 class RegisterRequest extends FormRequest
@@ -27,8 +28,12 @@ class RegisterRequest extends FormRequest
         return [
             'username' => 'required|string',
             'email' => 'required|email|max:255',
-            'password' => 'required|string|min:8|confirmed',  // confirmedルールで確認用と一致か確認
-            'password_confirmation' => 'required|string|min:8',
+            'password' => 'required|string|min:8',
+            'password_confirmation' => [
+                'required',
+                'string',
+                new PasswordMatch($this->input('password')),
+            ],
         ];
     }
 
@@ -39,7 +44,7 @@ class RegisterRequest extends FormRequest
             'email.required' => 'メールアドレスを入力してください',
             'password.required' => 'パスワードを入力してください',
             'password.min' => 'パスワードは8文字以上で入力してください',
-            'password.confirmed' => 'パスワードと一致しません',
+            'password_confirmation.required' => '確認用パスワードを入力してください',
         ];
     }
 }

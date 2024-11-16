@@ -27,7 +27,8 @@
     border: 1px solid #ccc;
 }
 .form__error {
-    border: 1px solid red;
+    color: #F95556;
+    font-size: 12px;
 }
 .form__button {
     background-color: #F95556;

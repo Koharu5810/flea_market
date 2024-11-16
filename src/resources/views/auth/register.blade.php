@@ -42,10 +42,10 @@
             </div>
             {{-- 確認用パスワード --}}
             <div class="form__group">
-                <label for="password">確認用パスワード</label>
+                <label for="password_confirmation">確認用パスワード</label>
                 <input type="password" name="password_confirmation" class="form__group-input" />
                 <div class="form__error">
-                    @error('password')
+                    @error('password_confirmation')
                         {{ $message }}
                     @enderror
                 </div>

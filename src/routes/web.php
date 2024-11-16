@@ -22,11 +22,12 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // 会員登録画面
-Route::get('/register', [AuthController::class, 'showRegistrationForm']);
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withoutMiddleware(['auth']);
+Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth']);
 // ログイン画面
 Route::get('/login', [AuthController::class, 'showLoginForm']);
 
-// Fortify認証　　　　　　　
-Route::middleware('auth')->group(function () {
-    Route::get('/', [ItemController::class, 'index']);
-});
+// Fortify認証
+// Route::middleware('auth')->group(function () {
+//     Route::get('/', [ItemController::class, 'index']);
+// });

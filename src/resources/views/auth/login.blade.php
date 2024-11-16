@@ -37,7 +37,7 @@
             </div>
         </form>
         {{-- 会員登録案内 --}}
-        <div class="login">
+        <div class="register">
             <a href="/register" class="login-button">会員登録はこちら</a>
         </div>
     </div>
