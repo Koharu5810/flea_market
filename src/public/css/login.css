@@ -1,4 +1,4 @@
-.register-container {
+.login-container {
     width: 80vw;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -8,17 +8,17 @@
     align-items: center;
     border: 1px solid pink;
 }
-.register-form__group {
+.login-form__group {
     width: 500px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;  /* ラベル・入力欄を左揃え */
     margin-bottom: 10px;
 }
-.register-form__group label {
+.login-form__group label {
     font-weight: bold;
 }
-.register-form__group-input {
+.login-form__group-input {
     width: 100%;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -26,18 +26,18 @@
     border-radius: 3px;
     border: 1px solid #ccc;
 }
-.register-form__error {
+.login-form__error {
     color: #F95556;
     font-size: 12px;
 }
-.register-form__button {
+.login-form__button {
     background-color: #F95556;
     display: flex;
     justify-content: center;
     margin-top: 70px;
     border-radius: 3px;
 }
-.register-form__button button {
+.login-form__button button {
     width: 100%;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -48,10 +48,10 @@
     text-align: center;
     cursor: pointer;
 }
-.login-container {
+.register-container {
     margin-top: 15px;
 }
-.login-button {
+.register-button {
     color: #8FC1E9;
     text-decoration: none;
 }

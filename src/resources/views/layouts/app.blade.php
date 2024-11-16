@@ -22,28 +22,30 @@
             @else
                 <div class="header__menu">
                     {{-- 検索フォーム --}}
-                    <form action="{{ route('search') }}" method="GET" class="header__search">
+                    {{-- <form action="{{ route('search') }}" method="GET" class="header__search"> --}}
                         <input type="text" name="query" placeholder="なにをお探しですか？" class="header__search-input">
                     </form>
 
                     {{-- ログアウトボタン --}}
                     @if (Auth::check())
-                        <form action="{{ route('logout') }}" method="POST" class="header__logout">
-                            @csrf
+                        {{-- <form action="{{ route('logout') }}" method="POST" class="header__logout"> --}}
+                            {{-- @csrf --}}
                             <button type="submit" class="header__logout-button">ログアウト</button>
-                        </form>
+                        {{-- </form> --}}
                     @else
-                        <form action="{{ route('login') }}" method="POST" class="header__login">
-                            @csrf
+                        {{-- <form action="{{ route('login') }}" method="POST" class="header__login"> --}}
+                            {{-- @csrf --}}
                             <button type="submit" class="header__login-button">ログイン</button>
-                        </form>
+                        {{-- </form> --}}
                     @endif
 
                     {{-- マイページボタン --}}
-                    <a href="{{ route('profile.index') }}" class="header__mypage">マイページ</a>
+                    {{-- <a href="{{ route('profile.index') }}" class="header__mypage">マイページ</a> --}}
+                    <button>マイページ</button>
 
                     {{-- 出品ボタン --}}
-                    <a href="{{ route('sell') }}" class="header__sell-button">出品する</a>
+                    {{-- <a href="{{ route('sell') }}" class="header__sell-button">出品する</a> --}}
+                    <button>出品する</button>
                 </div>
             @endif
         </div>

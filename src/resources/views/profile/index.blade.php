@@ -2,6 +2,7 @@
 @extends('layouts.app')
 
 @section('css')
+{{-- 作成後indexCSSに変更 --}}
 <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
 @endsection
 
@@ -9,7 +10,7 @@
 
 @section('content')
     <div class="register-container">
-        <form method="post" action="/register">
+        <form method="post" action="">
         @csrf
     {{-- ユーザー名 --}}
             <div class="form__group">
@@ -23,30 +24,30 @@
             </div>
     {{-- 郵便番号 --}}
             <div class="form__group">
-                <label for="username">メールアドレス</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="form__group-input" />
+                <label for="postal_code">郵便番号</label>
+                <input type="text" name="postal_code" value="{{ old('postal_code') }}" class="form__group-input" />
                 <div class="form__error">
-                    @error('email')
+                    @error('postal_code')
                         {{ $message }}
                     @enderror
                 </div>
             </div>
-    {{-- パスワード --}}
+    {{-- 住所 --}}
             <div class="form__group">
-                <label for="password">パスワード</label>
-                <input type="password" name="password"  class="form__group-input" />
+                <label for="address">住所</label>
+                <input type="text" name="address"  class="form__group-input" />
                 <div class="form__error">
-                    @error('password')
+                    @error('address')
                         {{ $message }}
                     @enderror
                 </div>
             </div>
-    {{-- 確認用パスワード --}}
+    {{-- 建物名 --}}
             <div class="form__group">
-                <label for="password_confirmation">確認用パスワード</label>
-                <input type="password" name="password_confirmation" class="form__group-input" />
+                <label for="building">建物名</label>
+                <input type="text" name="building" class="form__group-input" />
                 <div class="form__error">
-                    @error('password_confirmation')
+                    @error('building')
                         {{ $message }}
                     @enderror
                 </div>
