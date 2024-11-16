@@ -1,3 +1,4 @@
+{{-- 会員登録画面 --}}
 @extends('layouts.app')
 
 @section('css')
@@ -10,7 +11,7 @@
     <div class="register-container">
         <form method="post" action="/register">
         @csrf
-            {{-- ユーザー名 --}}
+    {{-- ユーザー名 --}}
             <div class="form__group">
                 <label for="username">ユーザー名</label>
                 <input type="text" name="username" value="{{ old('username') }}" class="form__group-input" />
@@ -20,7 +21,7 @@
                     @enderror
                 </div>
             </div>
-            {{-- メールアドレス --}}
+    {{-- メールアドレス --}}
             <div class="form__group">
                 <label for="username">メールアドレス</label>
                 <input type="email" name="email" value="{{ old('email') }}" class="form__group-input" />
@@ -30,7 +31,7 @@
                     @enderror
                 </div>
             </div>
-            {{-- パスワード --}}
+    {{-- パスワード --}}
             <div class="form__group">
                 <label for="password">パスワード</label>
                 <input type="password" name="password"  class="form__group-input" />
@@ -40,7 +41,7 @@
                     @enderror
                 </div>
             </div>
-            {{-- 確認用パスワード --}}
+    {{-- 確認用パスワード --}}
             <div class="form__group">
                 <label for="password_confirmation">確認用パスワード</label>
                 <input type="password" name="password_confirmation" class="form__group-input" />
@@ -50,12 +51,12 @@
                     @enderror
                 </div>
             </div>
-            {{-- 登録ボタン --}}
+    {{-- 登録ボタン --}}
             <div class="form__button">
                 <button>登録する</button>
             </div>
         </form>
-        {{-- ログイン案内 --}}
+{{-- ログイン案内 --}}
         <div class="login">
             <a href="/login" class="login-button">ログインはこちら</a>
         </div>

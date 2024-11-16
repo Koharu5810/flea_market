@@ -9,9 +9,11 @@ use App\Http\Requests\LoginRequest;
 
 class AuthController extends Controller
 {
+    // 会員登録画面表示
     public function showRegistrationForm() {
         return view('auth.register');
     }
+    // 会員登録
     public function register(RegisterRequest $request) {
         $form = $request->validated();
 
