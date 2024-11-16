@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -17,17 +16,20 @@ class AuthController extends Controller
     public function register(RegisterRequest $request) {
         $form = $request->validated();
 
-        User::create($form);
+        User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-        return redirect()->route('profile.index')->with('form', $form);
+        return redirect()->route('profile.index')->with('form', [
+            'username' => $form['username'],
+        ]);
     }
 
 // ログイン画面表示
     public function showLoginForm() {
         return view('auth.login');
     }
-// ログイン処理
-    public function login(LoginRequest $request) {
-        return view('auth.login');
-    }
+// ログイン処理はFortifyServiceProvider.phpで定義
 }

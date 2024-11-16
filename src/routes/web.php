@@ -3,6 +3,7 @@
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,9 +28,11 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withou
 Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth']);
 // ログイン画面
 Route::get('/login', [AuthController::class, 'showLoginForm']);
+Route::post('/login', [AuthController::class, 'login']);
 
 // Fortify認証
 // Route::middleware('auth')->group(function () {
 //     Route::get('/', [ItemController::class, 'index']);
 // });
 Route::get('/mypage', [UserController::class, 'index'])->name('profile.index');
+Route::get('/', [ItemController::class, 'index'])->name('home');

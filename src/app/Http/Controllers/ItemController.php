@@ -7,6 +7,10 @@ use App\Models\Item;
 
 class ItemController extends Controller
 {
+    public function index() {
+        return view('home');
+    }
+
     public function register(Request $request) {
         $form = $request->validated();
 

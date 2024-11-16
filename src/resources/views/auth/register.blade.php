@@ -34,7 +34,7 @@
     {{-- パスワード --}}
             <div class="register-form__group">
                 <label for="password">パスワード</label>
-                <input type="password" name="password"  class="form__group-input" />
+                <input type="password" name="password"  class="register-form__group-input" />
                 <div class="register-form__error">
                     @error('password')
                         {{ $message }}

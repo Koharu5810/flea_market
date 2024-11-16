@@ -3,14 +3,16 @@
 namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
-use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Hash;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -30,8 +32,6 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
-        // パスワードリセット機能。今回の要件にはなさそう
-        // Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         // /registerにアクセスした時に表示するviewファイルの指定
         Fortify::registerView(function () {
@@ -42,16 +42,27 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
 
-        // ログイン時のメール認証
+        // ログイン処理
+        Fortify::authenticateUsing(function (LoginRequest $request) {
+            $user = User::where('username', $request->username)
+                        ->orWhere('email', $request->username)  // ユーザ名またはメールアドレスで認証
+                        ->first();
+
+            // パスワードが一致するか確認
+            if ($user && Hash::check($request->password, $user->password)) {
+                return $user;  // 認証成功
+            }
+            return null;  // 認証失敗
+        });
+
+        // ログイン試行回数を制限する設定
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
 
             return Limit::perMinute(5)->by($email . '|' . $request->ip());
         });
 
-        // 2要素認証、多分不要
-        // RateLimiter::for('two-factor', function (Request $request) {
-        //     return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        // });
+        // ログイン後のリダイレクト先
+        Fortify::redirects('login', '/');
     }
 }
