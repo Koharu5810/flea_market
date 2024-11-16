@@ -11,7 +11,7 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'image', 'condition_id', 'description', 'price',
+        'name', 'image', 'condition', 'description', 'price',
     ];
 
     public function order()
@@ -22,10 +22,7 @@ class Item extends Model
     {
         return $this->belongsToMany(Category::class);
     }
-    public function condition()
-    {
-        return $this->belongsTo(Condition::class);
-    }
+
     // 出品アイテムが複数のユーザのお気に入りになる場合のリレーション
     public function favoriteBy()
     {

@@ -13,6 +13,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function user_addresses()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
     public function orders()
     {
         return $this->hasMany(Order::class);
@@ -36,10 +40,6 @@ class User extends Authenticatable
         'uuid',
         'username',
         'email',
-        'user_image',
-        'postal_code',
-        'address',
-        'building',
         'password',
     ];
 

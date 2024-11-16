@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
-            $table->foreignId('condition_id')->constrained()->cascadeOnDelete();
+            $table->enum('condition', ['良好', '目立った傷や汚れなし', 'やや傷や汚れあり', '状態が悪い']);
             $table->text('description');
             $table->decimal('price', 10, 0);
             $table->timestamps();
