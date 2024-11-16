@@ -27,10 +27,17 @@
                     </form>
 
                     {{-- ログアウトボタン --}}
-                    <form action="{{ route('logout') }}" method="POST" class="header__logout">
-                        @csrf
-                        <button type="submit" class="header__logout-button">ログアウト</button>
-                    </form>
+                    @if (Auth::check())
+                        <form action="{{ route('logout') }}" method="POST" class="header__logout">
+                            @csrf
+                            <button type="submit" class="header__logout-button">ログアウト</button>
+                        </form>
+                    @else
+                        <form action="{{ route('login') }}" method="POST" class="header__login">
+                            @csrf
+                            <button type="submit" class="header__login-button">ログイン</button>
+                        </form>
+                    @endif
 
                     {{-- マイページボタン --}}
                     <a href="{{ route('profile.index') }}" class="header__mypage">マイページ</a>

@@ -1,5 +1,7 @@
 .register-container {
     width: 80vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,16 +14,17 @@
     flex-direction: column;
     align-items: flex-start;  /* ラベル・入力欄を左揃え */
     margin-bottom: 10px;
-    border: 1px solid orange;
 }
 .form__group label{
     font-weight: bold;
 }
 .form__group-input {
     width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
     display: block;
     border-radius: 3px;
-    border: 1px solid green;
+    border: 1px solid #ccc;
 }
 .form__error {
     border: 1px solid red;
@@ -35,6 +38,8 @@
 }
 .form__button button {
     width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
     background-color: transparent;
     border: none;
     color: #fff;
@@ -44,10 +49,8 @@
 }
 .login {
     margin-top: 15px;
-    border: 1px solid purple;
 }
 .login-button {
     color: #8FC1E9;
     text-decoration: none;
-    border: 1px solid skyblue;
 }

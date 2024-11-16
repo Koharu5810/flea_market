@@ -8,12 +8,12 @@
 
 @section('content')
     <div class="register-container">
-        <form method="" action="">
+        <form method="post" action="/register">
         @csrf
             {{-- ユーザー名 --}}
             <div class="form__group">
                 <label for="username">ユーザー名</label>
-                <input type="text" name="username" placeholder="" value="{{ old('username') }}" class="form__group-input" />
+                <input type="text" name="username" value="{{ old('username') }}" class="form__group-input" />
                 <div class="form__error">
                     @error('username')
                         {{ $message }}
@@ -23,7 +23,7 @@
             {{-- メールアドレス --}}
             <div class="form__group">
                 <label for="username">メールアドレス</label>
-                <input type="email" name="email" placeholder="" value="{{ old('email') }}" class="form__group-input" />
+                <input type="email" name="email" value="{{ old('email') }}" class="form__group-input" />
                 <div class="form__error">
                     @error('email')
                         {{ $message }}
@@ -32,8 +32,8 @@
             </div>
             {{-- パスワード --}}
             <div class="form__group">
-                <label for="password">ユーザー名</label>
-                <input type="password" name="password" placeholder=""  class="form__group-input" />
+                <label for="password">パスワード</label>
+                <input type="password" name="password"  class="form__group-input" />
                 <div class="form__error">
                     @error('password')
                         {{ $message }}
@@ -43,7 +43,7 @@
             {{-- 確認用パスワード --}}
             <div class="form__group">
                 <label for="password">確認用パスワード</label>
-                <input type="password" name="password_confirmation" placeholder="" class="form__group-input" />
+                <input type="password" name="password_confirmation" class="form__group-input" />
                 <div class="form__error">
                     @error('username')
                         {{ $message }}
@@ -57,7 +57,7 @@
         </form>
         {{-- ログイン案内 --}}
         <div class="login">
-            <a href="" class="login-button">ログインはこちら</a>
+            <a href="/login" class="login-button">ログインはこちら</a>
         </div>
     </div>
 @endsection
