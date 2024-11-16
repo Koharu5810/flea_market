@@ -15,6 +15,7 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique()->index();
             $table->string('name');
             $table->string('image');
             $table->integer('item_condition')->comment('1=良好; 2=目立った傷や汚れなし; 3=やや傷や汚れあり; 4=状態が悪い');
