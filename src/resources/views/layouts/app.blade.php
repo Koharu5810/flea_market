@@ -44,6 +44,7 @@
 
     <main>
         <div class="content">
+            <h1 class="content__title">@yield('title')</h1>
             @yield('content')
         </div>
     </main>

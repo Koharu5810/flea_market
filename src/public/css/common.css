@@ -1,14 +1,21 @@
 .header {
     background-color: #000;
-    max-width: 1230px;
-    padding-top: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
     padding-left: 10px;
     height: 50px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
 }
 .header__logo {
+    height: auto;
 }
 .header__menu {
+    display: flex;
+    align-items: center;
 }
 .header__search {
 }
@@ -26,3 +33,47 @@
     background-color: #fff;
 
 }
+
+main {
+    padding-top: 50px;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid yellowgreen;
+}
+.content__title {
+    font-size: 20px;
+}
+
+/* PC幅用スタイル調整 */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .header,
+    .content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .header__search-input {
+        width: 250px;
+    }
+}
+/* タブレット幅用スタイル */
+@media (min-width: 768px) and (max-width: 850px) {
+    .header,
+    .content {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .header__search-input {
+        width: 150px;
+    }
+
+    .header__menu {
+        gap: 10px;
+    }
+}
+

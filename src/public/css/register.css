@@ -1,0 +1,27 @@
+.register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid pink;
+}
+.form__group {
+    display: flex;
+    border: 1px solid orange;
+}
+.form__group-input {
+    display: block;
+    border: 1px solid green;
+}
+.form__error {
+    border: 1px solid red;
+}
+.form__button {
+    border: 1px solid brown;
+}
+.login {
+    border: 1px solid purple;
+}
+.login-button {
+    border: 1px solid skyblue;
+}

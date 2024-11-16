@@ -4,9 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
 @endsection
 
+@section('title', '会員登録')
+
 @section('content')
     <div class="register-container">
-        <h1 class="form__title">会員登録</h1>
         <form method="" action="">
         @csrf
             {{-- ユーザー名 --}}
