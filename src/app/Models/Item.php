@@ -11,8 +11,19 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'image', 'condition', 'description', 'price',
+        'name', 'image', 'item_condition', 'description', 'price',
     ];
+
+    public const CONDITIONS = [
+        1 => '良好',
+        2 => '目立った傷や汚れなし',
+        3 => 'やや傷や汚れあり',
+        4 => '状態が悪い',
+    ];
+    public function getItemConditionTextAttribute()
+    {
+        return self::CONDITIONS[$this->item_condition] ?? '';
+    }
 
     public function order()
     {

@@ -12,10 +12,8 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'item_id',
+        'shipping_address_id',
         'payment_method',
-        'shipping_postal_code',
-        'shipping_address',
-        'shipping_building',
         'purchased_at',
     ];
 
@@ -26,5 +24,9 @@ class Order extends Model
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+    public function shippingAddress()
+    {
+        return $this->belongsTo(UserAddress::class, 'shipping_address_id');
     }
 }

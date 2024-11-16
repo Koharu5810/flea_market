@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
-            $table->enum('condition', ['良好', '目立った傷や汚れなし', 'やや傷や汚れあり', '状態が悪い']);
+            $table->integer('item_condition')->comment('1=良好; 2=目立った傷や汚れなし; 3=やや傷や汚れあり; 4=状態が悪い');
             $table->text('description');
             $table->decimal('price', 10, 0);
             $table->timestamps();
