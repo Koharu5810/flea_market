@@ -26,9 +26,9 @@ class AuthController extends Controller
         // 登録直後にログイン状態にする
         auth()->login($user);
 
-        return redirect()->route('profile.index')->with('form', [
-            'username' => $form['username'],
-        ]);
+        session(['username' => $form['username']]);
+
+        return redirect()->route('profile.index');
     }
 
 // ログイン画面表示

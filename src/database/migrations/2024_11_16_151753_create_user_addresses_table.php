@@ -16,7 +16,6 @@ class CreateUserAddressesTable extends Migration
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('user_image')->nullable();
             $table->string('postal_code', 8);
             $table->string('address');
             $table->string('building')->nullable();

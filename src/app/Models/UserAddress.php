@@ -10,7 +10,6 @@ class UserAddress extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_image',
         'postal_code',
         'address',
         'building',

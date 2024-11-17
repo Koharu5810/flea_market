@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="profile__create-container">
-        <form method="post" action="{{ route('profile.index') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('profile.store') }}" enctype="multipart/form-data">
         @csrf
     {{-- プロフィール画像 --}}
             <div class="profile__image">
@@ -30,7 +30,7 @@
     {{-- ユーザー名 --}}
             <div class="profile-form__group">
                 <label for="username">ユーザー名</label>
-                <input type="text" name="username" value="{{ old('username') }}" class="profile-form__group-input" />
+                <input type="text" name="username" value="{{ old('username', $username) }}" class="profile-form__group-input" />
                 @error('username')
                     <div class="profile-form__error">
                         {{ $message }}
@@ -76,9 +76,7 @@
 
 <script>
     const imageInput = document.getElementById('imageInput');
-    const imagePreview = document.getElementById('imagePreview');
     const previewImage = document.getElementById('previewImage');
-    const placeholderText = document.getElementById('placeholderText');
 
     imageInput.addEventListener('change', function () {
         const file = this.files[0];
@@ -89,7 +87,6 @@
             reader.onload = function (e) {
                 previewImage.src = e.target.result;
                 previewImage.style.display = 'block';
-                placeholderText.style.display = 'none';
             };
 
             reader.readAsDataURL(file);
