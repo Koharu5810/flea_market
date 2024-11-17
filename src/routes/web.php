@@ -28,8 +28,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withoutMiddleware(['auth']);
 Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth']);
 // ログイン画面
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::get('/login', [AuthController::class, 'showLoginForm']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::middleware('auth')->group(function () {

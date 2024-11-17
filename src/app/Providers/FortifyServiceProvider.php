@@ -42,19 +42,6 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
 
-        // ログイン処理
-        Fortify::authenticateUsing(function (LoginRequest $request) {
-            $user = User::where('username', $request->username)
-                        ->orWhere('email', $request->username)  // ユーザ名またはメールアドレスで認証
-                        ->first();
-
-            // パスワードが一致するか確認
-            if ($user && Hash::check($request->password, $user->password)) {
-                return $user;  // 認証成功
-            }
-            return null;  // 認証失敗
-        });
-
         // ログイン試行回数を制限する設定
         RateLimiter::for('login', function (Request $request) {
             $username = (string) $request->input('username');

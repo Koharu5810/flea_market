@@ -29,6 +29,9 @@
                     @error('password')
                         {{ $message }}
                     @enderror
+                    @if (session('auth_error'))
+                        {{ session('auth_error') }}
+                    @endif
                 </div>
             </div>
     {{-- ログインボタン --}}
