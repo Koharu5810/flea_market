@@ -19,11 +19,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// アクション作成前一時表示用
-// Route::get('register', function() {
-//     return view('auth.register');
-// });
-
 // // 会員登録画面
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withoutMiddleware(['auth']);
 Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth']);
@@ -35,8 +30,8 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::middleware('auth')->group(function () {
     // 商品一覧画面
     Route::get('/', [ItemController::class, 'index'])->name('home');
-    // プロフィール画面
-    Route::get('/mypage', [UserController::class, 'index'])->name('profile.index');
-    Route::post('/mypage', [UserController::class, 'store']);
+    // プロフィール編集画面
+    Route::get('/mypage/profile', [UserController::class, 'showStoreForm'])->name('profile.index');
+    Route::post('/mypage/profile', [UserController::class, 'store']);
 });
 

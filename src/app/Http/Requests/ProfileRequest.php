@@ -24,13 +24,15 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'profile_image' => 'mimes:png,jpg,jpeg',
+            'username' => 'required|string',
+            'profile_image' => 'nullable|image|mimes:png,jpg,jpeg',
         ];
     }
 
     public function messages()
     {
         return [
+            'username.required' => 'お名前を入力してください',
             'profile_image.mimes' => '「.jpeg」または「.png」形式でアップロードしてください',
         ];
     }

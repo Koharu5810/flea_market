@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="profile__create-container">
-        <form method="post" action="">
+        <form method="post" action="{{ route('profile.index') }}" enctype="multipart/form-data">
         @csrf
     {{-- プロフィール画像 --}}
             <div class="profile__image">
@@ -19,53 +19,53 @@
                 </div>
                 <label class="upload-button">
                     画像を選択する
-                    <input type="file" name="" id="imageInput" accept="image/*" style="display: none;">
+                    <input type="file" name="profile_image" id="imageInput" accept="image/*" style="display: none;">
                 </label>
-                <div class="profile-form__error">
-                    @error('image')
-                        {{ $message }}
-                    @enderror
-                </div>
             </div>
+            @error('profile_image')
+                <div class="profile-form__error">
+                    {{ $message }}
+                </div>
+            @enderror
     {{-- ユーザー名 --}}
             <div class="profile-form__group">
                 <label for="username">ユーザー名</label>
                 <input type="text" name="username" value="{{ old('username') }}" class="profile-form__group-input" />
-                <div class="profile-form__error">
-                    @error('username')
+                @error('username')
+                    <div class="profile-form__error">
                         {{ $message }}
-                    @enderror
-                </div>
+                    </div>
+                @enderror
             </div>
     {{-- 郵便番号 --}}
             <div class="profile-form__group">
                 <label for="postal_code">郵便番号</label>
                 <input type="text" name="postal_code" value="{{ old('postal_code') }}" class="profile-form__group-input" />
-                <div class="profile-form__error">
-                    @error('postal_code')
+                @error('postal_code')
+                    <div class="profile-form__error">
                         {{ $message }}
-                    @enderror
-                </div>
+                    </div>
+                @enderror
             </div>
     {{-- 住所 --}}
             <div class="profile-form__group">
                 <label for="address">住所</label>
                 <input type="text" name="address"  class="profile-form__group-input" />
-                <div class="profile-form__error">
-                    @error('address')
+                @error('address')
+                    <div class="profile-form__error">
                         {{ $message }}
-                    @enderror
-                </div>
+                    </div>
+                @enderror
             </div>
     {{-- 建物名 --}}
             <div class="profile-form__group">
                 <label for="building">建物名</label>
                 <input type="text" name="building" class="profile-form__group-input" />
-                <div class="profile-form__error">
-                    @error('building')
-                        {{ $message }}
-                    @enderror
-                </div>
+                @error('building')
+                    <div class="profile-form__error">
+                            {{ $message }}
+                    </div>
+                @enderror
             </div>
             {{-- 登録ボタン --}}
             <div class="profile-form__button">
