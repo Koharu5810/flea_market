@@ -2,7 +2,6 @@
 @extends('layouts.app')
 
 @section('css')
-{{-- 作成後loginCSSに変更 --}}
 <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
 @endsection
 
@@ -10,7 +9,7 @@
 
 @section('content')
     <div class="login-container">
-        <form method="post" action="/login">
+        <form method="POST" action="/login">
         @csrf
     {{-- ユーザー名/メールアドレス --}}
             <div class="login-form__group">

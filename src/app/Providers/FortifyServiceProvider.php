@@ -57,9 +57,9 @@ class FortifyServiceProvider extends ServiceProvider
 
         // ログイン試行回数を制限する設定
         RateLimiter::for('login', function (Request $request) {
-            $email = (string) $request->email;
+            $username = (string) $request->input('username');
 
-            return Limit::perMinute(5)->by($email . '|' . $request->ip());
+            return Limit::perMinute(5)->by($username . '|' . $request->ip());
         });
 
         // ログイン後のリダイレクト先
