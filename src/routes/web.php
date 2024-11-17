@@ -37,5 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [ItemController::class, 'index'])->name('home');
     // プロフィール画面
     Route::get('/mypage', [UserController::class, 'index'])->name('profile.index');
+    Route::post('/mypage', [UserController::class, 'store']);
 });
 
