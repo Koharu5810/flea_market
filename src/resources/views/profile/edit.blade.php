@@ -3,7 +3,7 @@
 
 @section('css')
 {{-- 作成後indexCSSに変更 --}}
-<link rel="stylesheet" href="{{ asset('css/profile/index.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/profile/edit.css') }}" />
 @endsection
 
 @section('title', 'プロフィール設定')

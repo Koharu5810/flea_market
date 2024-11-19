@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+// プロフィール画面表示
+    public function showMypage()
+    {
+        return view('profile.index');
+    }
+
 // プロフィール編集画面の表示
     public function showStoreForm()
     {
