@@ -13,23 +13,31 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+// プロフィール編集画面の表示
     public function showStoreForm()
     {
-        $userId = Auth::user();
-        // if (!$userId) {
-        //     abort(403, 'Unauthorized action.');
-        // }
-
+        // 認証ユーザか確認
         if (!Auth::check()) {
             return redirect()->route('login');
         }
 
         $user = Auth::user();
-        $username = $user->username ?? '';
 
-        return view('profile.index', compact('username'));
+        // usersテーブルからデータをデフォルト値付きで取得
+        $username = $user->username ?? '';
+        $profileImage = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
+
+        // user_addressesテーブルから既存データを取得または空文字を設定（初回登録時）
+        $userAddress = $user->user_addresses->first() ?? null;
+        $postal_code = $userAddress->postal_code ?? '';
+        $address = $userAddress->address ?? '';
+        $building = $userAddress->building ?? '';
+
+
+        return view('profile.index', compact('username', 'profileImage', 'postal_code', 'address', 'building'));
     }
 
+// プロフィール編集機能
     public function store(ProfileRequest $profileRequest, AddressRequest $addressRequest)
     {
         $profileData = $profileRequest->validated();
