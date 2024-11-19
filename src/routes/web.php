@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     // 商品一覧画面
     Route::get('/', [ItemController::class, 'index'])->name('home');
     // プロフィール編集画面
-    Route::get('/mypage/profile', [UserController::class, 'showStoreForm'])->name('profile.index');
+    Route::get('/mypage/profile', [UserController::class, 'showStoreForm'])->name('profile.edit');
     Route::post('/mypage/profile', [UserController::class, 'store'])->name('profile.store');
 });
 

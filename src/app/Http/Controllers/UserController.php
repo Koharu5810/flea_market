@@ -34,7 +34,7 @@ class UserController extends Controller
         $building = $userAddress->building ?? '';
 
 
-        return view('profile.index', compact('username', 'profileImage', 'postal_code', 'address', 'building'));
+        return view('profile.edit', compact('username', 'profileImage', 'postal_code', 'address', 'building'));
     }
 
 // プロフィール編集機能

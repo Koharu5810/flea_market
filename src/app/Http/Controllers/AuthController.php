@@ -28,7 +28,7 @@ class AuthController extends Controller
 
         session(['username' => $form['username']]);
 
-        return redirect()->route('profile.index');
+        return redirect()->route('profile.edit');
     }
 
 // ログイン画面表示
