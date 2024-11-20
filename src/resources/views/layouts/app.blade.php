@@ -14,7 +14,7 @@
     <header>
         <div class="header">
             {{-- ロゴ表示 --}}
-            <img class="header__logo" src="{{ asset('storage/images/logo.svg') }}" alt="ロゴ">
+            <a href="{{ route('home') }}"><img class="header__logo" src="{{ asset('storage/images/logo.svg') }}" alt="ロゴ" /></a>
 
             {{-- 会員登録画面・ログイン画面 --}}
             @if (request()->is('register') || request()->is('login'))
@@ -28,10 +28,10 @@
 
                     {{-- ログアウトボタン --}}
                     @if (Auth::check())
-                        {{-- <form action="{{ route('logout') }}" method="POST" class="header__logout"> --}}
-                            {{-- @csrf --}}
+                        <form action="{{ route('logout') }}" method="POST" class="header__logout">
+                            @csrf
                             <button type="submit" class="header__logout-button">ログアウト</button>
-                        {{-- </form> --}}
+                        </form>
                     @else
                         {{-- <form action="{{ route('login') }}" method="POST" class="header__login"> --}}
                             {{-- @csrf --}}
@@ -40,8 +40,8 @@
                     @endif
 
                     {{-- マイページボタン --}}
-                    {{-- <a href="{{ route('profile.index') }}" class="header__mypage">マイページ</a> --}}
-                    <button>マイページ</button>
+
+                    <button><a href="{{ route('profile.index') }}" class="header__mypage">マイページ</a></button>
 
                     {{-- 出品ボタン --}}
                     {{-- <a href="{{ route('sell') }}" class="header__sell-button">出品する</a> --}}

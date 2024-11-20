@@ -40,7 +40,7 @@
     {{-- 郵便番号 --}}
             <div class="profile-form__group">
                 <label for="postal_code">郵便番号</label>
-                <input type="text" name="postal_code" value="{{ old('postal_code') }}" class="profile-form__group-input" />
+                <input type="text" name="postal_code" value="{{ old('postal_code', $postal_code) }}" class="profile-form__group-input" />
                 @error('postal_code')
                     <div class="profile-form__error">
                         {{ $message }}
@@ -50,7 +50,7 @@
     {{-- 住所 --}}
             <div class="profile-form__group">
                 <label for="address">住所</label>
-                <input type="text" name="address"  class="profile-form__group-input" />
+                <input type="text" name="address" value="{{ old('address', $address) }}" class="profile-form__group-input" />
                 @error('address')
                     <div class="profile-form__error">
                         {{ $message }}
@@ -60,7 +60,7 @@
     {{-- 建物名 --}}
             <div class="profile-form__group">
                 <label for="building">建物名</label>
-                <input type="text" name="building" class="profile-form__group-input" />
+                <input type="text" name="building" value="{{ old('building', $building) }}" class="profile-form__group-input" />
                 @error('building')
                     <div class="profile-form__error">
                             {{ $message }}

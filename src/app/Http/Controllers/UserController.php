@@ -16,7 +16,9 @@ class UserController extends Controller
 // プロフィール画面表示
     public function showMypage()
     {
-        return view('profile.index');
+        $user = auth()->user();
+
+        return view('profile.index', compact('user'));
     }
 
 // プロフィール編集画面の表示
@@ -35,10 +37,9 @@ class UserController extends Controller
 
         // user_addressesテーブルから既存データを取得または空文字を設定（初回登録時）
         $userAddress = $user->user_addresses->first() ?? null;
-        $postal_code = $userAddress->postal_code ?? '';
-        $address = $userAddress->address ?? '';
-        $building = $userAddress->building ?? '';
-
+        $postal_code = $userAddress ? $userAddress->postal_code : '';
+        $address = $userAddress ? $userAddress->address : '';
+        $building = $userAddress ? $userAddress->building : '';
 
         return view('profile.edit', compact('username', 'profileImage', 'postal_code', 'address', 'building'));
     }

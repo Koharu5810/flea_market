@@ -25,13 +25,14 @@ Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware
 // ログイン画面
 Route::get('/login', [AuthController::class, 'showLoginForm']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+// ログアウト機能
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     // 商品一覧画面
     Route::get('/', [ItemController::class, 'index'])->name('home');
     // プロフィール画面
-    Route::get('mypage', [UserController::class, 'showMypage']);
+    Route::get('/mypage', [UserController::class, 'showMypage'])->name('profile.index');
     // プロフィール編集画面
     Route::get('/mypage/profile', [UserController::class, 'showStoreForm'])->name('profile.edit');
     Route::post('/mypage/profile', [UserController::class, 'store'])->name('profile.store');
