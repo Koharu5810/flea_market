@@ -34,13 +34,13 @@
             @foreach ($items as $item)
                 <a href="{{ route('item.detail', ['id' => $item->id]) }} " class="item-link">
                     <div class="item-container">
-                        <div class="item-image">
-                            @if ($item->image)
+                        @if ($item->image)
+                            <div class="item-image">
                                 <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
-                            @else
-                                <div class="item-image">商品画像</div>
-                            @endif
-                        </div>
+                            </div>
+                        @else
+                            <div class="item-image">商品画像</div>
+                        @endif
                         <div class="item-name">
                             {{ $item->name }}
                         </div>
@@ -51,23 +51,23 @@
     </div>
 
     <script>
-    const imageInput = document.getElementById('imageInput');
-    const previewImage = document.getElementById('previewImage');
+        const imageInput = document.getElementById('imageInput');
+        const previewImage = document.getElementById('previewImage');
 
-    imageInput.addEventListener('change', function () {
-        const file = this.files[0];
+        imageInput.addEventListener('change', function () {
+            const file = this.files[0];
 
-        if (file) {
-            const reader = new FileReader();
+            if (file) {
+                const reader = new FileReader();
 
-            reader.onload = function (e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block';
-            };
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                };
 
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 
 @endsection

@@ -75,6 +75,11 @@
     margin-top: 0;
     margin-bottom: 20px;
 }
+
+.item-link {
+    color: #000;
+    text-decoration: none;
+}
 .item__main {
     width: 80vw;
     display: grid;
