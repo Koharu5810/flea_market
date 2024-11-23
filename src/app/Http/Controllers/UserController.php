@@ -20,7 +20,7 @@ class UserController extends Controller
 
         $profileImage = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
 
-        return view('profile.index', compact('user', 'profileImage'));
+        return view('profile.mypage', compact('user', 'profileImage'));
     }
 
 // プロフィール編集画面の表示
@@ -42,7 +42,7 @@ class UserController extends Controller
         $address = $userAddress ? $userAddress->address : '';
         $building = $userAddress ? $userAddress->building : '';
 
-        return view('profile.edit', compact('username', 'profileImage', 'postal_code', 'address', 'building'));
+        return view('profile.profile_edit', compact('username', 'profileImage', 'postal_code', 'address', 'building'));
     }
 
 // プロフィール保存（登録または更新）
