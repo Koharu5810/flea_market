@@ -1,8 +1,7 @@
-{{-- プロフィール設定画面 --}}
+{{-- プロフィール編集画面 --}}
 @extends('layouts.app')
 
 @section('css')
-{{-- 作成後indexCSSに変更 --}}
 <link rel="stylesheet" href="{{ asset('css/profile/edit.css') }}" />
 @endsection
 
@@ -10,8 +9,11 @@
 
 @section('content')
     <div class="profile__create-container">
-        <form method="post" action="{{ route('profile.store') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('profile.save') }}" enctype="multipart/form-data">
         @csrf
+        {{-- @if($isUpdate)
+            @method('PATCH')
+        @endif --}}
     {{-- プロフィール画像 --}}
             <div class="profile__image">
                 <div class="profile__image-preview" id="imagePreview">

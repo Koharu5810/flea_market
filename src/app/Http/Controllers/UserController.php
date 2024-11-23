@@ -22,14 +22,13 @@ class UserController extends Controller
     }
 
 // プロフィール編集画面の表示
-    public function showStoreForm()
+    public function showProfileForm()
     {
         // 認証ユーザか確認
-        if (!Auth::check()) {
+        $user = Auth::user();
+        if (!$user) {
             return redirect()->route('login');
         }
-
-        $user = Auth::user();
 
         // usersテーブルからデータをデフォルト値付きで取得
         $username = $user->username ?? '';
@@ -44,8 +43,8 @@ class UserController extends Controller
         return view('profile.edit', compact('username', 'profileImage', 'postal_code', 'address', 'building'));
     }
 
-// プロフィール編集機能
-    public function store(ProfileRequest $profileRequest, AddressRequest $addressRequest)
+// プロフィール保存（登録または更新）
+    public function save(ProfileRequest $profileRequest, AddressRequest $addressRequest)
     {
         $profileData = $profileRequest->validated();
         $addressData = $addressRequest->validated();
@@ -56,6 +55,7 @@ class UserController extends Controller
         }
 
         // プロフィール画像の保存
+        $profileImagePath = $user->profile_image;  // デフォルトは既存画像
         if ($profileRequest->hasFile('profile_image')) {
             // 既存の画像を削除
             if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
@@ -63,8 +63,6 @@ class UserController extends Controller
             }
             // 新しい画像を保存
             $profileImagePath = $profileRequest->file('profile_image')->store('profile_images', 'public');
-        } else {
-            $profileImagePath = $user->profile_image;
         }
 
         // ユーザ情報の更新

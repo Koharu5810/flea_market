@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     // プロフィール画面
     Route::get('/mypage', [UserController::class, 'showMypage'])->name('profile.index');
     // プロフィール編集画面
-    Route::get('/mypage/profile', [UserController::class, 'showStoreForm'])->name('profile.edit');
-    Route::post('/mypage/profile', [UserController::class, 'store'])->name('profile.store');
+    Route::get('/mypage/profile', [UserController::class, 'showProfileForm'])->name('profile.edit');
+    Route::post('/mypage/profile', [UserController::class, 'save'])->name('profile.save');
 });
 
