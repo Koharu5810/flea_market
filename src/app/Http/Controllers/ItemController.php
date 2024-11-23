@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CommentRequest;
 use App\Models\Item;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -15,7 +17,7 @@ class ItemController extends Controller
 // 商品詳細画面の表示
     public function show($id)
     {
-        $item = Item::with('categories')->findOrFail($id);
+        $item = Item::with(['categories', 'comments.user'])->findOrFail($id);
 
         return view('item-detail', compact('item'));
     }
@@ -29,5 +31,16 @@ class ItemController extends Controller
         Item::create($form);
 
         return redirect()->route('index');
+    }
+// コメント送信フォーム
+    public function commentStore(CommentRequest $request)
+    {
+        Comment::create([
+            'user_id' => Auth::id(),
+            'item_id' => $request->item_id,
+            'comment' => $request->comment,
+        ]);
+
+        return redirect()->route('item.detail', ['id' => $request->item_id]);
     }
 }

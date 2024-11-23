@@ -54,9 +54,6 @@
             </div>
             <div class="comment-form">
                 <h3 class="item__title">コメント(1)</h3>
-                <div class="comment-form__user">
-                    <p class="user-icon">◯</p>
-                    <p class="user-name">admin</p>
                     {{-- <div class="profile__image" id="imagePreview">
                     @if (!empty($profileImage))
                         <img id="previewImage"
@@ -67,13 +64,28 @@
                     @endif
                     <div class="profile__username">{{ $user->username }}</div>
                 </div> --}}
-                </div>
-                <p class="user-comment">コメント</p>
-                <form action="">
+                @foreach($item->comments as $comment)
+                    <div class="user-comment">
+                        <div class="comment-form__user">
+                            <p class="user-icon">◯</p>
+                            <p class="user-name">{{ $comment->user->username }}</p>
+                        </div>
+                        <p>{{ $comment->comment }}</p>
+                    </div>
+                @endforeach
+                <form method="POST" action="{{ route('comments.store') }}">
                     @csrf
                     <h4 class="comment-form__text-title">商品へのコメント</h4>
-                    <textarea name="" id="" class="comment-form__textarea"></textarea>
-                    <button class="comment-form__button">コメントを送信する</button>
+                    <textarea name="comment" id="comment" class="comment-form__textarea"></textarea>
+                    @if ($errors->any())
+                        <div class="error-messages">
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}
+                            @endforeach
+                        </div>
+                    @endif
+                    <input type="hidden" name="item_id" value="{{ $item->id }}">
+                    <button type="submit" class="comment-form__button">コメントを送信する</button>
                 </form>
             </div>
         </div>

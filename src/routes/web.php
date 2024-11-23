@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [ItemController::class, 'index'])->name('home');
     // 商品詳細画面
     Route::get('item/{id}', [ItemController::class, 'show'])->name('item.detail');
+    // コメント送信フォーム
+    Route::post('/comments', [ItemController::class, 'commentStore'])->name('comments.store');
     // プロフィール画面
     Route::get('/mypage', [UserController::class, 'showMypage'])->name('profile.mypage');
     // プロフィール編集画面
