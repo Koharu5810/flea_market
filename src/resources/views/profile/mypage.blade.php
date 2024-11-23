@@ -26,23 +26,26 @@
         <h2>出品した商品</h2>
         <h2>購入した商品</h2>
     </div>
+    <hr class="item__divider" />
     <div class="item__main">
         @if ($items->isEmpty())
             <p>購入した商品がありません</p>
         @else
             @foreach ($items as $item)
-                <div class="item-container">
-                    <div class="item-image">
-                        @if ($item->image)
-                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
-                        @else
-                            <div class="item-image">商品画像</div>
-                        @endif
+                <a href="{{ route('item.detail', ['id' => $item->id]) }} " class="item-link">
+                    <div class="item-container">
+                        <div class="item-image">
+                            @if ($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
+                            @else
+                                <div class="item-image">商品画像</div>
+                            @endif
+                        </div>
+                        <div class="item-name">
+                            {{ $item->name }}
+                        </div>
                     </div>
-                    <div class="item-name">
-                        {{ $item->name }}
-                    </div>
-                </div>
+                </a>
             @endforeach
         @endif
     </div>

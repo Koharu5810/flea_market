@@ -31,8 +31,10 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::middleware('auth')->group(function () {
     // 商品一覧画面
     Route::get('/', [ItemController::class, 'index'])->name('home');
+    // 商品詳細画面
+    Route::get('item/{id}', [ItemController::class, 'show'])->name('item.detail');
     // プロフィール画面
-    Route::get('/mypage', [UserController::class, 'showMypage'])->name('profile.index');
+    Route::get('/mypage', [UserController::class, 'showMypage'])->name('profile.mypage');
     // プロフィール編集画面
     Route::get('/mypage/profile', [UserController::class, 'showProfileForm'])->name('profile.edit');
     Route::post('/mypage/profile', [UserController::class, 'save'])->name('profile.save');

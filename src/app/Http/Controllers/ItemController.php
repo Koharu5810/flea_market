@@ -8,12 +8,16 @@ use App\Models\Item;
 
 class ItemController extends Controller
 {
+// マイページを表示
     public function index() {
         return view('home');
     }
-    public function user()
+// 商品詳細画面の表示
+    public function show($id)
     {
-        
+        $item = Item::findOrFail($id);
+
+        return view('item-detail', compact('item'));
     }
 
     public function register(Request $request) {

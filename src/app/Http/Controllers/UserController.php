@@ -89,6 +89,6 @@ class UserController extends Controller
             ]
         );
 
-        return redirect()->route('home');
+        return redirect()->route('profile.mypage');
     }
 }
