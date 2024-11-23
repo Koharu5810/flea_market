@@ -14,7 +14,7 @@
     <header>
         <div class="header">
             {{-- ロゴ表示 --}}
-            <a href="{{ route('home') }}"><img class="header__logo" src="{{ asset('storage/images/logo.svg') }}" alt="ロゴ" /></a>
+            <a href="{{ route('home') }}"><img class="header__logo" src="{{ asset('storage/app/logo.svg') }}" alt="ロゴ" /></a>
 
             {{-- 会員登録画面・ログイン画面 --}}
             @if (request()->is('register') || request()->is('login'))

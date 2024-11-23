@@ -55,6 +55,29 @@
     border: none;
 }
 
+.item-status {
+    padding-left: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 40px;
+}
+.item-status img {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+.favorite-icon,
+.comment-icon {
+    cursor: pointer;
+}
+.favorite-icon p,
+.comment-icon p {
+    margin: 0;
+    padding-top: 2px;
+    text-align: center;
+    font-size: 10px;
+}
 .item__title {
     margin-top: 30px;
     margin-bottom: 10px;

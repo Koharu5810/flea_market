@@ -38,11 +38,16 @@ class Item extends Model
     public function favoriteBy() {
         return $this->belongsToMany(User::class, 'favorites');
     }
+    // 商品お気に入り登録
+    public function isFavoriteBy($user) {
+        return $this->favoriteBy->contains('id', $user->id);
+    }
     // 出品アイテムが複数のユーザがコメントを投稿する場合のリレーション
     public function comments() {
         return $this->hasMany(Comment::class);
     }
 
+    // uuidの生成
     protected static function boot() {
         parent::boot();
 

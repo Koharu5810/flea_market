@@ -17,11 +17,30 @@ class ItemController extends Controller
 // 商品詳細画面の表示
     public function show($id)
     {
-        $item = Item::with(['categories', 'comments.user'])->findOrFail($id);
+        $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->findOrFail($id);
+        $user = auth()->user();
 
-        return view('item-detail', compact('item'));
+        return view('item-detail', compact('item', 'user'));
+    }
+// お気に入り登録
+    public function toggle(Item $item)
+    {
+        $user = Auth::user();
+
+        if ($item->favoriteBy()->where('user_id', $user->id)->exists()){
+            // すでにお気に入りの場合usersテーブルから削除
+            $item->favoriteBy()->detach($user->id);
+        } else {
+            // お気に入りでない場合usersテーブルに追加
+            $item->favoriteBy()->attach($user->id);
+        }
+
+        return response()->json([
+            'isFavorited' => $item->favoriteBy()->where('user_id',)->exists(),
+        ]);
     }
 
+// 商品登録
     public function register(Request $request) {
         $form = $request->validated();
 
