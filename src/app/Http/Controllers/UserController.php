@@ -18,7 +18,9 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
-        return view('profile.index', compact('user'));
+        $profileImage = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
+
+        return view('profile.index', compact('user', 'profileImage'));
     }
 
 // プロフィール編集画面の表示
