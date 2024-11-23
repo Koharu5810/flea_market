@@ -45,7 +45,12 @@
             </div>
             <div class="comment-form">
                 <h4 class="comment-form__title">コメント(1)</h4>
-                <div class="profile__image" id="imagePreview">
+                <div class="comment__user">
+                    <p class="user-icon">◯</p>
+                    <p class="user-name">admin</p>
+                    <p class="user-comment">コメント</p>
+                </div>
+                {{-- <div class="profile__image" id="imagePreview">
                     @if (!empty($profileImage))
                         <img id="previewImage"
                             src="{{ $profileImage }}"
@@ -53,7 +58,14 @@
                     @else
                         <div class="profile__image"></div>
                     @endif
-                </div>
+                    <div class="profile__username">{{ $user->username }}</div>
+                </div> --}}
+                <form action="">
+                    @csrf
+                    <p>商品へのコメント</p>
+                    <textarea name="" id="" class="comment-form__textarea"></textarea>
+                    <button class="comment-form__button">コメントを送信する</button>
+                </form>
             </div>
         </div>
     </div>
