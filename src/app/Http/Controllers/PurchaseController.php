@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\UserAddress;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -11,6 +12,8 @@ class PurchaseController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        return view('purchase.index', compact('item'));
+        $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
+
+        return view('purchase.index', compact('item', 'address'));
     }
 }

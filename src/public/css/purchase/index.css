@@ -1,0 +1,135 @@
+.item-container {
+    width: 80vw;
+    display: flex;
+}
+.left-container {
+    width: 50%;
+    height: 300px;
+    align-items: center;
+    border: 1px solid orange;
+}
+.item-image {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 2px solid red;
+}
+.item-image img {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+}
+.right-container {
+    flex: 1;
+    flex-direction: column;
+    text-align: left;
+}
+.item-name {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+.item-brand {
+    margin: 0;
+    font-size: 10px;
+}
+.item-price span {
+    font-size: 20px;
+}
+
+.item-status {
+    padding-left: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 40px;
+}
+.item-status img {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+.favorite-icon,
+.comment-icon {
+    cursor: pointer;
+}
+.favorite-icon p,
+.comment-icon p {
+    margin: 0;
+    padding-top: 2px;
+    text-align: center;
+    font-size: 10px;
+}
+.item__title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.item__info-table {
+    width: 100%;
+    margin: 0;
+}
+.item__info-table th,
+.item__info-table td {
+    text-align: left;
+}
+.info-table__title {
+    width: 120px;
+}
+.info-table__category {
+    background-color: #f0f0f0;
+    width: 80px;
+    padding: 3px;
+    display: inline-block;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.comment-form__list {
+    margin-top: 0;
+    border: 1px solid yellow;
+}
+.user-container {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+}
+.user-icon {
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.user-name {
+    font-weight: bold;
+}
+.user-comment {
+    background-color: #f0f0f0;
+    margin-top: 0;
+    padding: 5px;
+}
+.comment-form__text-title {
+    margin-top: 30px;
+    margin-bottom: 0px;
+}
+.comment-form__textarea {
+    width: 100%;
+    height: 150px;
+    border-radius: 3px;
+}
+.container-form__error {
+    color: #ff6666;
+    font-size: 12px;
+}
+.purchase__button {
+    width: 100%;
+    margin-top: 30px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: #ff6666;
+    color: #fff;
+    border: none;
+}

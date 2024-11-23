@@ -3,21 +3,16 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('css')
-{{-- ファイル名変更 --}}
-<link rel="stylesheet" href="{{ asset('css/item-detail.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/item_detail.css') }}" />
 @endsection
 
 @section('content')
     <div class="item-container">
     {{-- 左側 --}}
         <div class="left-container">
-            @if ($item->image)
-                <div class="item-image">
-                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
-                </div>
-            @else
-                <div class="item-image">商品画像</div>
-            @endif
+            <div class="item-image">
+                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
+            </div>
         </div>
     {{-- 右側 --}}
         <div class="right-container">
@@ -41,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <form method="post" action="{{ route('purchase', ['item_id' => $item->id]) }}}">
+            <form method="post" action="{{ route('purchase', ['item_id' => $item->id]) }}">
                 @csrf
                 <button type="submit" class="purchase-button">購入手続きへ</button>
             </form>
