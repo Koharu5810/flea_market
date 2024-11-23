@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/profile/index.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/profile/mypage.css') }}" />
 @endsection
 
 @section('content')
@@ -23,14 +23,28 @@
         </div>
     </div>
     <div class="item__header">
-        <span>出品した商品</span>
-        <span>購入した商品</span>
+        <h2>出品した商品</h2>
+        <h2>購入した商品</h2>
     </div>
     <div class="item__main">
-        <div class="item-container">
-            <div class="item-image">商品画像</div>
-            <div class="item-name">商品名</div>
-        </div>
+        @if ($items->isEmpty())
+            <p>購入した商品がありません</p>
+        @else
+            @foreach ($items as $item)
+                <div class="item-container">
+                    <div class="item-image">
+                        @if ($item->image)
+                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
+                        @else
+                            <div class="item-image">商品画像</div>
+                        @endif
+                    </div>
+                    <div class="item-name">
+                        {{ $item->name }}
+                    </div>
+                </div>
+            @endforeach
+        @endif
     </div>
 
     <script>

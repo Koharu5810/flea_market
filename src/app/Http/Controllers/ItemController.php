@@ -11,6 +11,10 @@ class ItemController extends Controller
     public function index() {
         return view('home');
     }
+    public function user()
+    {
+        
+    }
 
     public function register(Request $request) {
         $form = $request->validated();

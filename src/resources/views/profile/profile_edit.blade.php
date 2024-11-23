@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/profile/edit.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/profile/profile_edit.css') }}" />
 @endsection
 
 @section('title', 'プロフィール設定')

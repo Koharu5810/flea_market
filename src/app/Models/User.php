@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
+use Psy\CodeCleaner\ReturnTypePass;
 
 class User extends Authenticatable
 {
@@ -48,25 +49,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function user_addresses()
-    {
+    public function user_addresses() {
         return $this->hasMany(UserAddress::class);
     }
-    public function orders()
-    {
+    public function items() {
+        return $this->hasMany(Item::class);
+    }
+    public function orders() {
         return $this->hasMany(Order::class);
     }
-    public function favorites()
-    {
+    public function favorites() {
         return $this->belongsToMany(Item::class, 'favorites');
     }
-    public function comments()
-    {
+    public function comments() {
         return $this->hasMany(Comment::class);
     }
 
-    protected static function boot()
-    {
+    protected static function boot() {
         parent::boot();
 
         // モデルが作成されるときにUUIDを生成

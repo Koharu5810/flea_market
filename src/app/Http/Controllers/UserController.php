@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserAddress;
 use App\Models\User;
+use App\Models\Item;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Support\Facades\Auth;
@@ -18,9 +19,14 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
+        // プロフィール画像表示
         $profileImage = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
 
-        return view('profile.mypage', compact('user', 'profileImage'));
+        // 商品データを取得
+        // $items = $user->items()->get();  // ユーザに関するデータのみを取得
+        $items = Item::all();
+
+        return view('profile.mypage', compact('user', 'profileImage', 'items'));
     }
 
 // プロフィール編集画面の表示

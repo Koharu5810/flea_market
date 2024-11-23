@@ -12,7 +12,7 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'image', 'item_condition', 'description', 'price',
+        'name', 'image', 'item_condition', 'description', 'price', 'user_id',
     ];
 
     public const CONDITIONS = [
@@ -21,33 +21,29 @@ class Item extends Model
         3 => 'やや傷や汚れあり',
         4 => '状態が悪い',
     ];
-    public function getItemConditionTextAttribute()
-    {
+    public function getItemConditionTextAttribute() {
         return self::CONDITIONS[$this->item_condition] ?? '';
     }
-
-    public function order()
-    {
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+    public function order() {
         return $this->hasOne(Order::class);
     }
-    public function categories()
-    {
+    public function categories() {
         return $this->belongsToMany(Category::class, 'item_category');
     }
 
     // 出品アイテムが複数のユーザのお気に入りになる場合のリレーション
-    public function favoriteBy()
-    {
+    public function favoriteBy() {
         return $this->belongsToMany(User::class, 'favorites');
     }
     // 出品アイテムが複数のユーザがコメントを投稿する場合のリレーション
-    public function comments()
-    {
+    public function comments() {
         return $this->hasMany(Comment::class);
     }
 
-    protected static function boot()
-    {
+    protected static function boot() {
         parent::boot();
 
         static::creating(function ($item) {
