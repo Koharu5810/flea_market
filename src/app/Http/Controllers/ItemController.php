@@ -15,7 +15,7 @@ class ItemController extends Controller
 // 商品詳細画面の表示
     public function show($id)
     {
-        $item = Item::findOrFail($id);
+        $item = Item::with('categories')->findOrFail($id);
 
         return view('item-detail', compact('item'));
     }
