@@ -11,13 +11,13 @@
     <div class="profile__create-container">
         <form method="post" action="{{ route('profile.save') }}" enctype="multipart/form-data">
         @csrf
-        {{-- @if($isUpdate)
-            @method('PATCH')
-        @endif --}}
     {{-- プロフィール画像 --}}
             <div class="profile__image">
                 <div class="profile__image-preview" id="imagePreview">
-                    <img id="previewImage" src="" alt="プロフィールアイコン" style="display: none;" />
+                    <img id="previewImage"
+                        src="{{ isset($profileImage) ? $profileImage : '' }}"
+                        alt="プロフィールアイコン"
+                        style="{{ isset($profileImage) ? '' : 'display: none;' }}" />
                 </div>
                 <label class="upload-button">
                     画像を選択する
