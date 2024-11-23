@@ -54,31 +54,21 @@
             </div>
             <div class="comment-form">
                 <h3 class="item__title">コメント(1)</h3>
-                    {{-- <div class="profile__image" id="imagePreview">
-                    @if (!empty($profileImage))
-                        <img id="previewImage"
-                            src="{{ $profileImage }}"
-                            alt="プロフィールアイコン" />
-                    @else
-                        <div class="profile__image"></div>
-                    @endif
-                    <div class="profile__username">{{ $user->username }}</div>
-                </div> --}}
                 @foreach($item->comments as $comment)
-                    <div class="user-comment">
-                        <div class="comment-form__user">
-                            <p class="user-icon">◯</p>
+                    <div class="comment-form__list">
+                        <div class="user-container">
+                            <img src="{{ $comment->user->profile_image_url }}" alt="アイコン" class="user-icon" />
                             <p class="user-name">{{ $comment->user->username }}</p>
                         </div>
-                        <p>{{ $comment->comment }}</p>
+                        <p class="user-comment">{{ $comment->comment }}</p>
                     </div>
                 @endforeach
                 <form method="POST" action="{{ route('comments.store') }}">
                     @csrf
                     <h4 class="comment-form__text-title">商品へのコメント</h4>
-                    <textarea name="comment" id="comment" class="comment-form__textarea"></textarea>
+                    <textarea name="comment" id="comment" class="comment-form__textarea">{{ old('comment') }}</textarea>
                     @if ($errors->any())
-                        <div class="error-messages">
+                        <div class="container-form__error">
                             @foreach ($errors->all() as $error)
                                 {{ $error }}
                             @endforeach
