@@ -11,10 +11,12 @@
     {{-- 左側 --}}
         <div class="left-container">
         {{-- 商品情報 --}}
-            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image" />
-            <div class="item-detail">
-                <h2 class="item-name">{{ $item->name }}</h2>
-                <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span></p>
+            <div class="detail-container">
+                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image" />
+                <div class="item-detail">
+                    <h2 class="item-name">{{ $item->name }}</h2>
+                    <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span></p>
+                </div>
             </div>
             <hr>
         {{-- 支払い方法 --}}
@@ -26,10 +28,12 @@
             </select>
             <hr>
         {{-- 配送先 --}}
-            <h3>配送先</h3>
-            <a href="">変更する</a>
+            <div class="delivery">
+                <h3>配送先</h3>
+                <a href="">変更する</a>
+            </div>
             <div>
-                <p>〒{{ $address->postal_code }}</p>
+                <p>〒 {{ $address->postal_code }}</p>
                 <p>{{ $address->address }} {{ $address->building }}</p>
             </div>
         </div>
@@ -47,7 +51,7 @@
             </table>
             {{-- <form method="post" action=""> --}}
                 {{-- @csrf --}}
-                <button type="submit" class="purchase-button">購入手続きへ</button>
+                <button type="submit" class="purchase-button">購入する</button>
             {{-- </form> --}}
         </div>
     </div>
