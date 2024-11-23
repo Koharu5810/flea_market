@@ -40,7 +40,7 @@ class Item extends Model
     }
     // 商品お気に入り登録
     public function isFavoriteBy($user) {
-        return $this->favoriteBy->contains('id', $user->id);
+        return $user && $this->favoriteBy->contains('id', $user->id);
     }
     // 出品アイテムが複数のユーザがコメントを投稿する場合のリレーション
     public function comments() {

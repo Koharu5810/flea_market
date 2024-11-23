@@ -27,7 +27,7 @@ class ItemController extends Controller
     {
         $user = Auth::user();
 
-        if ($item->favoriteBy()->where('user_id', $user->id)->exists()){
+        if ($item->favoriteBy()->where('user_id', $user->id)->exists()) {
             // すでにお気に入りの場合usersテーブルから削除
             $item->favoriteBy()->detach($user->id);
         } else {
@@ -35,8 +35,11 @@ class ItemController extends Controller
             $item->favoriteBy()->attach($user->id);
         }
 
+        $item->refresh();
+
         return response()->json([
-            'isFavorited' => $item->favoriteBy()->where('user_id',)->exists(),
+            'isFavorited' => $item->favoriteBy()->where('user_id', $user->id)->exists(),
+            'favoriteCount' => $item->favoriteBy->count(),
         ]);
     }
 

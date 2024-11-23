@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PurchaseController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [ItemController::class, 'index'])->name('home');
     // 商品詳細画面
     Route::get('item/{id}', [ItemController::class, 'show'])->name('item.detail');
+    // 商品購入画面へ遷移
+    Route::post('purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase');
     // お気に入り機能
     Route::post('/favorite/{item}', [ItemController::class, 'toggle'])->name('favorite.toggle');
     // コメント送信フォーム

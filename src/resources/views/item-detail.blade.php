@@ -25,25 +25,27 @@
                 <h2 class="item-name">{{ $item->name }}</h2>
                 <p class="item-brand">{{ $item->name }}</p>
                 <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span> (税込)</p>
+        {{-- お気に入り・コメントアイコン --}}
                 <div class="item-status">
-                    <div class="favorite-icon" id="favorite-icon" data-item-id="{{ $item->id }}">
+                    <div id="favorite-icon" data-item-id="{{ $item->id }}" class="favorite-icon">
                             <img
-                                src="{{ $item->isFavoriteBy($user) ? asset('storage/app/icon_favorite-listin.png') : asset('storage/app/icon_favorite.png') }}"
+                                src="{{ $item->isFavoriteBy(auth()->user()) ? asset('storage/app/favorited.png') : asset('storage/app/favorite.png') }}"
                                 alt={{ $item->isFavoriteBy($user) ?  'お気に入り登録済み' : 'お気に入り' }}
                                 id="favorite-icon-img"
                             />
-                        <p>{{ $item->favoriteBy->count() }}</p>
+                        <p id="favorite-count">{{ $item->favoriteBy->count() }}</p>
                     </div>
                     <div class="comment-icon">
-                        <img src="{{ asset('storage/app/icon_comment.png') }}" alt="コメント" />
+                        <img src="{{ asset('storage/app/comment.png') }}" alt="コメント" />
                         <p>{{ $item->comments->count() }}</p>
                     </div>
                 </div>
             </div>
-            {{-- <form method="post" action="">
-                @csrf --}}
+            <form method="post" action="{{ route('purchase', ['item_id' => $item->id]) }}}">
+                @csrf
                 <button type="submit" class="purchase-button">購入手続きへ</button>
-            {{-- </form> --}}
+            </form>
+    {{-- 商品説明・商品の情報 --}}
             <div class="item-description">
                 <h3 class="item__title">商品説明</h3>
                 {{ $item->description }}
@@ -66,6 +68,7 @@
                     </tr>
                 </table>
             </div>
+    {{-- コメントフォーム --}}
             <div class="comment-form">
                 <h3 class="item__title">コメント({{ $item->comments->count() }})</h3>
                 @foreach($item->comments as $comment)
@@ -115,12 +118,13 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
+            const favoriteContainer = document.getElementById('favorite-container');
             const favoriteIcon = document.getElementById('favorite-icon');
-            if (favoriteIcon) {
-                favoriteIcon.addEventListener('click', function () {
-                    const itemId = this.dataset.itemId;
-                    const favoriteIconImg = document.getElementById('favorite-icon-img');
-                    const favoriteCount = document.getElementById('favorite-count');
+            const favoriteCount = document.getElementById('favorite-count');
+
+            if (favoriteContainer) {
+                favoriteContainer.addEventListener('click', function () {
+                    const itemId = favoriteContainer.dataset.itemId;
 
                     fetch(`/favorite/${itemId}`, {
                         method: 'POST',
@@ -129,18 +133,14 @@
                             'Content-Type': 'application/json',
                         },
                     })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.isFavorited) {
-                                favoriteIconImg.src = '/storage/icon_favorite-listin.png';
-                                favoriteIconImg.alt = 'お気に入り登録済み';
-                            } else {
-                                favoriteIconImg.src = '/storage/icon_favorite.png';
-                                favoriteIconImg.alt = 'お気に入り';
-                            }
-                            favoriteCount.textContent = parseInt(favoriteCount.textContent) + (data.isFavorited ? 1 : -1);
-                        })
-                        .catch(error => console.error('Error:', error));
+                    .then(response => response.json())
+                    .then(data => {
+                        favoriteIcon.src = data.isFavorited
+                            ? '/storage/favorited.png'
+                            : '/storage/favorite.png';
+                        favoriteCount.textContent = data.favoriteCount;
+                    })
+                    .catch(error => console.error('Error:', error));
                 });
             }
         });
