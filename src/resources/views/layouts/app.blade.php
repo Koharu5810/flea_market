@@ -48,8 +48,7 @@
             {{-- マイページボタン --}}
                     <button class="header__mypage-button"><a href="{{ route('profile.mypage') }}">マイページ</a></button>
             {{-- 出品ボタン --}}
-                    {{-- <a href="{{ route('sell') }}" class="header__sell-button">出品</a> --}}
-                    <button>出品</button>
+                    <button class="header__sell-button"><a href="{{ route('sell') }}">出品</a></button>
                 </div>
             @endif
         </div>

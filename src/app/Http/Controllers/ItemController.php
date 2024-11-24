@@ -14,8 +14,13 @@ class ItemController extends Controller
     public function index() {
         return view('home');
     }
+// 商品出品画面の表示
+    public function showSell()
+    {
+        return view('sell');
+    }
 // 商品詳細画面の表示
-    public function show($id)
+    public function showDetail($id)
     {
         $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->findOrFail($id);
         $user = auth()->user();

@@ -32,8 +32,10 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::middleware('auth')->group(function () {
     // 商品一覧画面
     Route::get('/', [ItemController::class, 'index'])->name('home');
+    // 商品出品画面
+    Route::get('/sell', [ItemController::class, 'showSell'])->name('sell');
     // 商品詳細画面
-    Route::get('item/{id}', [ItemController::class, 'show'])->name('item.detail');
+    Route::get('item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
     // 商品購入画面へ遷移
     Route::post('purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase');
     // お気に入り機能
