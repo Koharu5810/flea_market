@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
+use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Comment;
@@ -23,8 +24,18 @@ class ItemController extends Controller
         return view('sell', compact('categories'));
     }
 // 商品出品
-    public function createItem()
+    public function createItem(ExhibitionRequest $request)
     {
+        $validated = $request->validated();
+
+        $item = new Item();
+        $item->fill($validated);
+
+        if ($request->hasFile('image')) {
+            $item->image_path = $request->file('image')->store('items', 'public');
+        }
+
+        $item->save();
 
         return redirect()->route('home');
     }

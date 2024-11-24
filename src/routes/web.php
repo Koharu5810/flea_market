@@ -33,7 +33,8 @@ Route::middleware('auth')->group(function () {
     // 商品一覧画面
     Route::get('/', [ItemController::class, 'index'])->name('home');
     // 商品出品画面
-    Route::get('/sell', [ItemController::class, 'showSell'])->name('sell');
+    Route::get('/sell', [ItemController::class, 'showSell'])->name('show.sell');
+    Route::post('/sell', [ItemController::class, 'createItem'])->name('sell');
     // 商品詳細画面
     Route::get('item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
     // 商品購入画面へ遷移

@@ -67,7 +67,6 @@
     display: none;
 }
 .sell-image__button:hover {
-
 }
 .category-container {
     display: flex;
@@ -114,6 +113,10 @@
 }
 .sell-price {
     padding-left: 30px;
+}
+.sell-form__error {
+    color: #ff6666;
+    font-size: 12px;
 }
 .sell-form__button {
     width: 100%;
