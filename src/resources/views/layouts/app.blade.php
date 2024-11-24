@@ -13,20 +13,27 @@
 <body>
     <header>
         <div class="header">
-            {{-- ロゴ表示 --}}
-            <a href="{{ route('home') }}"><img class="header__logo" src="{{ asset('storage/app/logo.svg') }}" alt="ロゴ" /></a>
+        {{-- ロゴ表示 --}}
+            <div class="header-left">
+                <a href="{{ route('home') }}">
+                    <img class="header__logo" src="{{ asset('storage/app/logo.svg') }}" alt="ロゴ" />
+                </a>
+            </div>
 
-            {{-- 会員登録画面・ログイン画面 --}}
-            @if (request()->is('register') || request()->is('login'))
-            {{-- その他画面 --}}
-            @else
-                <div class="header__menu">
+            {{-- ログイン・会員登録画面では非表示 --}}
+            @if (!request()->is('register') && !request()->is('login'))
+                <div class="header-center">
                     {{-- 検索フォーム --}}
-                    {{-- <form action="{{ route('search') }}" method="GET" class="header__search"> --}}
+                    <form action="" method="GET" class="header__search">
                         <input type="text" name="query" placeholder="なにをお探しですか？" class="header__search-input">
                     </form>
+                </div>
+            @endif
 
-                    {{-- ログアウトボタン --}}
+    {{-- ボタンコンテナ --}}
+            @if (!request()->is('register') && !request()->is('login'))
+                <div class="header-right">
+            {{-- ログアウトボタン --}}
                     @if (Auth::check())
                         <form action="{{ route('logout') }}" method="POST" class="header__logout">
                             @csrf
@@ -38,14 +45,11 @@
                             <button type="submit" class="header__login-button">ログイン</button>
                         {{-- </form> --}}
                     @endif
-
-                    {{-- マイページボタン --}}
-
-                    <button><a href="{{ route('profile.mypage') }}" class="header__mypage">マイページ</a></button>
-
-                    {{-- 出品ボタン --}}
-                    {{-- <a href="{{ route('sell') }}" class="header__sell-button">出品する</a> --}}
-                    <button>出品する</button>
+            {{-- マイページボタン --}}
+                    <button class="header__mypage-button"><a href="{{ route('profile.mypage') }}">マイページ</a></button>
+            {{-- 出品ボタン --}}
+                    {{-- <a href="{{ route('sell') }}" class="header__sell-button">出品</a> --}}
+                    <button>出品</button>
                 </div>
             @endif
         </div>

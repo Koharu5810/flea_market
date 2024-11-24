@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// // 会員登録画面
+// 会員登録画面
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withoutMiddleware(['auth']);
 Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth']);
 // ログイン画面
