@@ -27,6 +27,7 @@ class ItemController extends Controller
     public function createItem(ExhibitionRequest $request)
     {
         $validated = $request->validated();
+        $validated['item_condition'] = (int) $validated['item_condition'];
 
         $item = new Item();
         $item->fill($validated);
@@ -38,12 +39,13 @@ class ItemController extends Controller
         $item->user_id = auth()->id();  // ログインユーザのIDを設定
         $item->save();
 
-    if (!empty($validated['category'])) {
-        $item->categories()->sync($validated['category']);  // 中間テーブルに保存
-    }
+        if (!empty($validated['category'])) {
+            $item->categories()->sync($validated['category']);  // 中間テーブルに保存
+        }
 
         return redirect()->route('home');
     }
+
 // 商品詳細画面の表示
     public function showDetail($id)
     {
@@ -71,18 +73,6 @@ class ItemController extends Controller
             'isFavorited' => $item->favoriteBy()->where('user_id', $user->id)->exists(),
             'favoriteCount' => $item->favoriteBy->count(),
         ]);
-    }
-
-// 商品登録
-    public function register(Request $request) {
-        $form = $request->validated();
-
-        // テキストで取得したitem_conditionを数値に変換
-        $form['item_condition'] = array_search($form['item_condition'], Item::CONDITIONS);
-
-        Item::create($form);
-
-        return redirect()->route('index');
     }
 // コメント送信フォーム
     public function commentStore(CommentRequest $request)
