@@ -93,13 +93,16 @@
 .sell-brand,
 .sell-select,
 .sell-item-name,
-.sell-detail,
+.sell-description,
 .sell-price {
     width: 100%;
     padding: 5px;
     resize: none;
     border-radius: 3px;
     border: 1px solid #ccc;
+}
+.sell-description {
+    height: 90px;
 }
 .price-container {
     position: relative;

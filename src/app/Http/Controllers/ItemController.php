@@ -32,10 +32,15 @@ class ItemController extends Controller
         $item->fill($validated);
 
         if ($request->hasFile('image')) {
-            $item->image_path = $request->file('image')->store('items', 'public');
+            $item->image = $request->file('image')->store('items', 'public');
         }
 
+        $item->user_id = auth()->id();  // ログインユーザのIDを設定
         $item->save();
+
+    if (!empty($validated['category'])) {
+        $item->categories()->sync($validated['category']);  // 中間テーブルに保存
+    }
 
         return redirect()->route('home');
     }

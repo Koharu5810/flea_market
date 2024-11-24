@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="sell-container">
-        <form action="{{ route('sell') }}" method="POST" class="sell-form">
+        <form action="{{ route('sell') }}" method="POST" enctype="multipart/form-data" class="sell-form">
             @csrf
         {{-- 商品画像 --}}
             <h3 class="sell-title">商品画像</h3>
@@ -22,7 +22,7 @@
             </div>
             @error('image')
                 <p class="sell-form__error">
-                        {{ $message }}
+                    {{ $message }}
                 </p>
             @enderror
         {{-- 商品の詳細 --}}
@@ -37,20 +37,19 @@
             </div>
             @error('category')
                 <p class="sell-form__error">
-                        {{ $message }}
+                    {{ $message }}
                 </p>
             @enderror
-            {{-- <input type="hidden" name="selected_category" id="selectedCategory" /> --}}
             <div id="selectedCategoriesContainer"></div>
             <h3 class="sell-title">ブランド名</h3>
-            <input type="text" class="sell-brand" />
+            <input type="text" name="brand" value="{{ old('brand') }}" class="sell-brand" />
             @error('brand')
                 <p class="sell-form__error">
-                        {{ $message }}
+                    {{ $message }}
                 </p>
             @enderror
             <h3 class="sell-title">商品の状態</h3>
-            <select name="" id="" class="sell-select">
+            <select name="category" id="" class="sell-select">
                 <option value="">選択してください</option>
                 <option value="1">良好</option>
                 <option value="2">目立った傷や汚れなし</option>
@@ -59,36 +58,36 @@
             </select>
             @error('condition')
                 <p class="sell-form__error">
-                        {{ $message }}
+                    {{ $message }}
                 </p>
             @enderror
         {{-- 商品名と説明 --}}
             <h2 class="sell-component">商品名と説明</h2>
             <h3 class="sell-title">商品名</h3>
-            <input type="text" class="sell-item-name" />
+            <input type="text" name="name" value="{{ old('name') }}" class="sell-item-name" />
             @error('name')
                 <p class="sell-form__error">
-                        {{ $message }}
+                    {{ $message }}
                 </p>
             @enderror
             <h3 class="sell-title">商品の説明</h3>
-            <textarea name="" id="" cols="30" rows="10" class="sell-detail"></textarea>
+            <textarea name="description" id="" value="{{ old('brand') }}" class="sell-description"></textarea>
             @error('description')
                 <p class="sell-form__error">
-                        {{ $message }}
+                    {{ $message }}
                 </p>
             @enderror
             <h3 class="sell-title">販売価格</h3>
             <div class="price-container">
-                <input type="text" class="sell-price" />
+                <input type="text" name="price" class="sell-price" />
             </div>
             @error('price')
                 <p class="sell-form__error">
-                        {{ $message }}
+                    {{ $message }}
                 </p>
             @enderror
         {{-- 出品ボタン --}}
-            <button class="sell-form__button">出品する</button>
+            <button type="submit" class="sell-form__button">出品する</button>
         </form>
     </div>
 
@@ -140,7 +139,7 @@
             selectedCategories.forEach(categoryId => {
                 const hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
-                hiddenInput.name = 'selected_categories[]';
+                hiddenInput.name = 'category[]';
                 hiddenInput.value = categoryId;
                 selectedCategoriesContainer.appendChild(hiddenInput);
             });
