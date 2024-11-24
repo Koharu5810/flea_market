@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Item;
+use App\Models\User;
 
 class ItemTableSeeder extends Seeder
 {
@@ -15,6 +16,16 @@ class ItemTableSeeder extends Seeder
      */
     public function run()
     {
+        $user = User::firstOrCreate([
+            'email' => 'test@example.com',
+        ],
+        [
+            'username' => 'テストユーザー',
+            'password' => bcrypt('password'),
+        ]);
+
+        $brands = ['Sony', 'Adidas', 'Nike', 'Louis Vuitton', 'SHARP', null];
+
         $items = [
             [
                 'name' => '腕時計',
@@ -22,6 +33,7 @@ class ItemTableSeeder extends Seeder
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
                 'image' => 'images/clock.jpg',
                 'categories' => ['メンズ', 'ファッション', 'アクセサリー'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => 'HDD',
@@ -29,6 +41,7 @@ class ItemTableSeeder extends Seeder
                 'description' => '高速で信頼性の高いハードディスク',
                 'image' => 'images/HDD.jpg',
                 'categories' => ['家電'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => '玉ねぎ3束',
@@ -36,6 +49,7 @@ class ItemTableSeeder extends Seeder
                 'description' => '新鮮な玉ねぎの3束セット',
                 'image' => 'images/onion.jpg',
                 'categories' => ['キッチン'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => '革靴',
@@ -43,6 +57,7 @@ class ItemTableSeeder extends Seeder
                 'description' => 'クラシックなデザインの革靴',
                 'image' => 'images/shoes.jpg',
                 'categories' => ['ファッション', 'メンズ'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => 'ノートPC',
@@ -50,6 +65,7 @@ class ItemTableSeeder extends Seeder
                 'description' => '高性能なノートパソコン',
                 'image' => 'images/PC.jpg',
                 'categories' => ['家電'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => 'マイク',
@@ -57,6 +73,7 @@ class ItemTableSeeder extends Seeder
                 'description' => '高音質のレコーディング用マイク',
                 'image' => 'images/mic.jpg',
                 'categories' => ['家電'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => 'ショルダーバッグ',
@@ -64,6 +81,7 @@ class ItemTableSeeder extends Seeder
                 'description' => 'おしゃれなショルダーバッグ',
                 'image' => 'images/shoulder-bag.jpg',
                 'categories' => ['ファッション', 'レディース'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => 'タンブラー',
@@ -71,6 +89,7 @@ class ItemTableSeeder extends Seeder
                 'description' => '使いやすいタンブラー',
                 'image' => 'images/tumbler.jpg',
                 'categories' => ['キッチン'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => 'コーヒーミル',
@@ -78,6 +97,7 @@ class ItemTableSeeder extends Seeder
                 'description' => '手動のコーヒーミル',
                 'image' => 'images/coffee-grinder.jpg',
                 'categories' => ['キッチン', 'インテリア'],
+                'user_id' => $user->id,
             ],
             [
                 'name' => 'メイクセット',
@@ -85,6 +105,7 @@ class ItemTableSeeder extends Seeder
                 'description' => '便利なメイクアップセット',
                 'image' => 'images/makeup-set.jpg',
                 'categories' => ['コスメ', 'レディース', 'ファッション'],
+                'user_id' => $user->id,
             ],
         ];
 
@@ -93,12 +114,15 @@ class ItemTableSeeder extends Seeder
 
         foreach ($items as $item) {
             // itemsテーブルへ挿入
+            $randomBrand = $brands[array_rand($brands)];
             $createdItem = Item::create([
                 'name' => $item['name'],
                 'price' => $item['price'],
                 'description' => $item['description'],
                 'image' => $item['image'],
                 'item_condition' => $conditionId,
+                'user_id' => $item['user_id'],
+                'brand' => $randomBrand,
             ]);
 
             // アイテムのコンディションIDを設定（1〜4でローテーション）

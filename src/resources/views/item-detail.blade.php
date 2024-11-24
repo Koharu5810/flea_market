@@ -18,7 +18,7 @@
         <div class="right-container">
             <div class="item-detail">
                 <h2 class="item-name">{{ $item->name }}</h2>
-                <p class="item-brand">{{ $item->name }}</p>
+                <p class="item-brand">{{ $item->brand }}</p>
                 <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span> (税込)</p>
         {{-- お気に入り・コメントアイコン --}}
                 <div class="item-status">
