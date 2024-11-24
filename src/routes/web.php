@@ -39,6 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::get('item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
     // 商品購入画面へ遷移
     Route::post('purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase');
+    // 送付先住所変更画面
+    Route::get('purchase/address/{item_id}', [PurchaseController::class, 'showAddressForm'])->name('show.purchase.address');
+    Route::post('purchase/address/{item_id}', [PurchaseController::class, 'saveShippingAddress'])->name('change.purchase.address');
     // お気に入り機能
     Route::post('/favorite/{item}', [ItemController::class, 'toggle'])->name('favorite.toggle');
     // コメント送信フォーム

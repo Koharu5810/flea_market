@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <form method="post" action="{{ route('purchase', ['item_id' => $item->id]) }}">
+            <form method="POST" action="{{ route('purchase', ['item_id' => $item->id]) }}">
                 @csrf
                 <button type="submit" class="purchase-button">購入手続きへ</button>
             </form>

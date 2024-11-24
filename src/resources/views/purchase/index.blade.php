@@ -30,7 +30,10 @@
         {{-- 配送先 --}}
             <div class="delivery">
                 <h3>配送先</h3>
-                <a href="">変更する</a>
+                <form method="GET" action="{{ route('show.purchase.address', ['item_id' => $item->id]) }}">
+                    @csrf
+                    <button type="submit" class="change-address-button">変更する</button>
+                </form>
             </div>
             <div>
                 <p>〒 {{ $address->postal_code }}</p>
