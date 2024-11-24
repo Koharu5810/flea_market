@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 use App\Models\Item;
+use App\Models\Category;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,15 @@ class ItemController extends Controller
 // 商品出品画面の表示
     public function showSell()
     {
-        return view('sell');
+        $categories = Category::all();
+
+        return view('sell', compact('categories'));
+    }
+// 商品出品
+    public function createItem()
+    {
+
+        return redirect()->route('home');
     }
 // 商品詳細画面の表示
     public function showDetail($id)

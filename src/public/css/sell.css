@@ -19,12 +19,37 @@
     font-size: 16px;
 }
 .sell-image {
-    width: 100%;
-    height: 100px;
+    width: auto;
+    padding: 5px;
+    height: auto;
+    min-height: 150px;
     display: flex;
+    position: relative;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
     border: 1px dotted #000;
+}
+.image-preview-container {
+    width: 100%;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.image-preview-container img {
+    width: auto;
+    max-height: 200px;
+    display: block;
+}
+.image-preview {
+    max-width: 100%; /* 親要素に収まるように調整 */
+    max-height: 200px;
+    object-fit: cover;
+    display: none;
+    border: 1px solid #ccc;
 }
 .sell-image__button {
     display: inline-block;
@@ -44,8 +69,31 @@
 .sell-image__button:hover {
 
 }
+.category-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.sell-category {
+    display: inline-block;
+    margin: auto 0;
+    padding: 5px 15px;
+    background-color: transparent;
+    border-radius: 20px;
+    color: #ff6666;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #ff6666;
+}
+.sell-category.selected {
+    background-color: #ff6666;
+    color: #fff;
+    border-color: #ff6666;
+}
+.sell-brand,
 .sell-select,
-.sell__item-name,
+.sell-item-name,
 .sell-detail,
 .sell-price {
     width: 100%;
