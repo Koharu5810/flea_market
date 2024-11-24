@@ -30,7 +30,10 @@
             <h3 class="sell-title">カテゴリー</h3>
             <div class="category-container">
                 @foreach($categories as $category)
-                    <button type="button" class="sell-category" data-category-id="{{ $category->id }}">
+                    <button
+                        type="button"
+                        class="sell-category {{ in_array($category->id, old('category', [])) ? 'selected' : '' }}"
+                        data-category-id="{{ $category->id }}">
                         {{ $category->content }}
                     </button>
                 @endforeach
@@ -49,12 +52,12 @@
                 </p>
             @enderror
             <h3 class="sell-title">商品の状態</h3>
-            <select name="category" id="" class="sell-select">
+            <select name="condition" id="" class="sell-select">
                 <option value="">選択してください</option>
-                <option value="1">良好</option>
-                <option value="2">目立った傷や汚れなし</option>
-                <option value="3">やや傷や汚れあり</option>
-                <option value="4">状態が悪い</option>
+                <option value="1" {{ old('condition') == 1 ? 'selected' : '' }}>良好</option>
+                <option value="2" {{ old('condition') == 2 ? 'selected' : '' }}>目立った傷や汚れなし</option>
+                <option value="3" {{ old('condition') == 3 ? 'selected' : '' }}>やや傷や汚れあり</option>
+                <option value="4" {{ old('condition') == 4 ? 'selected' : '' }}>状態が悪い</option>
             </select>
             @error('condition')
                 <p class="sell-form__error">
@@ -71,7 +74,7 @@
                 </p>
             @enderror
             <h3 class="sell-title">商品の説明</h3>
-            <textarea name="description" id="" value="{{ old('brand') }}" class="sell-description"></textarea>
+            <textarea name="description" id="" class="sell-description">{{ old('description') }}</textarea>
             @error('description')
                 <p class="sell-form__error">
                     {{ $message }}
@@ -79,7 +82,7 @@
             @enderror
             <h3 class="sell-title">販売価格</h3>
             <div class="price-container">
-                <input type="text" name="price" class="sell-price" />
+                <input type="text" name="price" value="{{ old('price') }}" class="sell-price" />
             </div>
             @error('price')
                 <p class="sell-form__error">
@@ -99,6 +102,7 @@
         const categoryButtons = document.querySelectorAll('.sell-category');
         const selectedCategoriesContainer = document.getElementById('selectedCategoriesContainer');
         const selectedCategories = new Set();
+        const oldCategories = @json(old('category', []));
 
         // ファイル選択時のプレビュー処理
         fileInput?.addEventListener('change', function () {
@@ -118,15 +122,22 @@
             }
         });
 
-        // カテゴリー選択処理
+        // 過去選択されたカテゴリーの復元
         categoryButtons.forEach(button => {
+            const categoryId = Number(button.dataset.categoryId);
+            if (oldCategories.includes(categoryId)) {
+                button.classList.add('selected');
+                selectedCategories.add(categoryId); // 復元したカテゴリーをセットに追加
+            }
+
+            // カテゴリー選択処理
             button.addEventListener('click', function () {
-                const categoryId = this.dataset.categoryId;
+                const categoryId = Number(this.dataset.categoryId);
                 if (selectedCategories.has(categoryId)) {
-                    selectedCategories.delete(categoryId);
+                    selectedCategories.delete(categoryId); // 選択解除
                     this.classList.remove('selected');
                 } else {
-                    selectedCategories.add(categoryId);
+                    selectedCategories.add(categoryId); // 選択
                     this.classList.add('selected');
                 }
                 updateHiddenFields();
@@ -135,15 +146,18 @@
 
         // hiddenフィールドの更新
         function updateHiddenFields() {
-            selectedCategoriesContainer.innerHTML = '';
+            selectedCategoriesContainer.innerHTML = ''; // 初期化
             selectedCategories.forEach(categoryId => {
                 const hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
-                hiddenInput.name = 'category[]';
+                hiddenInput.name = 'category[]'; // 配列形式で送信
                 hiddenInput.value = categoryId;
                 selectedCategoriesContainer.appendChild(hiddenInput);
             });
         }
+
+        // 初期状態のhiddenフィールドを設定
+        updateHiddenFields();
     });
 </script>
 
