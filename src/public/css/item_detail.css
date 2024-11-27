@@ -7,10 +7,11 @@
 .left-container {
     width: 50%;
     height: 300px;
-    text-align: center;
     display: flex;
-    align-items: center;
-    border: 1px solid orange;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    box-sizing: border-box;
 }
 .item-image {
     width: 300px;
@@ -20,13 +21,13 @@
     align-items: center;
     overflow: hidden;
     box-sizing: border-box;
-    border: 2px solid red;
 }
 .item-image img {
     width: auto;
     height: 100%;
     object-fit: cover;
 }
+
 .right-container {
     flex: 1;
     flex-direction: column;
@@ -45,19 +46,9 @@
 .item-price span {
     font-size: 20px;
 }
-.purchase-button {
-    width: 100%;
-    margin-top: 5px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background-color: #ff6666;
-    color: #fff;
-    border: none;
-}
-
 .item-status {
     padding-left: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     display: flex;
     gap: 40px;
 }
@@ -75,9 +66,25 @@
 .comment-icon p {
     margin: 0;
     padding-top: 2px;
+    padding-bottom: 0;
     text-align: center;
     font-size: 10px;
+    box-sizing: border-box;
 }
+.favorite-form button {
+    all: unset;
+
+}
+.purchase-button {
+    width: 100%;
+    margin-top: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: #ff6666;
+    color: #fff;
+    border: none;
+}
+
 .item__title {
     margin-top: 30px;
     margin-bottom: 10px;
@@ -118,6 +125,14 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+}
+.default-icon {
+    background-color: #f0f0f0;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-block; /* div を画像のように表示 */
 }
 .user-name {
     font-weight: bold;

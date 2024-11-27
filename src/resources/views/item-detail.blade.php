@@ -1,6 +1,6 @@
 {{-- 商品詳細画面 --}}
 @extends('layouts.app')
-<meta name="csrf-token" content="{{ csrf_token() }}">
+{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/item_detail.css') }}" />
@@ -23,7 +23,7 @@
         {{-- お気に入り・コメントアイコン --}}
                 <div class="item-status">
                     <div class="favorite-icon">
-                        <form action="{{ route('item.favorite', ['id' => $item->id]) }}" method="POST">
+                        <form action="{{ route('item.favorite', ['id' => $item->id]) }}" method="POST" class="favorite-form">
                             @csrf
                             <button type="submit" id="favorite-button">
                                 <img
@@ -31,8 +31,8 @@
                                     alt="{{ $item->isFavoriteBy(auth()->user()) ?  'お気に入り登録済み' : 'お気に入り' }}"
                                 />
                             </button>
+                            <p id="favorite-count">{{ $item->favoriteBy->count() }}</p>
                         </form>
-                        <p id="favorite-count">{{ $item->favoriteBy->count() }}</p>
                     </div>
                     <div class="comment-icon">
                         <img src="{{ asset('storage/app/comment.png') }}" alt="コメント" />
@@ -73,7 +73,11 @@
                 @foreach($item->comments as $comment)
                     <div class="comment-form__list">
                         <div class="user-container">
-                            <img src="{{ $comment->user->profile_image_url }}" alt="アイコン" class="user-icon" />
+                            @if ($comment->user->profile_image_url)
+                                <img src="{{ $comment->user->profile_image_url }}" alt="アイコン" class="user-icon" />
+                            @else
+                                <div class="default-icon"></div>
+                            @endif
                             <p class="user-name">{{ $comment->user->username }}</p>
                         </div>
                         <p class="user-comment">{{ $comment->comment }}</p>
