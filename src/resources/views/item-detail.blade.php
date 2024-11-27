@@ -22,12 +22,16 @@
                 <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span> (税込)</p>
         {{-- お気に入り・コメントアイコン --}}
                 <div class="item-status">
-                    <div id="favorite-icon" data-item-id="{{ $item->id }}" class="favorite-icon">
-                            <img
-                                src="{{ $item->isFavoriteBy(auth()->user()) ? asset('storage/app/favorited.png') : asset('storage/app/favorite.png') }}"
-                                alt={{ $item->isFavoriteBy($user) ?  'お気に入り登録済み' : 'お気に入り' }}
-                                id="favorite-icon-img"
-                            />
+                    <div class="favorite-icon">
+                        <form action="{{ route('item.favorite', ['id' => $item->id]) }}" method="POST">
+                            @csrf
+                            <button type="submit" id="favorite-button">
+                                <img
+                                    src="{{ $item->isFavoriteBy(auth()->user()) ? asset('storage/app/favorited.png') : asset('storage/app/favorite.png') }}"
+                                    alt="{{ $item->isFavoriteBy(auth()->user()) ?  'お気に入り登録済み' : 'お気に入り' }}"
+                                />
+                            </button>
+                        </form>
                         <p id="favorite-count">{{ $item->favoriteBy->count() }}</p>
                     </div>
                     <div class="comment-icon">
@@ -36,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <form method="POST" action="{{ route('purchase', ['item_id' => $item->id]) }}">
+            <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="POST">
                 @csrf
                 <button type="submit" class="purchase-button">購入手続きへ</button>
             </form>
@@ -75,9 +79,9 @@
                         <p class="user-comment">{{ $comment->comment }}</p>
                     </div>
                 @endforeach
-                <form method="POST" action="{{ route('comments.store') }}">
+                <h4 class="comment-form__text-title">商品へのコメント</h4>
+                <form action="{{ route('comments.store', ['id' => $item->id]) }}" method="POST">
                     @csrf
-                    <h4 class="comment-form__text-title">商品へのコメント</h4>
                     <textarea name="comment" id="comment" class="comment-form__textarea">{{ old('comment') }}</textarea>
                     @if ($errors->any())
                         <div class="container-form__error">
@@ -92,52 +96,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const imageInput = document.getElementById('imageInput');
-        const previewImage = document.getElementById('previewImage');
-
-        imageInput.addEventListener('change', function () {
-            const file = this.files[0];
-
-            if (file) {
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = 'block';
-                };
-
-                reader.readAsDataURL(file);
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const favoriteContainer = document.getElementById('favorite-container');
-            const favoriteIcon = document.getElementById('favorite-icon');
-            const favoriteCount = document.getElementById('favorite-count');
-
-            if (favoriteContainer) {
-                favoriteContainer.addEventListener('click', function () {
-                    const itemId = favoriteContainer.dataset.itemId;
-
-                    fetch(`/favorite/${itemId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        favoriteIcon.src = data.isFavorited
-                            ? '/storage/favorited.png'
-                            : '/storage/favorite.png';
-                        favoriteCount.textContent = data.favoriteCount;
-                    })
-                    .catch(error => console.error('Error:', error));
-                });
-            }
-        });
-    </script>
 @endsection

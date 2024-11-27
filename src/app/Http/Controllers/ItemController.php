@@ -55,9 +55,14 @@ class ItemController extends Controller
         return view('item-detail', compact('item', 'user'));
     }
 // お気に入り登録
-    public function toggle(Item $item)
+    public function toggleFavorite(Request $request,$id)
     {
-        $user = Auth::user();
+        $user = auth()->user();
+
+        $item = Item::find($id);
+        if (!$item) {
+            return redirect()->back();
+        }
 
         if ($item->favoriteBy()->where('user_id', $user->id)->exists()) {
             // すでにお気に入りの場合usersテーブルから削除
@@ -69,10 +74,7 @@ class ItemController extends Controller
 
         $item->refresh();
 
-        return response()->json([
-            'isFavorited' => $item->favoriteBy()->where('user_id', $user->id)->exists(),
-            'favoriteCount' => $item->favoriteBy->count(),
-        ]);
+        return redirect()->back();
     }
 // コメント送信フォーム
     public function commentStore(CommentRequest $request)

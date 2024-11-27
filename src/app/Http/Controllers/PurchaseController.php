@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\UserAddress;
-use App\Models\ShippingAddress;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 
@@ -28,7 +27,7 @@ class PurchaseController extends Controller
     }
     public function saveShippingAddress(Request $request, $item_id)
     {
-        ShippingAddress::updateOrCreate(
+        UserAddress::updateOrCreate(
             ['user_id' => auth()->id()],
             [
                 'postal_code' => $request->postal_code,
