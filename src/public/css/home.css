@@ -6,31 +6,39 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid pink;
 }
 .home__header {
     width: 80vw;
-    padding-left: 30px;
+    padding-left: 50px;
     padding-bottom: 0;
     margin-bottom: 0;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: flex-end;
     gap: 50px;
-    border: 1px solid yellow;
+}
+.home__header a {
+    color: #000;
+    text-decoration: none;
 }
 .home__header h2 {
     margin: 0;
     font-size: 16px;
     line-height: 2;
 }
+.active h2 {
+    color: #ff6666;
+}
 /* 水平線のスタイル */
 .home__divider {
-    width: 100%;
+    width: 100vw;
     height: 1px; /* 線の太さ */
+    border: none;
     background-color: #ccc;
     margin-top: 0;
     margin-bottom: 20px;
+    left: 0;
+    margin-left: calc(-50vw + 50%);
 }
 
 .item-link {
@@ -40,8 +48,11 @@
 .home__main {
     width: 80vw;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 30px;
+    justify-items: start;
+    justify-content: start;
+    align-items: start;
 }
 .item-container {
     width: 150px;
@@ -51,7 +62,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid orange;
 }
 .item-image {
     display: flex;

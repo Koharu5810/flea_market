@@ -8,7 +8,7 @@
 @section('content')
     <div class="home-container">
         <div class="home__header">
-            <a href="{{ route('home') }}" class="home__tab {{ $tab === 'mylist' ? 'active' : '' }}">
+            <a href="{{ route('home') }}" class="home__tab {{ $tab !== 'mylist' ? 'active' : '' }}">
                 <h2>おすすめ</h2>
             </a>
             <a href="{{ route('home', ['tab' => 'mylist']) }}" class="home__tab {{ $tab === 'mylist' ? 'active' : '' }}">
