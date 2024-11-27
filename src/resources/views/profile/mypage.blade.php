@@ -21,43 +21,44 @@
             <div class="profile__username">{{ $user->username }}</div>
             <button class="profile__edit-button"><a href="{{ route('profile.edit') }}">プロフィールを編集</a></button>
         </div>
-    </div>
-    <div class="item__header">
-        <a href="{{ route('profile.mypage', ['tab' => 'sell']) }}" class="item__tab {{ $tab === 'sell' ? 'active' : '' }}">
-            <h2>出品した商品</h2>
-        </a>
-        <a href="{{ route('profile.mypage', ['tab' => 'buy']) }}" class="item__tab {{ $tab === 'buy' ? 'active' : '' }}">
-            <h2>購入した商品</h2>
-        </a>
-    </div>
-    <hr class="item__divider" />
-    <div class="item__main">
-        @if ($items->isEmpty())
-            <p>
-                @if ($tab === 'buy')
-                    購入した商品がありません
-                @elseif ($tab === 'sell')
-                    出品した商品がありません
-                @endif
-            </p>
-        @else
-            @foreach ($items as $item)
-                <a href="{{ route('item.detail', ['id' => $item->id]) }} " class="item-link">
-                    <div class="item-container">
-                        @if ($item->image)
-                            <div class="item-image">
-                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
+        <div class="item__header">
+            <a href="{{ route('profile.mypage', ['tab' => 'sell']) }}" class="item__tab {{ $tab === 'sell' ? 'active' : '' }}">
+                <h2>出品した商品</h2>
+            </a>
+            <a href="{{ route('profile.mypage', ['tab' => 'buy']) }}" class="item__tab {{ $tab === 'buy' ? 'active' : '' }}">
+                <h2>購入した商品</h2>
+            </a>
+        </div>
+        <hr class="item__divider" />
+    {{-- アイテムリスト（タブ表示） --}}
+        <div class="item__main">
+            @if ($items->isEmpty())
+                <p>
+                    @if ($tab === 'buy')
+                        購入した商品がありません
+                    @elseif ($tab === 'sell')
+                        出品した商品がありません
+                    @endif
+                </p>
+            @else
+                @foreach ($items as $item)
+                    <a href="{{ route('item.detail', ['id' => $item->id]) }} " class="item-link">
+                        <div class="item-container">
+                            @if ($item->image)
+                                <div class="item-image">
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
+                                </div>
+                            @else
+                                <div class="item-image">商品画像</div>
+                            @endif
+                            <div class="item-name">
+                                {{ $item->name }}
                             </div>
-                        @else
-                            <div class="item-image">商品画像</div>
-                        @endif
-                        <div class="item-name">
-                            {{ $item->name }}
                         </div>
-                    </div>
-                </a>
-            @endforeach
-        @endif
+                    </a>
+                @endforeach
+            @endif
+        </div>
     </div>
 
     <script>

@@ -6,7 +6,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid pink;
 }
 .profile__header {
     display: flex;
@@ -60,7 +59,6 @@
     display: flex;
     align-items: flex-end;
     gap: 20px;
-    border: 1px solid yellow;
 }
 .item__header a {
     color: #000;
@@ -104,7 +102,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid orange;
 }
 .item-image {
     display: flex;
