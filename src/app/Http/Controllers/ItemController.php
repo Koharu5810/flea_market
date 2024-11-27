@@ -27,14 +27,6 @@ class ItemController extends Controller
 
         return view('home', compact('items', 'tab'));
     }
-// マイページのお気に入りリストを表示
-    // public function showMylist() {
-    //     $user = auth()->user();
-
-    //     $items = $user->favorites;
-
-    //     return view('home', compact('items'));
-    // }
 // 商品出品画面の表示
     public function showSell()
     {

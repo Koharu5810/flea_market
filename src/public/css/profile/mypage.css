@@ -62,18 +62,28 @@
     gap: 20px;
     border: 1px solid yellow;
 }
+.item__header a {
+    color: #000;
+    text-decoration: none;
+}
 .item__header h2 {
     margin: 0;
     font-size: 16px;
     line-height: 2;
 }
+.item__tab.active {
+    color: #ff0000;
+}
 /* 水平線のスタイル */
 .item__divider {
-    width: 100%;
+    width: 100vw;
     height: 1px; /* 線の太さ */
+    border: none;
     background-color: #ccc;
     margin-top: 0;
     margin-bottom: 20px;
+    left: 0;
+    margin-left: calc(-50vw + 50%);
 }
 
 .item-link {

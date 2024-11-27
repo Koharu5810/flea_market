@@ -23,13 +23,23 @@
         </div>
     </div>
     <div class="item__header">
-        <h2>出品した商品</h2>
-        <h2>購入した商品</h2>
+        <a href="{{ route('profile.mypage', ['tab' => 'sell']) }}" class="item__tab {{ $tab === 'sell' ? 'active' : '' }}">
+            <h2>出品した商品</h2>
+        </a>
+        <a href="{{ route('profile.mypage', ['tab' => 'buy']) }}" class="item__tab {{ $tab === 'buy' ? 'active' : '' }}">
+            <h2>購入した商品</h2>
+        </a>
     </div>
     <hr class="item__divider" />
     <div class="item__main">
         @if ($items->isEmpty())
-            <p>購入した商品がありません</p>
+            <p>
+                @if ($tab === 'buy')
+                    購入した商品がありません
+                @elseif ($tab === 'sell')
+                    出品した商品がありません
+                @endif
+            </p>
         @else
             @foreach ($items as $item)
                 <a href="{{ route('item.detail', ['id' => $item->id]) }} " class="item-link">

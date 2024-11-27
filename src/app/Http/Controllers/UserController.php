@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserAddress;
 use App\Models\User;
 use App\Models\Item;
+use App\Models\Order;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Support\Facades\Auth;
@@ -15,17 +16,27 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
 // プロフィール画面表示
-    public function showMypage()
+    public function showMypage(Request $request)
     {
         $user = auth()->user();
 
         // プロフィール画像表示
         $profileImage = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
 
-        // 商品データを取得
-        $items = Item::all();
+        $tab = $request->query('tab', 'sell');
 
-        return view('profile.mypage', compact('user', 'profileImage', 'items'));
+        if ($tab === 'buy') {
+            // 購入した商品
+            $items = $user->orders()->with('items')->get()->pluck('item');
+        } elseif ($tab === 'sell') {
+            // 出品した商品
+            $items = $user->items;
+        } else {
+            // デフォルトでは空を返す
+            $items = collect();
+        }
+
+        return view('profile.mypage', compact('user', 'profileImage', 'items', 'tab'));
     }
 
 // プロフィール編集画面の表示

@@ -36,7 +36,7 @@ class Order extends Model
         parent::boot();
 
         static::creating(function ($order) {
-            if (empty($item->uuid)) {
+            if (empty($order->uuid)) {
                 $order->uuid = (string) Str::uuid();
             }
         });

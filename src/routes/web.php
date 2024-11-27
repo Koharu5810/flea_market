@@ -20,8 +20,6 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::middleware('auth')->group(function () {
     // トップページ表示
     Route::get('/', [ItemController::class, 'index'])->name('home');
-    // トップページ_マイリスト表示
-    // Route::get('/mylist', [ItemController::class, 'showMylist'])->name('home.mylist');
     // 商品出品画面
     Route::get('/sell', [ItemController::class, 'showSell'])->name('show.sell');
     Route::post('/sell', [ItemController::class, 'createItem'])->name('sell');
