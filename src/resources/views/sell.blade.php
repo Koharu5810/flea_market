@@ -90,7 +90,7 @@
                 </p>
             @enderror
         {{-- 出品ボタン --}}
-            <button type="submit" class="sell-form__button">出品する</button>
+            <button type="submit" class="sell-form__button button">出品する</button>
         </form>
     </div>
 

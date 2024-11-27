@@ -36,7 +36,7 @@
             </div>
     {{-- ログインボタン --}}
             <div class="login-form__button">
-                <button>ログインする</button>
+                <button class="button">ログインする</button>
             </div>
         </form>
     {{-- 会員登録案内 --}}

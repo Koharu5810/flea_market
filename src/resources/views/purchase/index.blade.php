@@ -54,7 +54,7 @@
             </table>
             {{-- <form method="post" action=""> --}}
                 {{-- @csrf --}}
-                <button type="submit" class="purchase-button">購入する</button>
+                <button type="submit" class="purchase-button button">購入する</button>
             {{-- </form> --}}
         </div>
     </div>

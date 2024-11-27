@@ -58,7 +58,7 @@
         </form>
 {{-- ログイン案内 --}}
         <div class="login-container">
-            <a href="/login" class="login-button">ログインはこちら</a>
+            <a href="/login" class="login-button button">ログインはこちら</a>
         </div>
     </div>
 @endsection

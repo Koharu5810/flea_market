@@ -48,7 +48,7 @@
 }
 .item-status {
     padding-left: 20px;
-    margin-bottom: 0;
+    margin-bottom: 15px;
     display: flex;
     gap: 40px;
 }
@@ -57,10 +57,6 @@
     width: 20px;
     height: 20px;
     margin: 0;
-}
-.favorite-icon,
-.comment-icon {
-    cursor: pointer;
 }
 .favorite-icon p,
 .comment-icon p {
@@ -72,8 +68,11 @@
     box-sizing: border-box;
 }
 .favorite-form button {
-    all: unset;
-
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .purchase-button {
     width: 100%;
@@ -112,7 +111,6 @@
 
 .comment-form__list {
     margin-top: 0;
-    border: 1px solid yellow;
 }
 .user-container {
     margin-bottom: 0;

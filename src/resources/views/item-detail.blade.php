@@ -22,10 +22,10 @@
                 <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span> (税込)</p>
         {{-- お気に入り・コメントアイコン --}}
                 <div class="item-status">
-                    <div class="favorite-icon">
+                    <div class="favorite-icon button">
                         <form action="{{ route('item.favorite', ['id' => $item->id]) }}" method="POST" class="favorite-form">
                             @csrf
-                            <button type="submit" id="favorite-button">
+                            <button type="submit" id="favorite-button" class="button">
                                 <img
                                     src="{{ $item->isFavoriteBy(auth()->user()) ? asset('storage/app/favorited.png') : asset('storage/app/favorite.png') }}"
                                     alt="{{ $item->isFavoriteBy(auth()->user()) ?  'お気に入り登録済み' : 'お気に入り' }}"
@@ -34,7 +34,7 @@
                             <p id="favorite-count">{{ $item->favoriteBy->count() }}</p>
                         </form>
                     </div>
-                    <div class="comment-icon">
+                    <div class="comment-icon button">
                         <img src="{{ asset('storage/app/comment.png') }}" alt="コメント" />
                         <p>{{ $item->comments->count() }}</p>
                     </div>
@@ -42,12 +42,12 @@
             </div>
             <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="POST">
                 @csrf
-                <button type="submit" class="purchase-button">購入手続きへ</button>
+                <button type="submit" class="purchase-button button">購入手続きへ</button>
             </form>
     {{-- 商品説明・商品の情報 --}}
             <div class="item-description">
                 <h3 class="item__title">商品説明</h3>
-                {{ $item->description }}
+                {!! nl2br(e($item->description)) !!}
                 <h3 class="item__title">商品の情報</h3>
                 <table class="item__info-table">
                     <tr>
@@ -80,7 +80,7 @@
                             @endif
                             <p class="user-name">{{ $comment->user->username }}</p>
                         </div>
-                        <p class="user-comment">{{ $comment->comment }}</p>
+                        <p class="user-comment">{!! nl2br(e($comment->comment)) !!}</p>
                     </div>
                 @endforeach
                 <h4 class="comment-form__text-title">商品へのコメント</h4>
@@ -95,7 +95,7 @@
                         </div>
                     @endif
                     <input type="hidden" name="item_id" value="{{ $item->id }}">
-                    <button type="submit" class="comment-form__button">コメントを送信する</button>
+                    <button type="submit" class="comment-form__button button">コメントを送信する</button>
                 </form>
             </div>
         </div>

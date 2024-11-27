@@ -75,13 +75,15 @@ html {
 main {
     padding-top: 50px;
 }
+.button {
+    cursor: pointer;
+}
 .content {
     padding-bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid yellowgreen; */
 }
 .content__title {
     margin-top: 40px;
