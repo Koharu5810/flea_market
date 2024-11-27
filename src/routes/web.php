@@ -20,20 +20,20 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::middleware('auth')->group(function () {
     // トップページ表示
     Route::get('/', [ItemController::class, 'index'])->name('home');
-    // 商品出品画面
-    Route::get('/sell', [ItemController::class, 'showSell'])->name('show.sell');
-    Route::post('/sell', [ItemController::class, 'createItem'])->name('sell');
     // 商品詳細画面
     Route::get('item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
+    // お気に入り機能
+    Route::post('/items/{id}/favorite', [ItemController::class, 'toggleFavorite'])->name('item.favorite');
+    // コメント送信フォーム
+    Route::post('/items/{id}/comments', [ItemController::class, 'commentStore'])->name('comments.store');
     // 商品購入画面へ遷移
     Route::post('purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase');
     // 送付先住所変更画面
     Route::get('purchase/address/{item_id}', [PurchaseController::class, 'showAddressForm'])->name('show.purchase.address');
     Route::post('purchase/address/{item_id}', [PurchaseController::class, 'saveShippingAddress'])->name('change.purchase.address');
-    // お気に入り機能
-    Route::post('/items/{id}/favorite', [ItemController::class, 'toggleFavorite'])->name('item.favorite');
-    // コメント送信フォーム
-    Route::post('/items/{id}/comments', [ItemController::class, 'commentStore'])->name('comments.store');
+    // 商品出品画面
+    Route::get('/sell', [ItemController::class, 'showSell'])->name('show.sell');
+    Route::post('/sell', [ItemController::class, 'createItem'])->name('sell');
     // プロフィール画面
     Route::get('/mypage', [UserController::class, 'showMypage'])->name('profile.mypage');
     // プロフィール編集画面
