@@ -13,9 +13,28 @@ use Illuminate\Support\Facades\Auth;
 class ItemController extends Controller
 {
 // マイページを表示
-    public function index() {
-        return view('home');
+    public function index(Request $request) {
+        $tab = $request->query('tab');
+
+        if ($tab === 'mylist') {
+            // お気に入りリストを取得
+            $user = auth()->user();
+            $items = $user->favorites;
+        } else {
+            // 全商品一覧を取得
+            $items = Item::all();
+        }
+
+        return view('home', compact('items', 'tab'));
     }
+// マイページのお気に入りリストを表示
+    // public function showMylist() {
+    //     $user = auth()->user();
+
+    //     $items = $user->favorites;
+
+    //     return view('home', compact('items'));
+    // }
 // 商品出品画面の表示
     public function showSell()
     {
@@ -55,7 +74,7 @@ class ItemController extends Controller
         return view('item-detail', compact('item', 'user'));
     }
 // お気に入り登録
-    public function toggleFavorite(Request $request,$id)
+    public function toggleFavorite(Request $request, $id)
     {
         $user = auth()->user();
 

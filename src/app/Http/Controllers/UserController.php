@@ -23,7 +23,6 @@ class UserController extends Controller
         $profileImage = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
 
         // 商品データを取得
-        // $items = $user->items()->get();  // ユーザに関するデータのみを取得
         $items = Item::all();
 
         return view('profile.mypage', compact('user', 'profileImage', 'items'));
