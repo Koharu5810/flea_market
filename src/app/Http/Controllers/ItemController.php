@@ -17,9 +17,14 @@ class ItemController extends Controller
         $tab = $request->query('tab');
 
         if ($tab === 'mylist') {
-            // お気に入りリストを取得
-            $user = auth()->user();
-            $items = $user->favorites;
+            if (auth()->check()) {
+                // 認証ユーザはお気に入りリストを取得
+                $user = auth()->user();
+                $items = $user->favorites;
+            } else {
+                // 未認証の場合は空を返す
+                $items = collect();
+            }
         } else {
             // 全商品一覧を取得
             $items = Item::all();
@@ -61,16 +66,20 @@ class ItemController extends Controller
     public function showDetail($id)
     {
         $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->findOrFail($id);
-        $user = auth()->user();
+        $user = auth()->check() ? auth()->user() : null; // 認証済みの場合のみユーザー情報を取得
 
         return view('item-detail', compact('item', 'user'));
     }
 // お気に入り登録
     public function toggleFavorite(Request $request, $id)
     {
-        $user = auth()->user();
+        if (!auth()->check()) {
+            return redirect()->route('item.login');
+        }
 
+        $user = auth()->user();
         $item = Item::find($id);
+
         if (!$item) {
             return redirect()->back();
         }
@@ -90,6 +99,10 @@ class ItemController extends Controller
 // コメント送信フォーム
     public function commentStore(CommentRequest $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('item.login');
+        }
+
         Comment::create([
             'user_id' => Auth::id(),
             'item_id' => $request->item_id,

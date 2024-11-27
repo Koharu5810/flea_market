@@ -39,7 +39,11 @@ class Item extends Model
         return $this->belongsToMany(User::class, 'favorites');
     }
     // 商品お気に入り登録
-    public function isFavoriteBy(User $user) {
+    public function isFavoriteBy(?User $user): bool {
+        if (!$user) {
+            return false;  // 未認証ユーザにはfalseを返す
+        }
+
         return $this->favoriteBy()->where('user_id', $user->id)->exists();
     }
     // 出品アイテムが複数のユーザがコメントを投稿する場合のリレーション

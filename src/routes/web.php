@@ -16,12 +16,12 @@ Route::get('/login', [AuthController::class, 'showLoginForm']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 // ログアウト機能
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+// トップページ表示
+Route::get('/', [ItemController::class, 'index'])->name('home');
+// 商品詳細画面
+Route::get('item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
 
 Route::middleware('auth')->group(function () {
-    // トップページ表示
-    Route::get('/', [ItemController::class, 'index'])->name('home');
-    // 商品詳細画面
-    Route::get('item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
     // お気に入り機能
     Route::post('/items/{id}/favorite', [ItemController::class, 'toggleFavorite'])->name('item.favorite');
     // コメント送信フォーム

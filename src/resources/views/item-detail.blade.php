@@ -23,7 +23,14 @@
         {{-- お気に入り・コメントアイコン --}}
                 <div class="item-status">
                     <div class="favorite-icon button">
-                        <form action="{{ route('item.favorite', ['id' => $item->id]) }}" method="POST" class="favorite-form">
+                        <form
+                            action="{{ auth()->check() ? route('item.favorite', ['id' => $item->id]) : '#' }}"
+                            method="POST"
+                            class="favorite-form"
+                            @if (!auth()->check())
+                                onclick="return false;"
+                            @endif
+                        >
                             @csrf
                             <button type="submit" id="favorite-button" class="button">
                                 <img
