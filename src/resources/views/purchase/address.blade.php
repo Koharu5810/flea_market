@@ -17,8 +17,7 @@
                 <input
                     type="text"
                     name="postal_code"
-                    value="{{ old('postal_code', $postal_code) }}"
-                    {{-- value="{{ old('postal_code', $address->postal_code ?? '') }}" --}}
+                    value="{{ old('postal_code', $address->postal_code) }}"
                     class="profile-form__group-input"
                 />
             </div>
@@ -28,8 +27,7 @@
                 <input
                     type="text"
                     name="address"
-                    value="{{ old('address', $address) }}"
-                    {{-- value="{{ old('address', $address->address ?? '') }}" --}}
+                    value="{{ old('address', $address->address) }}"
                     class="profile-form__group-input"
                 />
             </div>
@@ -39,8 +37,7 @@
                 <input
                     type="text"
                     name="building"
-                    value="{{ old('building', $building) }}"
-                    {{-- value="{{ old('building', $address->building ?? '') }}" --}}
+                    value="{{ old('building', $address->building) }}"
                     class="profile-form__group-input"
                 />
             </div>

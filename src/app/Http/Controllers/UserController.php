@@ -52,12 +52,13 @@ class UserController extends Controller
         $profileImage = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
 
         // user_addressesテーブルから既存データを取得または空文字を設定（初回登録時）
-        $userAddress = $user->user_addresses->first() ?? null;
-        $postal_code = $userAddress ? $userAddress->postal_code : '';
-        $address = $userAddress ? $userAddress->address : '';
-        $building = $userAddress ? $userAddress->building : '';
+        $userAddress = $user->user_address ?? (object) [
+            'postal_code' => '',
+            'address' => '',
+            'building' => '',
+        ];
 
-        return view('profile.profile_edit', compact('username', 'profileImage', 'postal_code', 'address', 'building'));
+        return view('profile.profile_edit', compact('username', 'profileImage', 'userAddress'));
     }
 
 // プロフィール保存（登録または更新）

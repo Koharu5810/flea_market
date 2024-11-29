@@ -28,9 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/items/{id}/comments', [ItemController::class, 'commentStore'])->name('comments.store');
     // 商品購入画面へ遷移
     Route::post('purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase');
+    // 送付先住所変更画面から商品購入画面へ遷移
+    Route::get('purchase/{item_id}', [PurchaseController::class, 'show'])->name('redirectPurchase');
     // 送付先住所変更画面
     Route::get('purchase/address/{item_id}', [PurchaseController::class, 'showAddressForm'])->name('show.purchase.address');
     Route::post('purchase/address/{item_id}', [PurchaseController::class, 'saveShippingAddress'])->name('change.purchase.address');
+
     // 商品出品画面
     Route::get('/sell', [ItemController::class, 'showSell'])->name('show.sell');
     Route::post('/sell', [ItemController::class, 'createItem'])->name('sell');

@@ -23,15 +23,10 @@ class PurchaseController extends Controller
     public function showAddressForm($item_id)
     {
         $user = Auth::user();
-        $userAddress = $user->user_addresses;
-        // $postal_code = $userAddress->postal_code;
-        $address = $userAddress->address;
-        $building = $userAddress->building;
-        $address = $user->address;
-        // $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
+        $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
         $item = Item::findOrFail($item_id);
 
-        return view('purchase.address', compact('item', 'postal_code', 'address', 'building'));
+        return view('purchase.address', compact('item', 'address'));
     }
 // 住所変更
     public function saveShippingAddress(Request $request, $item_id)
@@ -45,6 +40,6 @@ class PurchaseController extends Controller
             ]
         );
 
-        return redirect()->route('purchase.index', compact('address', 'item_id'));
+        return redirect()->route('redirectPurchase', compact('item_id'));
     }
 }
