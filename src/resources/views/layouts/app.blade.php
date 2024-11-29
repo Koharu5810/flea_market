@@ -33,17 +33,17 @@
     {{-- ボタンコンテナ --}}
             @if (!request()->is('register') && !request()->is('login'))
                 <div class="header-right">
-            {{-- ログアウトボタン --}}
+            {{-- ログイン・ログアウトボタン --}}
                     @if (Auth::check())
                         <form action="{{ route('logout') }}" method="POST" class="header__logout">
                             @csrf
                             <button type="submit" class="header__logout-button">ログアウト</button>
                         </form>
                     @else
-                        {{-- <form action="{{ route('login') }}" method="POST" class="header__login"> --}}
-                            {{-- @csrf --}}
+                        <form action="{{ route('show.login') }}" method="GET" class="header__login">
+                            @csrf
                             <button type="submit" class="header__login-button">ログイン</button>
-                        {{-- </form> --}}
+                        </form>
                     @endif
             {{-- マイページボタン --}}
                     <button class="header__mypage-button"><a href="{{ route('profile.mypage') }}">マイページ</a></button>

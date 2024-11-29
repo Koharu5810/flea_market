@@ -27,7 +27,7 @@ class ItemController extends Controller
             }
         } else {
             // 全商品一覧を取得
-            $items = Item::all();
+            $items = Item::where('user_id', '!=', Auth::id())->get();
         }
 
         return view('home', compact('items', 'tab'));
