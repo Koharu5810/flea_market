@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserAddress;
 use App\Models\User;
-use App\Models\Item;
 use App\Models\Order;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;

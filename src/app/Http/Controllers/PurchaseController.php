@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\FuncCall;
 
 class PurchaseController extends Controller
 {
+// 商品購入画面の表示
     public function show($item_id)
     {
         $item = Item::findOrFail($item_id);
@@ -17,14 +19,21 @@ class PurchaseController extends Controller
 
         return view('purchase.index', compact('item', 'address'));
     }
-
+// 住所変更画面の表示
     public function showAddressForm($item_id)
     {
-        $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
+        $user = Auth::user();
+        $userAddress = $user->user_addresses;
+        // $postal_code = $userAddress->postal_code;
+        $address = $userAddress->address;
+        $building = $userAddress->building;
+        $address = $user->address;
+        // $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
         $item = Item::findOrFail($item_id);
 
-        return view('purchase.address', compact('address', 'item'));
+        return view('purchase.address', compact('item', 'postal_code', 'address', 'building'));
     }
+// 住所変更
     public function saveShippingAddress(Request $request, $item_id)
     {
         UserAddress::updateOrCreate(

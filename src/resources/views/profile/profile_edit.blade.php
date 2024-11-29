@@ -21,7 +21,13 @@
                 </div>
                 <label class="upload-button">
                     画像を選択する
-                    <input type="file" name="profile_image" id="imageInput" accept="image/*" style="display: none;">
+                    <input
+                        type="file"
+                        name="profile_image"
+                        id="imageInput"
+                        accept="image/*"
+                        style="display: none;"
+                    />
                 </label>
             </div>
             @error('profile_image')
@@ -32,7 +38,12 @@
     {{-- ユーザー名 --}}
             <div class="profile-form__group">
                 <label for="username">ユーザー名</label>
-                <input type="text" name="username" value="{{ old('username', $username) }}" class="profile-form__group-input" />
+                <input
+                    type="text"
+                    name="username"
+                    value="{{ old('username', $username) }}"
+                    class="profile-form__group-input"
+                />
                 @error('username')
                     <div class="profile-form__error">
                         {{ $message }}
@@ -42,7 +53,12 @@
     {{-- 郵便番号 --}}
             <div class="profile-form__group">
                 <label for="postal_code">郵便番号</label>
-                <input type="text" name="postal_code" value="{{ old('postal_code', $postal_code) }}" class="profile-form__group-input" />
+                <input
+                    type="text"
+                    name="postal_code"
+                    value="{{ old('postal_code', $postal_code) }}"
+                    class="profile-form__group-input"
+                />
                 @error('postal_code')
                     <div class="profile-form__error">
                         {{ $message }}
@@ -52,7 +68,12 @@
     {{-- 住所 --}}
             <div class="profile-form__group">
                 <label for="address">住所</label>
-                <input type="text" name="address" value="{{ old('address', $address) }}" class="profile-form__group-input" />
+                <input
+                    type="text"
+                    name="address"
+                    value="{{ old('address', $address) }}"
+                    class="profile-form__group-input"
+                />
                 @error('address')
                     <div class="profile-form__error">
                         {{ $message }}
@@ -62,7 +83,12 @@
     {{-- 建物名 --}}
             <div class="profile-form__group">
                 <label for="building">建物名</label>
-                <input type="text" name="building" value="{{ old('building', $building) }}" class="profile-form__group-input" />
+                <input
+                    type="text"
+                    name="building"
+                    value="{{ old('building', $building) }}"
+                    class="profile-form__group-input"
+                />
                 @error('building')
                     <div class="profile-form__error">
                             {{ $message }}
