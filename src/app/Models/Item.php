@@ -36,7 +36,7 @@ class Item extends Model
 
     // 出品アイテムが複数のユーザのお気に入りになる場合のリレーション
     public function favoriteBy() {
-        return $this->belongsToMany(User::class, 'favorites');
+        return $this->belongsToMany(User::class, 'favorites', 'item_id', 'user_id');
     }
     // 商品お気に入り登録
     public function isFavoriteBy(?User $user): bool {

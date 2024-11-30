@@ -15,19 +15,32 @@ class ItemController extends Controller
 // マイページを表示
     public function index(Request $request) {
         $tab = $request->query('tab');
+        $query = $request->query('query');
 
         if ($tab === 'mylist') {
             if (auth()->check()) {
                 // 認証ユーザはお気に入りリストを取得
                 $user = auth()->user();
-                $items = $user->favorites;
+                $items = $user->favorites();
+
+                if (!empty($query)) {
+                    $items->where('name', 'like', '%' . $query . '%');
+                }
+
+                $items = $items->get();
             } else {
                 // 未認証の場合は空を返す
                 $items = collect();
             }
         } else {
             // 全商品一覧を取得
-            $items = Item::where('user_id', '!=', Auth::id())->get();
+            $items = Item::where('user_id', '!=', Auth::id());
+
+            if (!empty($query)) {
+                $items->where('name', 'like', '%' . $query . '%');
+            }
+
+            $items = $items->get();
         }
 
         return view('home', compact('items', 'tab'));
@@ -110,5 +123,19 @@ class ItemController extends Controller
         ]);
 
         return redirect()->route('item.detail', ['item_id' => $request->item_id]);
+    }
+
+// 検索機能
+    public function search(Request $request)
+    {
+        $items = Item::query();
+        if ($request->filled('query')) {
+            $items->where('name', 'like', '%' . $request->input('query') . '%');
+        }
+
+        $items = $items->get();
+        $tab = 'search';
+
+        return view('home', compact('items', 'tab'));
     }
 }

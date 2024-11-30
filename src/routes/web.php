@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
+use FontLib\Table\Type\name;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::get('/', [ItemController::class, 'index'])->name('home');
 // 商品詳細画面
 Route::get('/item/{item_id}', [ItemController::class, 'showDetail'])->name('item.detail');
+// 検索機能
+Route::get('/search', [ItemController::class, 'search'])->name('search');
 
 Route::middleware('auth')->group(function () {
     // お気に入り機能

@@ -24,8 +24,14 @@
             @if (!request()->is('register') && !request()->is('login'))
                 <div class="header-center">
                     {{-- 検索フォーム --}}
-                    <form action="" method="GET" class="header__search">
-                        <input type="text" name="query" placeholder="なにをお探しですか？" class="header__search-input">
+                    <form action="{{ route('search') }}" method="GET" class="header__search">
+                        <input
+                            type="text"
+                            name="query"
+                            value="{{ request('query') }}"
+                            placeholder="なにをお探しですか？"
+                            class="header__search-input"
+                        />
                     </form>
                 </div>
             @endif
