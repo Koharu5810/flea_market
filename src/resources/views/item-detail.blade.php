@@ -1,12 +1,17 @@
 {{-- 商品詳細画面 --}}
 @extends('layouts.app')
-{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/item_detail.css') }}" />
 @endsection
 
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="item-container">
     {{-- 左側 --}}
         <div class="left-container">
@@ -24,7 +29,7 @@
                 <div class="item-status">
                     <div class="favorite-icon">
                         <form
-                            action="{{ auth()->check() ? route('item.favorite', ['id' => $item->id]) : '#' }}"
+                            action="{{ auth()->check() ? route('item.favorite', ['item_id' => $item->id]) : '#' }}"
                             method="POST"
                             class="favorite-form"
                             @if (!auth()->check())
@@ -90,7 +95,7 @@
                     </div>
                 @endforeach
                 <h4 class="comment-form__text-title">商品へのコメント</h4>
-                <form action="{{ route('comments.store', ['id' => $item->id]) }}" method="POST">
+                <form action="{{ route('comments.store', ['item_id' => $item->id]) }}" method="POST">
                     @csrf
                     <textarea name="comment" id="comment" class="comment-form__textarea">{{ old('comment') }}</textarea>
                     @if ($errors->any())

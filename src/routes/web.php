@@ -19,13 +19,13 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 // トップページ表示
 Route::get('/', [ItemController::class, 'index'])->name('home');
 // 商品詳細画面
-Route::get('/item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
+Route::get('/item/{item_id}', [ItemController::class, 'showDetail'])->name('item.detail');
 
 Route::middleware('auth')->group(function () {
     // お気に入り機能
-    Route::post('/items/{id}/favorite', [ItemController::class, 'toggleFavorite'])->name('item.favorite');
+    Route::post('/item/{item_id}/favorite', [ItemController::class, 'toggleFavorite'])->name('item.favorite');
     // コメント送信フォーム
-    Route::post('/items/{id}/comments', [ItemController::class, 'commentStore'])->name('comments.store');
+    Route::post('/item/{item_id}/comments', [ItemController::class, 'commentStore'])->name('comments.store');
     // 商品購入画面へ遷移
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase.show');
     // 商品購入

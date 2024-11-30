@@ -6,6 +6,12 @@
 @endsection
 
 @section('content')
+    @if (session('error'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="item-container">
     {{-- 左側 --}}
         <div class="left-container">

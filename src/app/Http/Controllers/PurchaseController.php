@@ -36,11 +36,12 @@ class PurchaseController extends Controller
                 'line_items' => [
                     [
                         'price_data' => [
-                            'current' => 'jpy',
+                            'currency' => 'jpy',
                             'product_data' => [
                                 'name' => $item->name,
                             ],
-                            'unit_amount' => $item->price * 100,  // アイテムの金額をStripe用に変換 (例: 1000円 -> 100000)
+                            'unit_amount' => $item->price,
+                              // アイテムの金額をStripe用に変換 (例: 1000円 -> 100000)
                         ],
                         'quantity' => 1,  // 注文数
                     ],
@@ -52,7 +53,7 @@ class PurchaseController extends Controller
 
             return redirect($session->url);
         } catch (Exception $e) {
-            return redirect()->route('purchase', ['item' => $item->id])
+            return redirect()->route('purchase.show', ['item_id' => $item->id])
                 ->with('error', '決済中に問題が発生しました。再度お試しください。');
         }
     }
@@ -61,7 +62,7 @@ class PurchaseController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        return redirect()->route('purchase', ['item' => $item->id])
+        return redirect()->route('item.detail', ['item_id' => $item->id])
             ->with('success', '購入が完了しました！');
     }
 // 支払いキャンセル
@@ -69,7 +70,7 @@ class PurchaseController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        return redirect()->route('purchase', ['item' => $item->id])
+        return redirect()->route('purchase.show', ['item_id' => $item->id])
             ->with('error', '購入がキャンセルされました。');
     }
 
