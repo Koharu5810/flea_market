@@ -19,7 +19,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 // トップページ表示
 Route::get('/', [ItemController::class, 'index'])->name('home');
 // 商品詳細画面
-Route::get('item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
+Route::get('/item/{id}', [ItemController::class, 'showDetail'])->name('item.detail');
 
 Route::middleware('auth')->group(function () {
     // お気に入り機能
@@ -27,12 +27,16 @@ Route::middleware('auth')->group(function () {
     // コメント送信フォーム
     Route::post('/items/{id}/comments', [ItemController::class, 'commentStore'])->name('comments.store');
     // 商品購入画面へ遷移
-    Route::post('purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase');
-    // 送付先住所変更画面から商品購入画面へ遷移
-    Route::get('purchase/{item_id}', [PurchaseController::class, 'show'])->name('redirectPurchase');
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase.show');
+    // 商品購入
+    Route::post('/purchase/{item_id}', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
+    Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'success'])->name('purchase.success');
+    Route::get('/purchase/cancel/{item_id}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
     // 送付先住所変更画面
-    Route::get('purchase/address/{item_id}', [PurchaseController::class, 'showAddressForm'])->name('show.purchase.address');
-    Route::post('purchase/address/{item_id}', [PurchaseController::class, 'saveShippingAddress'])->name('change.purchase.address');
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'showAddressForm'])->name('show.purchase.address');
+    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'saveShippingAddress'])->name('change.purchase.address');
+    // 送付先住所変更画面から商品購入画面へ遷移
+    Route::get('/purchase/address/{item_id}/redirect', [PurchaseController::class, 'show'])->name('redirect.purchase');
 
     // 商品出品画面
     Route::get('/sell', [ItemController::class, 'showSell'])->name('show.sell');

@@ -47,8 +47,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="POST">
-                @csrf
+            <form action="{{ route('purchase.show', ['item_id' => $item->id]) }}" method="GET">
                 <button type="submit" class="purchase-button red-button">購入手続きへ</button>
             </form>
     {{-- 商品説明・商品の情報 --}}

@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="profile__create-container">
-        <form method="POST" action="{{ route('change.purchase.address', ['item_id' => $item->id]) }}">
+        <form method="POST" action="{{ route('redirect.purchase', ['item_id' => $item->id]) }}">
             @csrf
     {{-- 郵便番号 --}}
             <div class="profile-form__group">
