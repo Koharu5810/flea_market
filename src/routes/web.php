@@ -28,15 +28,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/item/{item_id}/comments', [ItemController::class, 'commentStore'])->name('comments.store');
     // 商品購入画面へ遷移
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase.show');
-    // 商品購入
+    // 商品購入実行
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
-    Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'success'])->name('purchase.success');
-    Route::get('/purchase/cancel/{item_id}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
+    // Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'success'])->name('purchase.success');
+    // Route::get('/purchase/cancel/{item_id}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
     // 送付先住所変更画面
-    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'showAddressForm'])->name('show.purchase.address');
-    Route::patch('/purchase/address/{item_id}', [PurchaseController::class, 'savePurchaseAddress'])->name('save.purchase.address');
-    // 送付先住所変更画面から商品購入画面へ遷移
-    Route::get('/purchase/address/{item_id}/redirect', [PurchaseController::class, 'show'])->name('redirect.purchase');
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('edit.purchase.address');
+    Route::patch('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('update.purchase.address');
 
     // 商品出品画面
     Route::get('/sell', [ItemController::class, 'showSell'])->name('show.sell');

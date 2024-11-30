@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Item;
-use App\Http\Requests\PurchaseRequest;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PurchaseRequest;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use PhpParser\Node\Expr\FuncCall;
@@ -75,7 +75,7 @@ class PurchaseController extends Controller
     }
 
 // 住所変更画面の表示
-    public function showAddressForm($item_id)
+    public function editAddress($item_id)
     {
         $user = Auth::user();
         $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
@@ -84,7 +84,7 @@ class PurchaseController extends Controller
         return view('purchase.address', compact('item', 'address'));
     }
 // 住所変更
-    public function savePurchaseAddress(PurchaseRequest $request, $item_id)
+    public function updateAddress(PurchaseRequest $request, $item_id)
     {
         UserAddress::updateOrCreate(
             ['user_id' => auth()->id()],
@@ -95,6 +95,6 @@ class PurchaseController extends Controller
             ]
         );
 
-        return redirect()->route('redirect.purchase', compact('item_id'));
+        return redirect()->route('purchase.show', compact('item_id'));
     }
 }

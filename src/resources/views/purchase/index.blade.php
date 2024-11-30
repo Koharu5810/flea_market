@@ -43,7 +43,7 @@
             {{-- 配送先 --}}
                 <div class="delivery-container">
                     <h3 class="parts-title">配送先</h3>
-                    <a href="{{ route('show.purchase.address', ['item_id' => $item->id]) }}" class="change-address-button blue-button">変更する</a>
+                    <a href="{{ route('edit.purchase.address', ['item_id' => $item->id]) }}" class="change-address-button blue-button">変更する</a>
                 </div>
                 <div class="delivery-detail">
                     <p>〒 {{ $address->postal_code }}</p>

@@ -24,8 +24,7 @@ class PurchaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'payment_method' => 'required|string',
-            'delivery_destination' => 'required|string',
+            'payment_method' => 'required|string|in:コンビニ支払い,カード支払い',
             'postal_code' => 'required|string|regex:/^\d{3}-\d{4}$/',
             'address' => 'required|string',
             'building' => 'required|string',
@@ -36,7 +35,6 @@ class PurchaseRequest extends FormRequest
     {
         return [
             'payment_method.required' => '支払い方法を選択してください',
-            'delivery_destination.required' => '配送先を入力してください',
             'postal_code.required' => '郵便番号を入力してください',
             'postal_code.regex' => '郵便番号はハイフンを含む形式（例: 123-4567）で入力してください',
             'address.required' => '住所を入力してください',

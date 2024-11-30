@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="profile__create-container">
-        <form method="POST" action="{{ route('save.purchase.address', ['item_id' => $item->id]) }}">
+        <form method="POST" action="{{ route('update.purchase.address', ['item_id' => $item->id]) }}">
             @csrf
             @method('PATCH')
     {{-- 郵便番号 --}}
@@ -17,6 +17,7 @@
                 <label for="postal_code">郵便番号</label>
                 <input
                     type="text"
+                    id="postal_code"
                     name="postal_code"
                     value="{{ old('postal_code', $address->postal_code) }}"
                     class="profile-form__group-input"
@@ -32,6 +33,7 @@
                 <label for="address">住所</label>
                 <input
                     type="text"
+                    id="address"
                     name="address"
                     value="{{ old('address', $address->address) }}"
                     class="profile-form__group-input"
@@ -47,6 +49,7 @@
                 <label for="building">建物名</label>
                 <input
                     type="text"
+                    id="building"
                     name="building"
                     value="{{ old('building', $address->building) }}"
                     class="profile-form__group-input"
