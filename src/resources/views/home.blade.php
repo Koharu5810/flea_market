@@ -25,7 +25,7 @@
                         <p>お気に入り登録した商品がありません</p>
                     @else
                         @foreach ($items as $item)
-                            <a href="{{ route('item.detail', ['id' => $item->id]) }} " class="item-link">
+                            <a href="{{ route('item.detail', ['item_id' => $item->id]) }} " class="item-link">
                                 <div class="item-container">
                                     @if ($item->image)
                                         <div class="item-image">
@@ -46,7 +46,7 @@
             @else
         {{-- おすすめタブの処理 --}}
                 @foreach ($items as $item)
-                    <a href="{{ route('item.detail', ['id' => $item->id]) }} " class="item-link">
+                    <a href="{{ route('item.detail', ['item_id' => $item->id]) }} " class="item-link">
                         <div class="item-container">
                             @if ($item->image)
                                 <div class="item-image">

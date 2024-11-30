@@ -63,9 +63,9 @@ class ItemController extends Controller
     }
 
 // 商品詳細画面の表示
-    public function showDetail($id)
+    public function showDetail($item_id)
     {
-        $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->findOrFail($id);
+        $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->findOrFail($item_id);
         $user = auth()->check() ? auth()->user() : null; // 認証済みの場合のみユーザー情報を取得
 
         return view('item-detail', compact('item', 'user'));
@@ -109,6 +109,6 @@ class ItemController extends Controller
             'comment' => $request->comment,
         ]);
 
-        return redirect()->route('item.detail', ['id' => $request->item_id]);
+        return redirect()->route('item.detail', ['item_id' => $request->item_id]);
     }
 }

@@ -42,7 +42,7 @@
                 </p>
             @else
                 @foreach ($items as $item)
-                    <a href="{{ route('item.detail', ['id' => $item->id]) }} " class="item-link">
+                    <a href="{{ route('item.detail', ['item_id' => $item->id]) }} " class="item-link">
                         <div class="item-container">
                             @if ($item->image)
                                 <div class="item-image">
