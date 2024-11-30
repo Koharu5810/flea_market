@@ -36,7 +36,6 @@
     font-size: 12px;
     font-weight: bold;
     text-align: center;
-    border-radius: 5px;
     cursor: pointer;
 }
 .profile-form__group {
@@ -62,20 +61,10 @@
     font-size: 12px;
 }
 .profile-form__button {
-    background-color: #ff6666;
     display: flex;
     justify-content: center;
     margin-top: 70px;
-    border-radius: 3px;
 }
 .profile-form__button button {
     width: 100%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    font-size: 16px;
-    text-align: center;
-    cursor: pointer;
 }

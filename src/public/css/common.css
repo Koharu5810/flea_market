@@ -75,8 +75,20 @@ html {
 main {
     padding-top: 50px;
 }
-.button {
+.red-button {
+    background-color: #ff6666;
+    color: #fff;
+    font-size: 16px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: center;
+    border-radius: 3px;
+    border: none;
     cursor: pointer;
+}
+.blue-button {
+    color: #8FC1E9;
+    text-decoration: none;
 }
 .content {
     padding-bottom: 30px;

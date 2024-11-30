@@ -65,8 +65,6 @@
 .sell-image__input {
     display: none;
 }
-.sell-image__button:hover {
-}
 .category-container {
     display: flex;
     flex-wrap: wrap;
@@ -100,6 +98,9 @@
     border-radius: 3px;
     border: 1px solid #ccc;
 }
+.sell-select {
+    cursor: pointer;
+}
 .sell-description {
     height: 90px;
 }
@@ -123,10 +124,4 @@
 .sell-form__button {
     width: 100%;
     margin-top: 50px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: #ff6666;
-    color: #fff;
-    font-size: 18px;
-    border: none;
 }

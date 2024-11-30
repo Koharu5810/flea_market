@@ -95,9 +95,9 @@
                     </div>
                 @enderror
             </div>
-            {{-- 登録ボタン --}}
+            {{-- 更新ボタン --}}
             <div class="profile-form__button">
-                <button>更新する</button>
+                <button class="red-button">更新する</button>
             </div>
         </form>
     </div>

@@ -45,9 +45,6 @@
     display: flex;
     justify-content: space-between;
 }
-.delivery a {
-    font-display: none;
-}
 
 .right-container {
     flex: 1;
@@ -57,10 +54,4 @@
 .purchase-button {
     width: 100%;
     margin-top: 30px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background-color: #ff6666;
-    color: #fff;
-    border-radius: 3px;
-    border: none;
 }

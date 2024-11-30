@@ -22,7 +22,7 @@
         {{-- 支払い方法 --}}
             <h3>支払い方法</h3>
             <select name="select" id="select" class="select">
-                <option value="">選択してください</option>
+                <option value="" disabled selected>選択してください</option>
                 <option value="">コンビニ支払い</option>
                 <option value="">カード支払い</option>
             </select>
@@ -32,7 +32,7 @@
                 <h3>配送先</h3>
                 <form method="GET" action="{{ route('show.purchase.address', ['item_id' => $item->id]) }}">
                     @csrf
-                    <button type="submit" class="change-address-button">変更する</button>
+                    <a type="submit" class="change-address-button blue-button">変更する</a>
                 </form>
             </div>
             <div>
@@ -54,7 +54,7 @@
             </table>
             {{-- <form method="post" action=""> --}}
                 {{-- @csrf --}}
-                <button type="submit" class="purchase-button button">購入する</button>
+                <button type="submit" class="purchase-button red-button">購入する</button>
             {{-- </form> --}}
         </div>
     </div>

@@ -22,7 +22,7 @@
                 <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span> (税込)</p>
         {{-- お気に入り・コメントアイコン --}}
                 <div class="item-status">
-                    <div class="favorite-icon button">
+                    <div class="favorite-icon">
                         <form
                             action="{{ auth()->check() ? route('item.favorite', ['id' => $item->id]) : '#' }}"
                             method="POST"
@@ -32,7 +32,7 @@
                             @endif
                         >
                             @csrf
-                            <button type="submit" id="favorite-button" class="button">
+                            <button type="submit" id="favorite-button">
                                 <img
                                     src="{{ $item->isFavoriteBy(auth()->user()) ? asset('storage/app/favorited.png') : asset('storage/app/favorite.png') }}"
                                     alt="{{ $item->isFavoriteBy(auth()->user()) ?  'お気に入り登録済み' : 'お気に入り' }}"
@@ -41,7 +41,7 @@
                             <p id="favorite-count">{{ $item->favoriteBy->count() }}</p>
                         </form>
                     </div>
-                    <div class="comment-icon button">
+                    <div class="comment-icon">
                         <img src="{{ asset('storage/app/comment.png') }}" alt="コメント" />
                         <p>{{ $item->comments->count() }}</p>
                     </div>
@@ -49,7 +49,7 @@
             </div>
             <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="POST">
                 @csrf
-                <button type="submit" class="purchase-button button">購入手続きへ</button>
+                <button type="submit" class="purchase-button red-button">購入手続きへ</button>
             </form>
     {{-- 商品説明・商品の情報 --}}
             <div class="item-description">
@@ -102,7 +102,7 @@
                         </div>
                     @endif
                     <input type="hidden" name="item_id" value="{{ $item->id }}">
-                    <button type="submit" class="comment-form__button button">コメントを送信する</button>
+                    <button type="submit" class="comment-form__button red-button">コメントを送信する</button>
                 </form>
             </div>
         </div>

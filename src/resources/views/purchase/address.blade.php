@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/profile/profile_edit.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/purchase/address.css') }}" />
 @endsection
 
 @section('title', '住所の変更')
@@ -41,10 +41,8 @@
                     class="profile-form__group-input"
                 />
             </div>
-            {{-- 登録ボタン --}}
-            <div class="profile-form__button">
-                <button>更新する</button>
-            </div>
+    {{-- 登録ボタン --}}
+            <button class="profile-form__button red-button">更新する</button>
         </form>
     </div>
 

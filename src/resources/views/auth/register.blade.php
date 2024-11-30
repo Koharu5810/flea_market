@@ -52,13 +52,10 @@
                 </div>
             </div>
     {{-- 登録ボタン --}}
-            <div class="register-form__button">
-                <button>登録する</button>
-            </div>
+            <button class="register-form__button red-button">登録する</button>
         </form>
 {{-- ログイン案内 --}}
-        <div class="login-container">
-            <a href="/login" class="login-button button">ログインはこちら</a>
-        </div>
+        <a href="/login" class="login-button blue-button">ログインはこちら</a>
+
     </div>
 @endsection

@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;  /* ラベル・入力欄を左揃え */
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 .register-form__group label {
     font-weight: bold;
@@ -30,26 +30,12 @@
     font-size: 12px;
 }
 .register-form__button {
-    background-color: #ff6666;
+    width: 100%;
+    margin-top: 70px;
     display: flex;
     justify-content: center;
-    margin-top: 70px;
-    border-radius: 3px;
-}
-.register-form__button button {
-    width: 100%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    font-size: 16px;
-    text-align: center;
-}
-.login-container {
-    margin-top: 15px;
 }
 .login-button {
-    color: #8FC1E9;
-    text-decoration: none;
+    margin-top: 15px;
 }
+

@@ -53,7 +53,7 @@
             @enderror
             <h3 class="sell-title">商品の状態</h3>
                 <select name="item_condition" id="" class="sell-select">
-                    <option value="">選択してください</option>
+                    <option value="" disabled selected>選択してください</option>
                     <option value="1" @selected(old('item_condition') == 1)>良好</option>
                     <option value="2" @selected(old('item_condition') == 2)>目立った傷や汚れなし</option>
                     <option value="3" @selected(old('item_condition') == 3)>やや傷や汚れあり</option>
@@ -90,7 +90,7 @@
                 </p>
             @enderror
         {{-- 出品ボタン --}}
-            <button type="submit" class="sell-form__button button">出品する</button>
+            <button type="submit" class="sell-form__button red-button">出品する</button>
         </form>
     </div>
 
