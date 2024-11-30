@@ -79,6 +79,10 @@
 .delivery-detail p {
     margin: 0;
 }
+.change-address-button {
+    border: none;
+    background-color: transparent;
+}
 
 .right-container {
     flex: 1;

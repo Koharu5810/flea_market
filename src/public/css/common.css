@@ -89,6 +89,7 @@ main {
 .blue-button {
     color: #8FC1E9;
     text-decoration: none;
+    cursor: pointer;
 }
 .content {
     padding-bottom: 30px;
