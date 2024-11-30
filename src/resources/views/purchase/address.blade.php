@@ -9,8 +9,9 @@
 
 @section('content')
     <div class="profile__create-container">
-        <form method="POST" action="{{ route('redirect.purchase', ['item_id' => $item->id]) }}">
+        <form method="POST" action="{{ route('save.purchase.address', ['item_id' => $item->id]) }}">
             @csrf
+            @method('PATCH')
     {{-- 郵便番号 --}}
             <div class="profile-form__group">
                 <label for="postal_code">郵便番号</label>
@@ -21,6 +22,11 @@
                     class="profile-form__group-input"
                 />
             </div>
+            @error('postal_code')
+                <p class="sell-form__error">
+                    {{ $message }}
+                </p>
+            @enderror
     {{-- 住所 --}}
             <div class="profile-form__group">
                 <label for="address">住所</label>
@@ -31,6 +37,11 @@
                     class="profile-form__group-input"
                 />
             </div>
+            @error('address')
+                <p class="sell-form__error">
+                    {{ $message }}
+                </p>
+            @enderror
     {{-- 建物名 --}}
             <div class="profile-form__group">
                 <label for="building">建物名</label>
@@ -41,8 +52,13 @@
                     class="profile-form__group-input"
                 />
             </div>
+            @error('building')
+                <p class="sell-form__error">
+                    {{ $message }}
+                </p>
+            @enderror
     {{-- 登録ボタン --}}
-            <button class="profile-form__button red-button">更新する</button>
+            <button type="submit" class="profile-form__button red-button">更新する</button>
         </form>
     </div>
 

@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/purchase/cancel/{item_id}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
     // 送付先住所変更画面
     Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'showAddressForm'])->name('show.purchase.address');
-    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'saveShippingAddress'])->name('change.purchase.address');
+    Route::patch('/purchase/address/{item_id}', [PurchaseController::class, 'savePurchaseAddress'])->name('save.purchase.address');
     // 送付先住所変更画面から商品購入画面へ遷移
     Route::get('/purchase/address/{item_id}/redirect', [PurchaseController::class, 'show'])->name('redirect.purchase');
 

@@ -34,6 +34,11 @@
                     <option value="コンビニ支払い">コンビニ支払い</option>
                     <option value="カード支払い">カード支払い</option>
                 </select>
+                @error('payment_method')
+                    <p class="sell-form__error">
+                        {{ $message }}
+                    </p>
+                @enderror
                 <hr class="page-line">
             {{-- 配送先 --}}
                 <div class="delivery-container">

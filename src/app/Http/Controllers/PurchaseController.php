@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
-use App\Models\UserAddress;
 use Exception;
+use App\Models\Item;
+use App\Http\Requests\PurchaseRequest;
+use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
@@ -23,7 +24,7 @@ class PurchaseController extends Controller
         return view('purchase.index', compact('item', 'address'));
     }
 // 商品購入
-    public function checkout(Request $request)
+    public function checkout(PurchaseRequest $request)
     {
         $user = auth()->user();
         $item = Item::findOrFail($request->item_id);
@@ -41,7 +42,6 @@ class PurchaseController extends Controller
                                 'name' => $item->name,
                             ],
                             'unit_amount' => $item->price,
-                              // アイテムの金額をStripe用に変換 (例: 1000円 -> 100000)
                         ],
                         'quantity' => 1,  // 注文数
                     ],
@@ -84,7 +84,7 @@ class PurchaseController extends Controller
         return view('purchase.address', compact('item', 'address'));
     }
 // 住所変更
-    public function saveShippingAddress(Request $request, $item_id)
+    public function savePurchaseAddress(PurchaseRequest $request, $item_id)
     {
         UserAddress::updateOrCreate(
             ['user_id' => auth()->id()],
