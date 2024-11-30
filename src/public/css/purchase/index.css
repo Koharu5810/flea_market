@@ -3,9 +3,12 @@
     display: flex;
 }
 .left-container {
-    width: 70%;
+    width: 60%;
+    padding-right: 30px;
     align-items: center;
-    border: 1px solid orange;
+}
+.left-container h3 {
+    font-size: 16px;
 }
 .detail-container {
     display: flex;
@@ -41,15 +44,59 @@
     margin-top: 30px;
     margin-bottom: 10px;
 }
-.delivery {
+.page-line {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.parts-title {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.pay-select,
+.delivery-detail {
+    margin-left: 50px;
+    margin-top: 20px;
+}
+.pay-select {
+    width: 40%;
+    padding: 3px;
+    border-radius: 3px;
+}
+.delivery-container {
+    margin-top: 0;
+    padding-top: 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+.delivery-container h3,
+.delivery-container form {
+    margin: 0;
+    padding: 0;
+}
+.delivery-detail p {
+    margin: 0;
 }
 
 .right-container {
     flex: 1;
     flex-direction: column;
     text-align: left;
+}
+.confirmation-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+}
+.confirmation-table tr {
+    border: 1px solid #000;
+}
+.confirmation-table th,td {
+    padding: 25px;
+    text-align: center;
+    font-weight: 400;
 }
 .purchase-button {
     width: 100%;
