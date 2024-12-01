@@ -28,17 +28,6 @@
     height: 100%;
     object-fit: cover;
 }
-.upload-button {
-    display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid #ff6666;
-    border-radius: 3px;
-    color: #ff6666;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-}
 .profile-form__group {
     width: 500px;
     display: flex;
@@ -58,10 +47,5 @@
     border: 1px solid #ccc;
 }
 .profile-form__button {
-    display: flex;
-    justify-content: center;
     margin-top: 70px;
-}
-.profile-form__button button {
-    width: 100%;
 }

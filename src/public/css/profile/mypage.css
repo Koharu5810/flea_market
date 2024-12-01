@@ -34,22 +34,6 @@
     font-weight: bold;
     margin-right: 100px;
 }
-.profile__edit-button {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: transparent;
-    border: 1px solid #ff6666;
-    color: #ff6666;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.profile__edit-button a {
-    color: #ff6666;
-    text-decoration: none;
-}
 
 .item__header {
     width: 80vw;

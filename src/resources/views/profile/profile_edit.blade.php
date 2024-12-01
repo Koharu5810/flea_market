@@ -19,7 +19,7 @@
                         alt="プロフィールアイコン"
                         style="{{ isset($profileImage) ? '' : 'display: none;' }}" />
                 </div>
-                <label class="upload-button">
+                <label class="edit__red-button">
                     画像を選択する
                     <input
                         type="file"
@@ -97,7 +97,7 @@
             </div>
             {{-- 更新ボタン --}}
             <div class="profile-form__button">
-                <button class="red-button">更新する</button>
+                <button class="form__red-button">更新する</button>
             </div>
         </form>
     </div>

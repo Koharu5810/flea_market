@@ -19,7 +19,7 @@
                 @endif
             </div>
             <div class="profile__username">{{ $user->username }}</div>
-            <button class="profile__edit-button"><a href="{{ route('profile.edit') }}">プロフィールを編集</a></button>
+            <button class="edit__red-button"><a href="{{ route('profile.edit') }}">プロフィールを編集</a></button>
         </div>
         <div class="item__header">
             <a href="{{ route('profile.mypage', ['tab' => 'sell']) }}" class="item__tab {{ $tab === 'sell' ? 'active' : '' }}">

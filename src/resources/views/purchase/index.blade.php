@@ -65,7 +65,7 @@
                             <td id="payment_method_show">選択してください</td>
                         </tr>
                     </table>
-                <button type="submit" class="purchase-button red-button">購入する</button>
+                <button type="submit" class="purchase-button form__red-button">購入する</button>
                 <input type="hidden" name="item_id" value="{{ $item->id }}">
             </form>
         </div>

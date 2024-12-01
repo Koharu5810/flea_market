@@ -76,7 +76,6 @@
     cursor: pointer;
 }
 .purchase-button {
-    width: 100%;
     margin-top: 0;
 }
 
@@ -146,7 +145,6 @@
     border-radius: 3px;
 }
 .comment-form__button {
-    width: 100%;
-    margin-top: 30px;
+    margin-top: 40px;
 }
 

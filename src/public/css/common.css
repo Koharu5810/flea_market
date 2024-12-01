@@ -75,16 +75,34 @@ html {
 main {
     padding-top: 50px;
 }
-.red-button {
+.form__red-button {
+    width: 100%;
     background-color: #ff6666;
     color: #fff;
     font-size: 16px;
     padding-top: 3px;
     padding-bottom: 3px;
+    justify-content: center;
     text-align: center;
     border-radius: 3px;
     border: none;
     cursor: pointer;
+}
+.edit__red-button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 1px solid #ff6666;
+    border-radius: 5px;
+    color: #ff6666;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+.edit__red-button a {
+    color: #ff6666;
+    text-decoration: none;
 }
 .blue-button {
     color: #8FC1E9;

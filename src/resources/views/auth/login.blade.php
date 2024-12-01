@@ -35,7 +35,7 @@
                 </div>
             </div>
     {{-- ログインボタン --}}
-            <button class="login-form__button red-button">ログインする</button>
+            <button class="login-form__button form__red-button">ログインする</button>
         </form>
     {{-- 会員登録案内 --}}
         <a href="/register" class="register-button blue-button">会員登録はこちら</a>

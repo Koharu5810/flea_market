@@ -17,7 +17,7 @@
                 <div class="image-preview-container">
                     <img id="imagePreview" alt="プレビュー画像" class="image-preview" style="display: none;" />
                 </div>
-                <label for="fileInput" class="sell-image__button">画像を選択する</label>
+                <label for="fileInput" class="edit__red-button">画像を選択する</label>
                 <input type="file" name="image" id="fileInput" class="sell-image__input">
             </div>
             @error('image')
@@ -90,7 +90,7 @@
                 </p>
             @enderror
         {{-- 出品ボタン --}}
-            <button type="submit" class="sell-form__button red-button">出品する</button>
+            <button type="submit" class="sell-form__button form__red-button">出品する</button>
         </form>
     </div>
 

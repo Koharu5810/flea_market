@@ -50,18 +50,6 @@
     display: none;
     border: 1px solid #ccc;
 }
-.sell-image__button {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: transparent;
-    border: 1px solid #ff6666;
-    color: #ff6666;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-}
 .sell-image__input {
     display: none;
 }
@@ -118,6 +106,5 @@
     padding-left: 30px;
 }
 .sell-form__button {
-    width: 100%;
     margin-top: 50px;
 }

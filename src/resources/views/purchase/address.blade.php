@@ -61,7 +61,7 @@
                 @enderror
             </div>
     {{-- 登録ボタン --}}
-            <button type="submit" class="profile-form__button red-button">更新する</button>
+            <button type="submit" class="profile-form__button form__red-button">更新する</button>
         </form>
     </div>
 

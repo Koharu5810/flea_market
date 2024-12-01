@@ -43,7 +43,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;  /* ラベル・入力欄を左揃え */
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .profile-form__group label {
     font-weight: bold;
@@ -56,13 +56,6 @@
     border-radius: 3px;
     border: 1px solid #ccc;
 }
-.profile-form__error {
-    color: #ff6666;
-    font-size: 12px;
-}
 .profile-form__button {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 70px;
+    margin-top: 40px;
 }

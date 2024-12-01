@@ -53,7 +53,7 @@
                 </div>
             </div>
             <form action="{{ route('purchase.show', ['item_id' => $item->id]) }}" method="GET">
-                <button type="submit" class="purchase-button red-button">購入手続きへ</button>
+                <button type="submit" class="purchase-button form__red-button">購入手続きへ</button>
             </form>
     {{-- 商品説明・商品の情報 --}}
             <div class="item-description">
@@ -106,7 +106,7 @@
                         </div>
                     @endif
                     <input type="hidden" name="item_id" value="{{ $item->id }}">
-                    <button type="submit" class="comment-form__button red-button">コメントを送信する</button>
+                    <button type="submit" class="comment-form__button form__red-button">コメントを送信する</button>
                 </form>
             </div>
         </div>
