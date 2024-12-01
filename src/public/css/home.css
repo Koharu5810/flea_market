@@ -63,27 +63,9 @@
     justify-content: space-between;
     align-items: center;
 }
-.item-container.soldout {
-    position: relative;
-}
-.item-container.soldout
-.item-image::after{
-    content: 'SOLD OUT'; /* 表示するテキスト */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* 中央に配置 */
-    font-size: 20px;
-    color: rgba(255, 255, 255, 0.8); /* 白色で少し透過 */
-    background-color: rgba(0, 0, 0, 0.5); /* 背景の黒色で半透明 */
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-transform: uppercase; /* 文字を大文字に */
-    z-index: 1; /* 画像の上に表示 */
-    pointer-events: none; /* クリックを無効化 */
-}
 .item-image {
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
     background-color: #f0f0f0;
@@ -93,6 +75,25 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.item-container.soldout
+.item-image::after{
+    content: 'Sold'; /* 表示するテキスト */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 中央に配置 */
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 102, 102, 0.5);
+    width: 70%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase; /* 文字を大文字に */
+    z-index: 1; /* 画像の上に表示 */
+    pointer-events: none; /* クリックを無効化 */
 }
 .item-name {
     width: 100%;
