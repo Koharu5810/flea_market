@@ -99,7 +99,7 @@
                     @csrf
                     <textarea name="comment" id="comment" class="comment-form__textarea">{{ old('comment') }}</textarea>
                     @if ($errors->any())
-                        <div class="container-form__error">
+                        <div class="error-message">
                             @foreach ($errors->all() as $error)
                                 {{ $error }}
                             @endforeach

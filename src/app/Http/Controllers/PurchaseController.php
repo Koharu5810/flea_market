@@ -7,8 +7,8 @@ use App\Models\Item;
 use App\Models\UserAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
+use App\Http\Requests\PurchaseAddressRequest;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use PhpParser\Node\Expr\FuncCall;
@@ -85,7 +85,7 @@ class PurchaseController extends Controller
         return view('purchase.address', compact('item', 'address'));
     }
 // 住所変更
-    public function updateAddress(Request $request, $item_id)
+    public function updateAddress(PurchaseAddressRequest $request, $item_id)
     {
         UserAddress::updateOrCreate(
             ['user_id' => auth()->id()],

@@ -32,6 +32,7 @@
     display: inline-block;
     padding: 5px 10px;
     border: 1px solid #ff6666;
+    border-radius: 3px;
     color: #ff6666;
     font-size: 12px;
     font-weight: bold;
@@ -55,10 +56,6 @@
     display: block;
     border-radius: 3px;
     border: 1px solid #ccc;
-}
-.profile-form__error {
-    color: #ff6666;
-    font-size: 12px;
 }
 .profile-form__button {
     display: flex;

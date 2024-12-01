@@ -15,7 +15,7 @@
             <div class="login-form__group">
                 <label for="username">ユーザー名/メールアドレス</label>
                 <input type="text" name="username" value="{{ old('username') }}" class="login-form__group-input" />
-                <div class="login-form__error">
+                <div class="error-message">
                     @error('username')
                         {{ $message }}
                     @enderror
@@ -25,7 +25,7 @@
             <div class="login-form__group">
                 <label for="password">パスワード</label>
                 <input type="password" name="password"  class="login-form__group-input" />
-                <div class="login-form__error">
+                <div class="error-message">
                     @error('password')
                         {{ $message }}
                     @enderror

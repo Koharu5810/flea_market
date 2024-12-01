@@ -21,7 +21,7 @@
                 <input type="file" name="image" id="fileInput" class="sell-image__input">
             </div>
             @error('image')
-                <p class="sell-form__error">
+                <p class="error-message">
                     {{ $message }}
                 </p>
             @enderror
@@ -39,7 +39,7 @@
                 @endforeach
             </div>
             @error('category')
-                <p class="sell-form__error">
+                <p class="error-message">
                     {{ $message }}
                 </p>
             @enderror
@@ -47,7 +47,7 @@
             <h3 class="sell-title">ブランド名</h3>
             <input type="text" name="brand" value="{{ old('brand') }}" class="sell-brand" />
             @error('brand')
-                <p class="sell-form__error">
+                <p class="error-message">
                     {{ $message }}
                 </p>
             @enderror
@@ -60,7 +60,7 @@
                     <option value="4" @selected(old('item_condition') == 4)>状態が悪い</option>
                 </select>
             @error('item_condition')
-                <p class="sell-form__error">
+                <p class="error-message">
                     {{ $message }}
                 </p>
             @enderror
@@ -69,14 +69,14 @@
             <h3 class="sell-title">商品名</h3>
             <input type="text" name="name" value="{{ old('name') }}" class="sell-item-name" />
             @error('name')
-                <p class="sell-form__error">
+                <p class="error-message">
                     {{ $message }}
                 </p>
             @enderror
             <h3 class="sell-title">商品の説明</h3>
             <textarea name="description" id="" class="sell-description">{{ old('description') }}</textarea>
             @error('description')
-                <p class="sell-form__error">
+                <p class="error-message">
                     {{ $message }}
                 </p>
             @enderror
@@ -85,7 +85,7 @@
                 <input type="text" name="price" value="{{ old('price') }}" class="sell-price" />
             </div>
             @error('price')
-                <p class="sell-form__error">
+                <p class="error-message">
                     {{ $message }}
                 </p>
             @enderror

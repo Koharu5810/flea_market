@@ -22,12 +22,12 @@
                     value="{{ old('postal_code', $address->postal_code) }}"
                     class="profile-form__group-input"
                 />
+                @error('postal_code')
+                    <p class="error-message">
+                        {{ $message }}
+                    </p>
+                @enderror
             </div>
-            @error('postal_code')
-                <p class="sell-form__error">
-                    {{ $message }}
-                </p>
-            @enderror
     {{-- 住所 --}}
             <div class="profile-form__group">
                 <label for="address">住所</label>
@@ -38,12 +38,12 @@
                     value="{{ old('address', $address->address) }}"
                     class="profile-form__group-input"
                 />
+                @error('address')
+                    <p class="error-message">
+                        {{ $message }}
+                    </p>
+                @enderror
             </div>
-            @error('address')
-                <p class="sell-form__error">
-                    {{ $message }}
-                </p>
-            @enderror
     {{-- 建物名 --}}
             <div class="profile-form__group">
                 <label for="building">建物名</label>
@@ -54,12 +54,12 @@
                     value="{{ old('building', $address->building) }}"
                     class="profile-form__group-input"
                 />
+                @error('building')
+                    <p class="error-message">
+                        {{ $message }}
+                    </p>
+                @enderror
             </div>
-            @error('building')
-                <p class="sell-form__error">
-                    {{ $message }}
-                </p>
-            @enderror
     {{-- 登録ボタン --}}
             <button type="submit" class="profile-form__button red-button">更新する</button>
         </form>

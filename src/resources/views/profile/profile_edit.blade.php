@@ -31,7 +31,7 @@
                 </label>
             </div>
             @error('profile_image')
-                <div class="profile-form__error">
+                <div class="error-message">
                     {{ $message }}
                 </div>
             @enderror
@@ -45,7 +45,7 @@
                     class="profile-form__group-input"
                 />
                 @error('username')
-                    <div class="profile-form__error">
+                    <div class="error-message">
                         {{ $message }}
                     </div>
                 @enderror
@@ -60,7 +60,7 @@
                     class="profile-form__group-input"
                 />
                 @error('postal_code')
-                    <div class="profile-form__error">
+                    <div class="error-message">
                         {{ $message }}
                     </div>
                 @enderror
@@ -75,7 +75,7 @@
                     class="profile-form__group-input"
                 />
                 @error('address')
-                    <div class="profile-form__error">
+                    <div class="error-message">
                         {{ $message }}
                     </div>
                 @enderror
@@ -90,7 +90,7 @@
                     class="profile-form__group-input"
                 />
                 @error('building')
-                    <div class="profile-form__error">
+                    <div class="error-message">
                             {{ $message }}
                     </div>
                 @enderror

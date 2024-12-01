@@ -29,16 +29,18 @@
 
         {{-- 支払い方法 --}}
                 <h3 class="parts-title">支払い方法</h3>
-                <select name="payment_method" id="payment_method" class="pay-select">
-                    <option value="" disabled selected>選択してください</option>
-                    <option value="コンビニ支払い">コンビニ支払い</option>
-                    <option value="カード支払い">カード支払い</option>
-                </select>
-                @error('payment_method')
-                    <p class="sell-form__error">
-                        {{ $message }}
-                    </p>
-                @enderror
+                    <div class="payment-container">
+                        <select name="payment_method" id="payment_method" class="pay-select">
+                            <option value="" disabled selected>選択してください</option>
+                            <option value="コンビニ支払い">コンビニ支払い</option>
+                            <option value="カード支払い">カード支払い</option>
+                        </select>
+                        @error('payment_method')
+                            <p class="error-message">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    </div>
                 <hr class="page-line">
             {{-- 配送先 --}}
                 <div class="delivery-container">

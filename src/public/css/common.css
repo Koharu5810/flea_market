@@ -91,6 +91,10 @@ main {
     text-decoration: none;
     cursor: pointer;
 }
+.error-message {
+    color: #ff6666;
+    font-size: 12px;
+}
 .content {
     padding-bottom: 30px;
     display: flex;
