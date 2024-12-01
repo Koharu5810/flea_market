@@ -26,9 +26,9 @@ class Order extends Model
     {
         return $this->belongsTo(Item::class);
     }
-    public function shippingAddress()
+    public function address()
     {
-        return $this->belongsTo(UserAddress::class, 'shipping_address_id');
+        return $this->belongsTo(UserAddress::class);
     }
 
         protected static function boot()
