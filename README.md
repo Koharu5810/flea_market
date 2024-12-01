@@ -13,10 +13,6 @@
 4. DockerDesktop アプリを立ち上げる または `open -a docker`
 5. `docker-compose up -d --build`
 
-> Mac の M1・M2 チップの PC の場合、
-> no matching manifest for linux/arm64/v8 in the manifest list entries のメッセージが表示されビルドができないことがあります。
-> エラーが発生する場合は、docker-compose.yml ファイルの「mysql」内に「platform」の項目を追加で記載してください
-> その後`docker-compose down`でコンテナを停止し、`docker-compose up -d --build`で再ビルドしてください。
 
 ```bash
 services:
