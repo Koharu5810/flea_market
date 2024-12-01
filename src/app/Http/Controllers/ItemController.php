@@ -14,6 +14,14 @@ class ItemController extends Controller
 {
 // マイページを表示
     public function index(Request $request) {
+    // 購入成功処理
+        if ($request->has('success') && $request->success == 'true' && $request->has('item_id')) {
+            $item = Item::find($request->item_id);
+            if ($item) {
+                session()->flash('success', '購入が完了しました！');
+            }
+        }
+
         $tab = $request->query('tab');
         $query = $request->query('query');
 

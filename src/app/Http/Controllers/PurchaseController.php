@@ -49,33 +49,15 @@ class PurchaseController extends Controller
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => route('purchase.success', ['item_id' => $item->id]),
-                'cancel_url' => route('purchase.cancel', ['item_id' => $item->id]),
+                'success_url' => route('home') . '?success=true&item_id=' . $item->id,
+                'cancel_url' => route('purchase.show', ['item_id' => $item->id]),
             ]);
 
             return redirect($session->url);
         } catch (Exception $e) {
-                   Log::error('Stripeエラー: ' . $e->getMessage());
-                   
             return redirect()->route('purchase.show', ['item_id' => $item->id])
-                ->with('error', '決済中に問題が発生しました。再度お試しください。');
+                ->with('error', '購入がキャンセルされました。');
         }
-    }
-// 支払い成功
-    public function success($item_id)
-    {
-        $item = Item::findOrFail($item_id);
-
-        return redirect()->route('item.detail', ['item_id' => $item->id])
-            ->with('success', '購入が完了しました！');
-    }
-// 支払いキャンセル
-    public function cancel($item_id)
-    {
-        $item = Item::findOrFail($item_id);
-
-        return redirect()->route('purchase.show', ['item_id' => $item->id])
-            ->with('error', '購入がキャンセルされました。');
     }
 
 // 住所変更画面の表示
