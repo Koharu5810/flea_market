@@ -52,9 +52,13 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('purchase.show', ['item_id' => $item->id]) }}" method="GET">
-                <button type="submit" class="purchase-button form__red-button">購入手続きへ</button>
-            </form>
+            @if (!$item->is_sold)
+                <form action="{{ route('purchase.show', ['item_id' => $item->id]) }}" method="GET">
+                    <button type="submit" class="purchase-button form__red-button">購入手続きへ</button>
+                </form>
+            @else
+                <div class="form__red-button" style="pointer-events: none;">この商品はSoldしました</div>
+            @endif
     {{-- 商品説明・商品の情報 --}}
             <div class="item-description">
                 <h3 class="item__title">商品説明</h3>
