@@ -15,7 +15,8 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('address_id')->constrained('user_addresses')->cascadeOnDelete();
             $table->uuid('uuid')->unique()->index();
             $table->string('name');
             $table->string('image');
@@ -23,6 +24,7 @@ class CreateItemsTable extends Migration
             $table->text('description');
             $table->string('brand')->nullable();
             $table->decimal('price', 10, 0);
+            $table->boolean('is_sold')->default(false);
             $table->timestamps();
         });
     }
