@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 use App\Models\UserAddress;
 
-class ItemTableSeeder extends Seeder
+class ItemsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
