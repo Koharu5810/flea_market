@@ -54,11 +54,11 @@ class User extends Authenticatable
     public function user_address() {
         return $this->hasOne(UserAddress::class, 'user_id', 'id');
     }
-    public function items() {
-        return $this->hasMany(Item::class);
-    }
     public function orders() {
         return $this->hasMany(Order::class);
+    }
+    public function items() {
+        return $this->hasMany(Item::class);
     }
     public function favorites() {
         return $this->belongsToMany(Item::class, 'favorites', 'user_id', 'item_id');

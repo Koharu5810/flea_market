@@ -26,7 +26,12 @@ class UserController extends Controller
 
         if ($tab === 'buy') {
             // 購入した商品
-            $items = $user->orders()->with('items')->get()->pluck('item');
+            $items = $user->orders()
+                ->with('item')
+                ->get()
+                ->map(function ($order) {
+                    return $order->item;
+                });
         } elseif ($tab === 'sell') {
             // 出品した商品
             $items = $user->items;
