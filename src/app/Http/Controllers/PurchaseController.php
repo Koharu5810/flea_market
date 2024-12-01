@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Item;
 use App\Models\UserAddress;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
@@ -84,7 +85,7 @@ class PurchaseController extends Controller
         return view('purchase.address', compact('item', 'address'));
     }
 // 住所変更
-    public function updateAddress(PurchaseRequest $request, $item_id)
+    public function updateAddress(Request $request, $item_id)
     {
         UserAddress::updateOrCreate(
             ['user_id' => auth()->id()],
