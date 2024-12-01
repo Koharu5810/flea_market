@@ -33,8 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase.show');
     // 商品購入実行
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
-    // Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'success'])->name('purchase.success');
-    // Route::get('/purchase/cancel/{item_id}', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
+    Route::get('/purchase/{item_id}/success', [PurchaseController::class, 'success'])->name('purchase.success');
+    Route::get('/purchase/{item_id}/cancel', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
     // 送付先住所変更画面
     Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('edit.purchase.address');
     Route::patch('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('update.purchase.address');

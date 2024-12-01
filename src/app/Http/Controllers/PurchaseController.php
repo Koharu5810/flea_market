@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\UserAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\PurchaseAddressRequest;
 use Stripe\Stripe;
@@ -54,6 +55,8 @@ class PurchaseController extends Controller
 
             return redirect($session->url);
         } catch (Exception $e) {
+                   Log::error('Stripeエラー: ' . $e->getMessage());
+                   
             return redirect()->route('purchase.show', ['item_id' => $item->id])
                 ->with('error', '決済中に問題が発生しました。再度お試しください。');
         }
