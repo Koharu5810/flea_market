@@ -23,34 +23,15 @@
         </div>
         <hr class="home__divider">
         <div class="home__main">
-    {{-- タブの切替絵表示 --}}
-            @if ($tab === 'mylist')
+    {{-- タブの切替表示 --}}
+            @if ($tab === 'mylist' && auth()->check())
         {{-- マイリストタブの処理 --}}
-                @if (auth()->check())
-                    @if ($items->isEmpty())
-                        <p>お気に入り登録した商品がありません</p>
-                    @else
-                        @foreach ($items as $item)
-                            <a href="{{ route('item.detail', ['item_id' => $item->id]) }} " class="item-link">
-                                <div class="item-container">
-                                    @if ($item->image)
-                                        <div class="item-image">
-                                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
-                                        </div>
-                                    @else
-                                        <div class="item-image">商品画像</div>
-                                    @endif
-                                    <div class="item-name">
-                                        {{ $item->name }}
-                                    </div>
-                                </div>
-                            </a>
-                        @endforeach
-                    @endif
-                @else
+                @if ($items->isEmpty())
+                    <p>お気に入り登録した商品がありません</p>
                 @endif
-            @else
-        {{-- おすすめタブの処理 --}}
+            @endif
+
+            @if ($tab !== 'mylist' || auth()->check())
                 @foreach ($items as $item)
                     <a href="{{ route('item.detail', ['item_id' => $item->id]) }} " class="item-link">
                         <div class="item-container">
