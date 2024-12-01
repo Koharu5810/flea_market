@@ -12,7 +12,7 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'image', 'item_condition', 'description', 'price', 'brand', 'user_id',
+        'name', 'image', 'item_condition', 'description', 'price', 'brand', 'user_id', 'is_sold',
     ];
 
     public const CONDITIONS = [

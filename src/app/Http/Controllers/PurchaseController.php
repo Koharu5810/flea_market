@@ -10,6 +10,7 @@ use App\Models\UserAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\PurchaseAddressRequest;
@@ -58,7 +59,10 @@ class PurchaseController extends Controller
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => route('home') . '?success=true&item_id=' . $item->id,
+                'success_url' => route('purchase.success', [
+                    'item_id' => $item->id,
+                    'session_id' => '{CHECKOUT_SESSION_ID}',
+                ]),
                 'cancel_url' => route('purchase.show', ['item_id' => $item->id]),
             ]);
 
@@ -68,52 +72,46 @@ class PurchaseController extends Controller
                 ->with('error', '購入がキャンセルされました。');
         }
     }
-
-// StripeのWebhooksで決済完了後の処理を実装
-public function handleStripeWebhook(Request $request)
-{
-    $payload = $request->getContent();
-    $sigHeader = $request->header('Stripe-Signature');
-    $endpointSecret = env('STRIPE_WEBHOOK_SECRET');
-
-    try {
-        $event = \Stripe\Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
-    } catch (\UnexpectedValueException $e) {
-        // 無効なペイロード
-        return response('Invalid payload', 400);
-    } catch (\Stripe\Exception\SignatureVerificationException $e) {
-        // シグネチャの検証失敗
-        return response('Invalid signature', 400);
-    }
-
-    if ($event->type === 'checkout.session.completed') {
-        $session = $event->data->object;
-
-        // アイテムとユーザーを特定
-        $itemId = $session->metadata->item_id;
-        $userId = $session->metadata->user_id;
-
-        $item = Item::find($itemId);
-        $user = User::find($userId);
-
-        if ($item && $user) {
-            // Ordersテーブルにデータを挿入
-            Order::create([
-                'uuid' => (string) Str::uuid(),
-                'user_id' => $user->id,
-                'item_id' => $item->id,
-                'address_id' => $user->address_id,
-                'payment_method' => $session->payment_method_types[0],
-                'purchased_at' => now(),
-            ]);
-
-            // アイテムの販売状態を更新
-            $item->update(['is_sold' => true]);
+// 購入完了後の処理
+    public function success(Request $request)
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login');
         }
-    }
 
-    return response('Webhook handled', 200);
-}
+        $sessionId = $request->session_id;
+        $itemId = $request->item_id;
+
+        $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+        if ($session->payment_status === 'paid') {
+            $item = Item::findOrFail($itemId);
+
+            // 商品が既に売れていないか確認
+            if ($item->is_sold) {
+                return redirect()->route('home')->with('error', 'この商品は既に購入されています。');
+            }
+
+            DB::transaction(function () use ($item, $session) {
+                // Ordersテーブルにデータを挿入
+                Order::create([
+                    'uuid' => (string) Str::uuid(),
+                    'user_id' => auth()->id(),
+                    'item_id' => $item->id,
+                    'address_id' => auth()->user()->default_address_id,
+                    'payment_method' => $session->payment_method_types[0] ?? 'unknown',
+                    'purchased_at' => now(),
+                ]);
+
+                // 商品を販売済みに更新
+                $item->update(['is_sold' => true]);
+            });
+
+            return redirect()->route('home')->with('success', '購入が完了しました。');
+        }
+
+        return redirect()->route('home')->with('error', '決済に失敗しました。');
+    }
 
 // 住所変更画面の表示
     public function editAddress($item_id)
