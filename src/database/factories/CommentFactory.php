@@ -18,7 +18,7 @@ class CommentFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->first()->id,
             'item_id' => Item::inRandomOrder()->first()->id,
-            'comment' => $this->faker->sentence(10),
+            'comment' => $this->faker->realText(255),
             'created_at' => now(),
             'updated_at' => now(),
         ];
