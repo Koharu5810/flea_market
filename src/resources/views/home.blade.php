@@ -22,10 +22,9 @@
             </a>
         </div>
         <hr class="home__divider">
-        <div class="home__main">
     {{-- タブの切替表示 --}}
+        <div class="home__main">
             @if ($tab === 'mylist' && auth()->check())
-        {{-- マイリストタブの処理 --}}
                 @if ($items->isEmpty())
                     <p>お気に入り登録した商品がありません</p>
                 @endif
@@ -34,7 +33,7 @@
             @if ($tab !== 'mylist' || auth()->check())
                 @foreach ($items as $item)
                     <a href="{{ route('item.detail', ['item_id' => $item->id]) }} " class="item-link">
-                        <div class="item-container">
+                        <div class="item-container {{ $item->is_sold ? 'soldout' : '' }}">
                             @if ($item->image)
                                 <div class="item-image">
                                     <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />

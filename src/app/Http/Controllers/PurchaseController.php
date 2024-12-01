@@ -59,10 +59,11 @@ class PurchaseController extends Controller
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => route('purchase.success', [
-                    'item_id' => $item->id,
-                    'session_id' => '{CHECKOUT_SESSION_ID}',
-                ]),
+                // 'success_url' => route('purchase.success', [
+                //     'item_id' => $item->id,
+                //     'session_id' => '{CHECKOUT_SESSION_ID}',
+                // ]),
+                'success_url' => url('/purchase/' . $item->id . '/success?session_id={CHECKOUT_SESSION_ID}'),
                 'cancel_url' => route('purchase.show', ['item_id' => $item->id]),
             ]);
 
@@ -79,6 +80,8 @@ class PurchaseController extends Controller
             return redirect()->route('login');
         }
 
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
         $sessionId = $request->session_id;
         $itemId = $request->item_id;
 
@@ -93,12 +96,20 @@ class PurchaseController extends Controller
             }
 
             DB::transaction(function () use ($item, $session) {
+                $address = auth()->user()->user_address;
+
+                if (!$address) {
+                    return redirect()->route('profile.edit')->with('error', '配送先住所を登録してください。');
+                }
+
+                $addressId = $address->id;
+
                 // Ordersテーブルにデータを挿入
                 Order::create([
                     'uuid' => (string) Str::uuid(),
                     'user_id' => auth()->id(),
                     'item_id' => $item->id,
-                    'address_id' => auth()->user()->default_address_id,
+                    'address_id' => $addressId,
                     'payment_method' => $session->payment_method_types[0] ?? 'unknown',
                     'purchased_at' => now(),
                 ]);

@@ -52,7 +52,7 @@ class User extends Authenticatable
     ];
 
     public function user_address() {
-        return $this->hasOne(UserAddress::class);
+        return $this->hasOne(UserAddress::class, 'user_id', 'id');
     }
     public function items() {
         return $this->hasMany(Item::class);
