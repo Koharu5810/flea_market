@@ -43,6 +43,7 @@ html {
     border: none;
 }
 
+/* ボタン類 */
 .header-right {
     margin-right: 20px;
     justify-content: flex-end;
@@ -78,6 +79,7 @@ html {
 main {
     padding-top: 50px;
 }
+/* フォーム送信用 背景赤色ボタン */
 .form__red-button {
     width: 100%;
     background-color: #ff6666;
@@ -91,6 +93,7 @@ main {
     border: none;
     cursor: pointer;
 }
+/* 修正ボタン用 赤枠ボタン */
 .edit__red-button {
     display: inline-block;
     padding: 5px 10px;
@@ -107,15 +110,18 @@ main {
     color: #ff6666;
     text-decoration: none;
 }
+/* リンク用 青文字ボタン */
 .blue-button {
     color: #8FC1E9;
     text-decoration: none;
     cursor: pointer;
 }
+/* バリデーションエラーメッセージ */
 .error-message {
     color: #ff6666;
     font-size: 12px;
 }
+
 .content {
     padding-bottom: 30px;
     display: flex;
