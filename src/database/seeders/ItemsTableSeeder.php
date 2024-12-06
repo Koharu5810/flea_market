@@ -16,7 +16,6 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        // $userAddresses = UserAddress::all();
         $brands = ['Sony', 'Adidas', 'Nike', 'Louis Vuitton', 'SHARP', null];
 
         $items = [
@@ -97,7 +96,6 @@ class ItemsTableSeeder extends Seeder
         $users = User::all();
 
         foreach ($items as $item) {
-            // $randomAddress = $userAddresses->random();
             $randomUser = $users->random();
             $randomBrand = $brands[array_rand($brands)];
 
@@ -108,9 +106,8 @@ class ItemsTableSeeder extends Seeder
                 'description' => $item['description'],
                 'image' => $item['image'],
                 'item_condition' => $conditionId,
-                'user_id' => $randomUser->user_id,
+                'user_id' => $randomUser->id,
                 'address_id' => null,
-                // 'address_id' => $randomAddress->id,
                 'brand' => $randomBrand,
             ]);
 
