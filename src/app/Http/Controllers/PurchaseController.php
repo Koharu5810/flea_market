@@ -91,6 +91,7 @@ class PurchaseController extends Controller
                 return redirect()->route('home')->with('error', 'この商品は既に購入されています。');
             }
 
+            // トランザクションを使用することで処理が失敗した場合ロールバック
             DB::transaction(function () use ($item, $session) {
                 $address = auth()->user()->user_address;
 
@@ -111,7 +112,10 @@ class PurchaseController extends Controller
                 ]);
 
                 // 商品を販売済みに更新
-                $item->update(['is_sold' => true]);
+                $item->update([
+                    'is_sold' => true,
+                    'address_id' => $addressId,  // 購入者の住所をitemsテーブルに挿入
+                ]);
             });
 
             return redirect()->route('home')->with('success', '購入が完了しました。');
