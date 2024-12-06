@@ -59,10 +59,6 @@ class PurchaseController extends Controller
                     ],
                 ],
                 'mode' => 'payment',
-                // 'success_url' => route('purchase.success', [
-                //     'item_id' => $item->id,
-                //     'session_id' => '{CHECKOUT_SESSION_ID}',
-                // ]),
                 'success_url' => url('/purchase/' . $item->id . '/success?session_id={CHECKOUT_SESSION_ID}'),
                 'cancel_url' => route('purchase.show', ['item_id' => $item->id]),
             ]);
