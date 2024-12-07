@@ -160,7 +160,7 @@ main {
     align-items: center;
     justify-content: center;
 
-    border: 1px solid yellow;  /* デバッグ用 */
+    border: 1px solid green;  /* デバッグ用 */
 }
 .content__title {
     margin-top: 40px;
