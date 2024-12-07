@@ -1,5 +1,5 @@
 .login-container {
-    width: 80vw;
+    width: 80%;
     padding-top: 5px;
     padding-bottom: 5px;
     display: flex;
@@ -7,28 +7,16 @@
     justify-content: center;
     align-items: center;
 }
-.login-form__group {
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;  /* ラベル・入力欄を左揃え */
-    margin-bottom: 15px;
-}
-.login-form__group label {
-    font-weight: bold;
-}
-.login-form__group-input {
-    width: 100%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    display: block;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-}
 .login-form__button {
     margin-top: 40px;
 }
-.register-button {
+.register-link {
     margin-top: 15px;
 }
 
+/* タブレット幅用スタイル */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .login-form__button {
+        width: 100%;
+    }
+}

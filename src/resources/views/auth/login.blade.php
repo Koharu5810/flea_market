@@ -8,36 +8,34 @@
 @section('title', 'ログイン')
 
 @section('content')
-    <div class="login-container">
-        <form method="POST" action="/login">
-        @csrf
-    {{-- ユーザー名/メールアドレス --}}
-            <div class="login-form__group">
-                <label for="username">ユーザー名/メールアドレス</label>
-                <input type="text" name="username" value="{{ old('username') }}" class="login-form__group-input" />
-                <div class="error-message">
-                    @error('username')
-                        {{ $message }}
-                    @enderror
-                </div>
+    <form method="POST" action="/login" class="login-container">
+    @csrf
+{{-- ユーザー名/メールアドレス --}}
+        <div class="form__group">
+            <label for="username">ユーザー名/メールアドレス</label>
+            <input type="text" name="username" value="{{ old('username') }}" class="form__group-input" />
+            <div class="error-message">
+                @error('username')
+                    {{ $message }}
+                @enderror
             </div>
-    {{-- パスワード --}}
-            <div class="login-form__group">
-                <label for="password">パスワード</label>
-                <input type="password" name="password"  class="login-form__group-input" />
-                <div class="error-message">
-                    @error('password')
-                        {{ $message }}
-                    @enderror
-                    @if (session('auth_error'))
-                        {{ session('auth_error') }}
-                    @endif
-                </div>
+        </div>
+{{-- パスワード --}}
+        <div class="form__group">
+            <label for="password">パスワード</label>
+            <input type="password" name="password"  class="form__group-input" />
+            <div class="error-message">
+                @error('password')
+                    {{ $message }}
+                @enderror
+                @if (session('auth_error'))
+                    {{ session('auth_error') }}
+                @endif
             </div>
-    {{-- ログインボタン --}}
-            <button class="login-form__button form__red-button">ログインする</button>
-        </form>
-    {{-- 会員登録案内 --}}
-        <a href="/register" class="register-button blue-button">会員登録はこちら</a>
-    </div>
+        </div>
+{{-- ログインボタン --}}
+        <button class="login-form__button form__red-button">ログインする</button>
+    </form>
+{{-- 会員登録案内 --}}
+    <a href="/register" class="register-link blue-button">会員登録はこちら</a>
 @endsection

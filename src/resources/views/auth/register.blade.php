@@ -11,9 +11,9 @@
     <form method="post" action="/register" class="register-container">
     @csrf
 {{-- ユーザー名 --}}
-        <div class="register-form__group">
+        <div class="form__group">
             <label for="username">ユーザー名</label>
-            <input type="text" name="username" value="{{ old('username') }}" class="register-form__group-input" />
+            <input type="text" name="username" value="{{ old('username') }}" class="form__group-input" />
             <div class="error-message">
                 @error('username')
                     {{ $message }}
@@ -21,9 +21,9 @@
             </div>
         </div>
 {{-- メールアドレス --}}
-        <div class="register-form__group">
+        <div class="form__group">
             <label for="username">メールアドレス</label>
-            <input type="email" name="email" value="{{ old('email') }}" class="register-form__group-input" />
+            <input type="email" name="email" value="{{ old('email') }}" class="form__group-input" />
             <div class="error-message">
                 @error('email')
                     {{ $message }}
@@ -31,9 +31,9 @@
             </div>
         </div>
 {{-- パスワード --}}
-        <div class="register-form__group">
+        <div class="form__group">
             <label for="password">パスワード</label>
-            <input type="password" name="password"  class="register-form__group-input" />
+            <input type="password" name="password"  class="form__group-input" />
             <div class="error-message">
                 @error('password')
                     {{ $message }}
@@ -41,9 +41,9 @@
             </div>
         </div>
 {{-- 確認用パスワード --}}
-        <div class="register-form__group">
+        <div class="form__group">
             <label for="password_confirmation">確認用パスワード</label>
-            <input type="password" name="password_confirmation" class="register-form__group-input" />
+            <input type="password" name="password_confirmation" class="form__group-input" />
             <div class="error-message">
                 @error('password_confirmation')
                     {{ $message }}

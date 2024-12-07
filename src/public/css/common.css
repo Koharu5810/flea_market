@@ -86,9 +86,30 @@ main {
     display: flex;
     justify-content: center;
 }
+/* 入力フォーム・グループ */
+.form__group {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;  /* ラベル・入力欄を左揃え */
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+/* 入力フォーム・ラベル */
+.form__group label {
+    font-weight: bold;
+}
+.form__group-input {
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
 /* フォーム送信用 背景赤色ボタン */
 .form__red-button {
-    width: 100%;
+    width: 60%;
     background-color: #ff6666;
     color: #fff;
     font-size: 16px;
@@ -158,6 +179,12 @@ main {
     }
     .content {
         max-width: 95vw;
+    }
+    .form__group{
+        width: 100%;
+    }
+    .form__red-button {
+        width: 100%;
     }
 }
 /* スマートフォン幅用スタイル */
