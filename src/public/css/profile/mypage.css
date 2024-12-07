@@ -79,7 +79,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 30px;
-    justify-items: start;
+    justify-items: center;
     justify-content: center;
     align-items: start;
 }
