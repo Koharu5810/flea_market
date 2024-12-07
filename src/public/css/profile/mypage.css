@@ -74,12 +74,18 @@
 }
 .item__main {
     width: 80vw;
+    max-width: 1230px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 30px;
     justify-items: start;
-    justify-content: start;
+    justify-content: center;
     align-items: start;
+}
+.item__main p {
+    white-space: nowrap;  /* 折り返しを防ぐ */
+    width: auto;
 }
 .item-container {
     width: 150px;
