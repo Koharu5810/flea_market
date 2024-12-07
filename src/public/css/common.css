@@ -212,4 +212,10 @@ main {
     .header__sell-button {
         font-size: 10px;
     }
+    .form__group{
+        width: 100%;
+    }
+    .form__red-button {
+        width: 100%;
+    }
 }
