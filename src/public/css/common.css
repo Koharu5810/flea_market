@@ -8,11 +8,11 @@ html {
     width: 100%;
     height: 50px;
     padding: 0 20px;
+    gap: 10px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;    border: 1px solid green;  /* デバッグ用 */
-
+    align-items: center;  /* 垂直位置 中央揃え */
+    justify-content: space-between;  /* 水平方向 両端揃え */
+    box-sizing: border-box;
 }
 .header-left,
 .header-center,
@@ -20,8 +20,7 @@ html {
     flex: 1;
     display: flex;
     align-items: center;
-    max-width: 400px;
-    border: 1px solid red;  /* デバッグ用 */
+    height: 30px;
 }
 
 /* ロゴ */
@@ -29,21 +28,20 @@ html {
     justify-content: flex-start;
 }
 .header__logo {
-    height: 30px;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* 検索フォーム */
 .header-center {
     justify-content: center;
-    width: 100%;
 }
 .header__search {
     display: flex;
     justify-content: center;
     width: 100%;
-    max-width: 500px;
-    border: 3px solid blue;  /* デバッグ用 */
-
 }
 .header__search-input {
     width: 100%;
@@ -63,6 +61,7 @@ html {
 .header__mypage-button {
     background-color: transparent;
     color: #ccc;
+    font-size: 14px;
     border: none;
     cursor: pointer;
 }
@@ -84,6 +83,8 @@ html {
 
 main {
     padding-top: 50px;
+    display: flex;
+    justify-content: center;
 }
 /* フォーム送信用 背景赤色ボタン */
 .form__red-button {
@@ -129,6 +130,7 @@ main {
 }
 
 .content {
+    max-width: 1230px;
     padding-bottom: 30px;
     display: flex;
     flex-direction: column;
@@ -142,28 +144,42 @@ main {
 }
 
 /* PC幅用スタイル調整 */
-@media (min-width: 1400px) and (max-width: 1540px) {
-    .header,
-    .content {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-    .header__search-input {
-        width: 250px;
-    }
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+
 }
 /* タブレット幅用スタイル */
-@media (min-width: 768px) and (max-width: 850px) {
-    .header,
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .header__logo {
+        width: 90%;
+        height: auto;
+    }
     .content {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .header__search-input {
-        width: 150px;
-    }
-    .header__menu {
-        gap: 10px;
+        max-width: 95vw;
     }
 }
-
+/* スマートフォン幅用スタイル */
+@media screen and (max-width: 767px) {
+    .header {
+        padding: 0;
+        gap: 2px;
+    }
+    .header__search {
+        height: 20px;
+    }
+    .header__search-input {
+        font-size: 10px;
+    }
+    .header-right {
+        gap: 2px;
+    }
+    .header__login-button,
+    .header__logout-button,
+    .header__mypage-button {
+        font-size: 10px;
+        padding: 0;
+        margin: 0;
+    }
+    .header__sell-button {
+        font-size: 10px;
+    }
+}
