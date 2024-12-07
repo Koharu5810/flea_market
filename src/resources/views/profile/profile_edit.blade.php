@@ -8,7 +8,7 @@
 @section('title', 'プロフィール設定')
 
 @section('content')
-    <div class="profile__create-container">
+    <div class="profile__edit-container">
         <form method="post" action="{{ route('profile.save') }}" enctype="multipart/form-data">
         @csrf
     {{-- プロフィール画像 --}}
@@ -36,13 +36,13 @@
                 </div>
             @enderror
     {{-- ユーザー名 --}}
-            <div class="profile-form__group">
+            <div class="form__group">
                 <label for="username">ユーザー名</label>
                 <input
                     type="text"
                     name="username"
                     value="{{ old('username', $username) }}"
-                    class="profile-form__group-input"
+                    class="form__group-input"
                 />
                 @error('username')
                     <div class="error-message">
@@ -51,13 +51,13 @@
                 @enderror
             </div>
     {{-- 郵便番号 --}}
-            <div class="profile-form__group">
+            <div class="form__group">
                 <label for="postal_code">郵便番号</label>
                 <input
                     type="text"
                     name="postal_code"
                     value="{{ old('postal_code', $userAddress->postal_code) }}"
-                    class="profile-form__group-input"
+                    class="form__group-input"
                 />
                 @error('postal_code')
                     <div class="error-message">
@@ -66,13 +66,13 @@
                 @enderror
             </div>
     {{-- 住所 --}}
-            <div class="profile-form__group">
+            <div class="form__group">
                 <label for="address">住所</label>
                 <input
                     type="text"
                     name="address"
                     value="{{ old('address', $userAddress->address) }}"
-                    class="profile-form__group-input"
+                    class="form__group-input"
                 />
                 @error('address')
                     <div class="error-message">
@@ -81,13 +81,13 @@
                 @enderror
             </div>
     {{-- 建物名 --}}
-            <div class="profile-form__group">
+            <div class="form__group">
                 <label for="building">建物名</label>
                 <input
                     type="text"
                     name="building"
                     value="{{ old('building', $userAddress->building) }}"
-                    class="profile-form__group-input"
+                    class="form__group-input"
                 />
                 @error('building')
                     <div class="error-message">
