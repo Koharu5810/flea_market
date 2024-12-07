@@ -1,6 +1,10 @@
 .item-container {
-    width: 80vw;
+    width: 80%;
+    margin: 0;
     display: flex;
+    box-sizing: border-box;
+
+    border: 1px solid pink;  /* デバッグ用 */
 }
 .left-container {
     width: 60%;
@@ -59,7 +63,7 @@
     margin-top: 20px;
 }
 .pay-select {
-    width: 40%;
+    width: 60%;
     padding: 3px;
     border-radius: 3px;
 }
@@ -80,10 +84,12 @@
     margin: 0;
 }
 .change-address-button {
+    margin-right: 30px;
     border: none;
     background-color: transparent;
 }
 
+/* 右側 */
 .right-container {
     flex: 1;
     flex-direction: column;
@@ -98,10 +104,41 @@
     border: 1px solid #000;
 }
 .confirmation-table th,td {
-    padding: 25px;
+    padding: 30px 20px;
+    text-align: center;
+    font-weight: 400;
+    white-space: nowrap;
+}
+.purchase-button {
+    width: 100%;
+    margin-top: 40px;
+}
+
+/* タブレット幅用スタイル */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .item-container {
+        width: 100%;
+    }
+    .confirmation-table th,td {
+    padding: 30px 10px;
     text-align: center;
     font-weight: 400;
 }
-.purchase-button {
-    margin-top: 40px;
+}
+/* スマホ幅用スタイル */
+@media screen and (max-width: 767px) {
+    .item-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+    }
+    .left-container,
+    .right-container {
+        width: 80%;
+    }
+    .pay-select {
+        width: 80%;
+    }
 }
