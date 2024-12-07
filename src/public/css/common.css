@@ -94,7 +94,6 @@ main {
     align-items: flex-start;  /* ラベル・入力欄を左揃え */
     margin-bottom: 15px;
     box-sizing: border-box;
-    border: 1px solid pink;  /* デバッグ用 */
 }
 /* 入力フォーム・ラベル */
 .form__group label {
@@ -159,8 +158,6 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    border: 1px solid green;  /* デバッグ用 */
 }
 .content__title {
     margin-top: 40px;

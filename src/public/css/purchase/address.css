@@ -1,61 +1,19 @@
-.profile__create-container {
-    width: 80vw;
+.address__update-container {
+    width: 80%;
     padding-top: 5px;
     padding-bottom: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.profile__image {
-    display: flex;
-    align-items: center;
-    gap:20px;
-    margin-bottom: 50px;
-}
-.profile__image-preview {
-    background-color: #f0f0f0;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-.profile__image-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.upload-button {
-    display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid #ff6666;
-    color: #ff6666;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-}
-.profile-form__group {
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;  /* ラベル・入力欄を左揃え */
-    margin-bottom: 20px;
-}
-.profile-form__group label {
-    font-weight: bold;
-}
-.profile-form__group-input {
-    width: 100%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    display: block;
-    border-radius: 3px;
-    border: 1px solid #ccc;
 }
 .profile-form__button {
     margin-top: 40px;
+}
+
+/* タブレット幅用スタイル */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .login-form__button {
+        width: 100%;
+    }
 }
