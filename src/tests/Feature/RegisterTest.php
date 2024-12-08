@@ -69,5 +69,22 @@ class RegisterTest extends TestCase
             'password' => 'パスワードを入力してください',
         ]);
     }
+    public function test_password_validation_error_when_password_is_too_short()
+    {
+        $url = route('register');
+
+        $data = [
+            'username' => 'TEST TECKO',
+            'email' => 'test@example.com',
+            'password' => 'short12',
+            'password_confirmation' => 'short12',
+        ];
+
+        $response = $this->postJson($url, $data);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors([
+            'password' => 'パスワードは8文字以上で入力してください',
+        ]);
+    }
 
 }
