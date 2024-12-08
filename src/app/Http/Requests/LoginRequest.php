@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255',   // usernameまたはemailでログイン可能
             'password' => 'required|string|min:8',
         ];
     }
@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'メールアドレスを入力してください',
+            'username.required' => 'ユーザー名またはメールアドレスを入力してください',
             'password.required' => 'パスワードを入力してください',
         ];
     }
