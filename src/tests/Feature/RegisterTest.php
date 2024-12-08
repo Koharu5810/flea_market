@@ -100,7 +100,7 @@ class RegisterTest extends TestCase
         $response = $this->postJson($url, $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
-            'password_confirmation' => 'パスワードが一致しません',
+            'password_confirmation' => 'パスワードと一致しません',
         ]);
     }
 }
