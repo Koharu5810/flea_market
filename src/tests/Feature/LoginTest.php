@@ -54,6 +54,28 @@ class LoginTest extends TestCase
             'password' => 'パスワードを入力してください',
         ]);
     }
+    public function test_login_fails_with_invalid_credentials()
+    {
+        $url = route('login');
+
+        User::factory()->create([
+            'username' => 'TEST USER',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password123'),
+        ]);
+
+        $data = [
+            'username' => 'wronguser',
+            'password' => 'wrongpassword',
+        ];
+
+        $response = $this->post($url, $data);
+        $response->assertStatus(302);
+        $response->assertRedirect(route('login'));
+
+        // ユーザーが認証されていないことを確認
+        $this->assertGuest();
+    }
 
     // 全ての項目が正しく入力されている場合、ログイン処理実行
     public function test_user_can_login_and_redirect_to_home()
@@ -76,6 +98,7 @@ class LoginTest extends TestCase
         $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
         $response->assertRedirect(route('home'));
 
+        // 認証ユーザであることを確認
         $this->assertAuthenticatedAs($user);
     }
 }
