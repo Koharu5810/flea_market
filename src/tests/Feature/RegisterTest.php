@@ -52,4 +52,22 @@ class RegisterTest extends TestCase
             'email' => 'メールアドレスを入力してください',
         ]);
     }
+    public function test_password_validation_error_when_password_is_missing()
+    {
+        $url = route('register');
+
+        $data = [
+            'username' => 'TEST TECKO',
+            'email' => 'test@example.com',
+            'password' => '',
+            'password_confirmation' => 'password123',
+        ];
+
+        $response = $this->postJson($url, $data);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors([
+            'password' => 'パスワードを入力してください',
+        ]);
+    }
+
 }
