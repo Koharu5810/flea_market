@@ -53,6 +53,7 @@ class ItemController extends Controller
 
         return view('home', compact('items', 'tab'));
     }
+
 // 商品出品画面の表示
     public function showSell()
     {
@@ -106,11 +107,9 @@ class ItemController extends Controller
         }
 
         if ($item->favoriteBy()->where('user_id', $user->id)->exists()) {
-            // すでにお気に入りの場合usersテーブルから削除
-            $item->favoriteBy()->detach($user->id);
+            $item->favoriteBy()->detach($user->id);  // すでにお気に入りの場合usersテーブルから削除
         } else {
-            // お気に入りでない場合usersテーブルに追加
-            $item->favoriteBy()->attach($user->id);
+            $item->favoriteBy()->attach($user->id);  // お気に入りでない場合usersテーブルに追加
         }
 
         $item->refresh();

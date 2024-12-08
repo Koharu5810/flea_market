@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\User;
 use App\Models\Order;
 use App\Models\Item;
 use App\Models\UserAddress;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\PurchaseAddressRequest;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
-use PhpParser\Node\Expr\FuncCall;
 
 class PurchaseController extends Controller
 {
@@ -24,7 +21,6 @@ class PurchaseController extends Controller
     public function show($item_id)
     {
         $item = Item::findOrFail($item_id);
-
         $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
 
         return view('purchase.index', compact('item', 'address'));

@@ -6,12 +6,6 @@
 @endsection
 
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div class="home-container">
         <div class="home__header">
             <a href="{{ route('home', ['query' => request('query')]) }}" class="home__tab {{ $tab !== 'mylist' ? 'active' : '' }}">
