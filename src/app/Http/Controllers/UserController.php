@@ -73,19 +73,20 @@ class UserController extends Controller
         $addressData = $addressRequest->validated();
 
         $user = Auth::user();
-        if (!$user || !$user instanceof User) {
-            abort(403, 'Unauthorized action.');
+        if (!$user) {
+            return redirect()->route('login');
         }
 
         // プロフィール画像の保存
         $profileImagePath = $user->profile_image;  // デフォルトは既存画像
         if ($profileRequest->hasFile('profile_image')) {
+            $newImagePath = $profileRequest->file('profile_image')->store('profile_image', 'public');
             // 既存の画像を削除
             if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
                 Storage::disk('public')->delete($user->profile_image);
             }
             // 新しい画像を保存
-            $profileImagePath = $profileRequest->file('profile_image')->store('profile_images', 'public');
+            $profileImagePath = $newImagePath;
         }
 
         // ユーザ情報の更新
