@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 
 class LoginTest extends TestCase
 {
@@ -30,7 +31,6 @@ class LoginTest extends TestCase
         $data = [
             'username' => '',
             'password' => 'password123',
-            'password_confirmation' => 'password123',
         ];
 
         $response = $this->postJson($url, $data);
@@ -46,7 +46,6 @@ class LoginTest extends TestCase
         $data = [
             'username' => 'TEST USER',
             'password' => '',
-            'password_confirmation' => 'password123',
         ];
 
         $response = $this->postJson($url, $data);
@@ -54,5 +53,29 @@ class LoginTest extends TestCase
         $response->assertJsonValidationErrors([
             'password' => 'パスワードを入力してください',
         ]);
+    }
+
+    // 全ての項目が正しく入力されている場合、ログイン処理実行
+    public function test_user_can_login_and_redirect_to_home()
+    {
+        $url = route('login');
+
+        // 事前にユーザーを作成
+        $user = User::factory()->create([
+            'username' => 'TEST USER',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password123'),
+        ]);
+
+        $data = [
+            'username' => 'TEST USER',
+            'password' => 'password123',
+        ];
+
+        $response = $this->post($url, $data);
+        $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
+        $response->assertRedirect(route('home'));
+
+        $this->assertAuthenticatedAs($user);
     }
 }

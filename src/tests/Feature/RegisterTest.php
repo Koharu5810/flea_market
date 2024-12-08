@@ -107,7 +107,7 @@ class RegisterTest extends TestCase
     }
 
 // 全ての項目が入力されている場合、会員情報が登録されログイン画面に遷移
-    public function test_user_can_register_and_redirect_to_login()
+    public function test_user_can_register_and_redirect_to_profile_edit()
     {
         $url = route('register');
 
