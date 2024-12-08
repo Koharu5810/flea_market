@@ -86,5 +86,21 @@ class RegisterTest extends TestCase
             'password' => 'パスワードは8文字以上で入力してください',
         ]);
     }
+    public function test_password_validation_error_when_password_confirmation_does_not_match()
+    {
+        $url = route('register');
 
+        $data = [
+            'username' => 'TEST TECKO',
+            'email' => 'test@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password456',
+        ];
+
+        $response = $this->postJson($url, $data);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors([
+            'password_confirmation' => 'パスワードと一致しません',
+        ]);
+    }
 }
