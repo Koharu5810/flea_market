@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // 会員登録画面
-Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withoutMiddleware(['auth']);
-Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth']);
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withoutMiddleware(['auth'])->name('register.show');
+Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth'])->name('register');
 // ログイン画面
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('show.login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
