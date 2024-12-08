@@ -15,8 +15,6 @@ class AuthController extends Controller
     }
 // 会員登録処理
     public function register(RegisterRequest $request) {
-        $form = $request->validated();
-
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
@@ -25,8 +23,6 @@ class AuthController extends Controller
 
         // 登録直後にログイン状態にする
         auth()->login($user);
-
-        session(['username' => $form['username']]);
 
         return redirect()->route('profile.edit');
     }
@@ -37,19 +33,19 @@ class AuthController extends Controller
     }
 // ログイン処理
     public function login(LoginRequest $request) {
-            $user = User::where('username', $request->username)
-                ->orWhere('email', $request->username)  // ユーザ名またはメールアドレスで認証
-                ->first();
+        $user = User::where('username', $request->username)
+            ->orWhere('email', $request->username)  // ユーザ名またはメールアドレスで認証
+            ->first();
 
-            // パスワードが一致するか確認
-            if ($user && Hash::check($request->password, $user->password)) {
-                auth()->login($user);  // 認証成功
+        // パスワードが一致するか確認
+        if ($user && Hash::check($request->password, $user->password)) {
+            auth()->login($user);  // 認証成功
 
-                // 認証成功後商品一覧画面にリダイレクト
-                return redirect()->route('home');
-            }
+            // 認証成功後商品一覧画面にリダイレクト
+            return redirect()->route('home');
+        }
 
-            session()->flash('auth_error', 'ログイン情報が登録されていません。');
-            return redirect()->route('login')->withInput();  // 入力値を保持してログイン画面にリダイレクト
+        session()->flash('auth_error', 'ログイン情報が登録されていません。');
+        return redirect()->route('login')->withInput();  // 入力値を保持してログイン画面にリダイレクト
     }
 }
