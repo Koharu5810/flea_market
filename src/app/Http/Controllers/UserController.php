@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserAddress;
-use App\Models\User;
-use App\Models\Order;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -24,21 +21,11 @@ class UserController extends Controller
 
         $tab = $request->query('tab', 'sell');
 
-        if ($tab === 'buy') {
-            // 購入した商品
-            $items = $user->orders()
-                ->with('item')
-                ->get()
-                ->map(function ($order) {
-                    return $order->item;
-                });
-        } elseif ($tab === 'sell') {
-            // 出品した商品
-            $items = $user->items;
-        } else {
-            // デフォルトでは空を返す
-            $items = collect();
-        }
+        $items = match ($tab) {
+            'buy' => $user->orders()->with('item')->get()->map(fn($order) => $order->item),  // 購入した商品タブ
+            'sell' => $user->items,  // 出品した商品タブ
+            default => collect(),   // デフォルトでは空を返す
+        };
 
         return view('profile.mypage', compact('user', 'profileImage', 'items', 'tab'));
     }
