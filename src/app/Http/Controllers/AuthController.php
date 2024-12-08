@@ -45,7 +45,7 @@ class AuthController extends Controller
             return redirect()->route('home');
         }
 
-        session()->flash('auth_error', 'ログイン情報が登録されていません。');
+        session()->flash('auth_error', 'ログイン情報が登録されていません');
         return redirect()->route('login')->withInput();  // 入力値を保持してログイン画面にリダイレクト
     }
 }

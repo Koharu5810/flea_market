@@ -72,6 +72,7 @@ class LoginTest extends TestCase
         $response = $this->post($url, $data);
         $response->assertStatus(302);
         $response->assertRedirect(route('login'));
+        $response->assertSessionHas('auth_error', 'ログイン情報が登録されていません');
 
         // ユーザーが認証されていないことを確認
         $this->assertGuest();
