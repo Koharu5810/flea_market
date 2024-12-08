@@ -21,6 +21,6 @@ class PasswordMatch implements Rule
 
     public function message()
     {
-        return 'パスワードと一致しません';
+        return 'パスワードが一致しません';
     }
 }
