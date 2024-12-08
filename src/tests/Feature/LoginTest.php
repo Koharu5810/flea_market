@@ -39,4 +39,20 @@ class LoginTest extends TestCase
             'username' => 'ユーザー名またはメールアドレスを入力してください',
         ]);
     }
+    public function test_password_validation_error_when_password_is_missing()
+    {
+        $url = route('register');
+
+        $data = [
+            'username' => 'TEST USER',
+            'password' => '',
+            'password_confirmation' => 'password123',
+        ];
+
+        $response = $this->postJson($url, $data);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors([
+            'password' => 'パスワードを入力してください',
+        ]);
+    }
 }
