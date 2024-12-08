@@ -35,4 +35,21 @@ class RegisterTest extends TestCase
             'username' => 'お名前を入力してください',
         ]);
     }
+    public function test_email_validation_error_when_email_is_missing()
+    {
+        $url = route('register');
+
+        $data = [
+            'username' => 'TEST TECKO',
+            'email' => '',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ];
+
+        $response = $this->postJson($url, $data);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors([
+            'email' => 'メールアドレスを入力してください',
+        ]);
+    }
 }
