@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
+use App\Models\User;
 
 class RegisterTest extends TestCase
 {
@@ -40,7 +42,7 @@ class RegisterTest extends TestCase
         $url = route('register');
 
         $data = [
-            'username' => 'TEST TECKO',
+            'username' => 'TEST USER',
             'email' => '',
             'password' => 'password123',
             'password_confirmation' => 'password123',
@@ -57,7 +59,7 @@ class RegisterTest extends TestCase
         $url = route('register');
 
         $data = [
-            'username' => 'TEST TECKO',
+            'username' => 'TEST USER',
             'email' => 'test@example.com',
             'password' => '',
             'password_confirmation' => 'password123',
@@ -74,7 +76,7 @@ class RegisterTest extends TestCase
         $url = route('register');
 
         $data = [
-            'username' => 'TEST TECKO',
+            'username' => 'TEST USER',
             'email' => 'test@example.com',
             'password' => 'short12',
             'password_confirmation' => 'short12',
@@ -91,7 +93,7 @@ class RegisterTest extends TestCase
         $url = route('register');
 
         $data = [
-            'username' => 'TEST TECKO',
+            'username' => 'TEST USER',
             'email' => 'test@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password456',
@@ -102,5 +104,33 @@ class RegisterTest extends TestCase
         $response->assertJsonValidationErrors([
             'password_confirmation' => 'パスワードと一致しません',
         ]);
+    }
+
+// 全ての項目が入力されている場合、会員情報が登録されログイン画面に遷移
+    public function test_user_can_register_and_redirect_to_login()
+    {
+        $url = route('register');
+
+        $data = [
+            'username' => 'TEST USER',
+            'email' => 'test@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ];
+
+        $response = $this->post($url, $data);
+        $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
+        $response->assertRedirect(route('profile.edit'));
+
+        // データベースにユーザーが作成されたことを確認
+        $this->assertDatabaseHas('users', [
+            'username' => 'TEST USER',
+            'email' => 'test@example.com',
+        ]);
+
+        // パスワードがハッシュ化されて保存されていることを確認
+        $user = User::where('email', 'test@example.com')->first();
+        $this->assertNotNull($user);
+        $this->assertTrue(Hash::check('password123', $user->password));
     }
 }
