@@ -37,6 +37,6 @@ class ItemTest extends TestCase
 
         $response = $this->get(route('home'));
         $response->assertStatus(200);
-        // $response->assertSee('Sold');
+        $response->assertSee('Sold');
     }
 }

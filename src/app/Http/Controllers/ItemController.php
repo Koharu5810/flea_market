@@ -93,7 +93,7 @@ class ItemController extends Controller
         return view('item-detail', compact('item', 'user'));
     }
 // お気に入り登録
-    public function toggleFavorite(Request $request, $id)
+    public function toggleFavorite($id)
     {
         if (!auth()->check()) {
             return redirect()->route('item.login');
