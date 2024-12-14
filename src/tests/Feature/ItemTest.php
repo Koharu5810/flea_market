@@ -140,6 +140,20 @@ class ItemTest extends TestCase
         // 他のユーザーが出品した商品が表示されていることを確認
         $response->assertSeeText($otherItem->name);
     }
+    public function test_guest_user_sees_nothing_in_mylist()
+    {
+        // 未認証の状態でマイリストタブにアクセス
+        $response = $this->get(route('home', ['tab' => 'mylist']));
+        $response->assertStatus(200);
+
+        // レスポンスが空に近い状態であることを確認
+        $html = $response->getContent();
+
+        // お気に入り商品がない場合のメッセージが表示されていないことを確認
+        $this->assertStringNotContainsString('お気に入り登録した商品がありません', $html);
+        // 商品のリストが一切表示されていないことを確認
+        $this->assertStringNotContainsString('<div class="item-container"', $html);
+    }
 
 
 }
