@@ -81,7 +81,7 @@ class ItemTest extends TestCase
             $user = User::factory()->create();
             $otherUser = User::factory()->create();
 
-            $items = Item::factory()->count(5)->create();
+            $items = Item::factory()->count(2)->create();
 
             // ユーザーが「いいね」した商品を登録
             $favoritedItems = $items->take(3);
