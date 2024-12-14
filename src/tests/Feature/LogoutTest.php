@@ -28,9 +28,13 @@ class LogoutTest extends TestCase
             'password' => bcrypt('password123'),
         ]);
 
-        // ユーザをログイン状態にする
         $this->assertNotNull($user);
+        // ユーザをログイン状態にする
         $this->actingAs($user);
+
+        $response = $this->get(route('home'));
+        $response->assertSee('ログアウト');
+        $response->assertStatus(200);
 
         $response = $this->post(route('logout'));
         $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
