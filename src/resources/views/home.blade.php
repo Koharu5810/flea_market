@@ -28,6 +28,9 @@
                 @foreach ($items as $item)
                     <a href="{{ route('item.detail', ['item_id' => $item->id]) }} " class="item-link">
                         <div class="item-container {{ $item->is_sold ? 'soldout' : '' }}">
+                            @if ($item->is_sold)
+                                <span class="sold-label visually-hidden">Sold</span> <!-- 非表示にする -->
+                            @endif
                             @if ($item->image)
                                 <div class="item-image">
                                     <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
