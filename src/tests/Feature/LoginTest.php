@@ -88,8 +88,6 @@ class LoginTest extends TestCase
 // 全ての項目が正しく入力されている場合、ログイン処理実行
     public function test_user_can_login_and_redirect_to_home()
     {
-        $url = route('login');
-
         // 事前にユーザーを作成
         $user = User::factory()->create([
             'username' => 'TEST USER',
@@ -102,7 +100,7 @@ class LoginTest extends TestCase
             'password' => 'password123',
         ];
 
-        $response = $this->post($url, $data);
+        $response = $this->post(route('login'), $data);
         $response->assertStatus(302);
         $response->assertRedirect(route('home'));
 
