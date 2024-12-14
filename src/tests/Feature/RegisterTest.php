@@ -20,9 +20,18 @@ class RegisterTest extends TestCase
         $this->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     }
 
+    public function test_register_page_can_be_opened()
+    {
+        $response = $this->get(route('register'));
+        $response->assertStatus(200);
+        $response->assertSee('登録する');
+    }
     public function test_username_validation_error_when_username_is_missing()
     {
-        $url = route('register');
+        // $url = route('register');
+
+        $response = $this->get(route('register'));
+        $response->assertStatus(200);
 
         $data = [
             'username' => '',
@@ -31,7 +40,10 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password123',
         ];
 
-        $response = $this->postJson($url, $data);
+        $response = $this->post(route('register'), $data);
+        // $response->assertSee('登録する');
+
+        // $response = $this->postJson($url, $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'username' => 'お名前を入力してください',
