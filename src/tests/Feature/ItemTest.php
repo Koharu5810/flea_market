@@ -37,6 +37,22 @@ class ItemTest extends TestCase
 
         $response = $this->get(route('home'));
         $response->assertStatus(200);
-        $response->assertSee('Sold');
+
+        // レスポンスのHTMLを文字列として取得
+        $html = $response->getContent();
+
+        // 購入済み商品が正しく表示されているか確認
+        foreach ($soldItems as $item) {
+            $this->assertStringContainsString(
+                'item-container soldout',
+                $html,
+                "Item ID {$item->id} の 'soldout' クラスが見つかりません。"
+            );
+            $this->assertStringContainsString(
+                'Sold',
+                $html,
+                "Item ID {$item->id} に 'Sold' が表示されていません。"
+            );
+        }
     }
 }
