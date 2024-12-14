@@ -74,4 +74,43 @@ class ItemTest extends TestCase
         $response->assertStatus(200);
         $response->assertDontSee($ownItem);
     }
+
+    public function test_only_favorited_items_are_displayed()
+    {
+        {
+            $user = User::factory()->create();
+            $otherUser = User::factory()->create();
+
+            $items = Item::factory()->count(5)->create();
+
+            // ユーザーが「いいね」した商品を登録
+            $favoritedItems = $items->take(3);
+            foreach ($favoritedItems as $item) {
+                DB::table('favorites')->insert([
+                    'user_id' => $user->id,
+                    'item_id' => $item->id,
+                ]);
+            }
+
+            // 他のユーザーが「いいね」した商品を登録
+            DB::table('favorites')->insert([
+                'user_id' => $otherUser->id,
+                'item_id' => $items->last()->id,
+            ]);
+
+            // ユーザーをログイン
+            $this->actingAs($user);
+
+            $response = $this->get(route('home'));
+            $response->assertStatus(200);
+
+            // ユーザーが「いいね」した商品のみが表示されていることを確認
+            foreach ($favoritedItems as $item) {
+                $response->assertSee($item);
+            }
+
+            // 他のユーザーが「いいね」した商品は表示されないことを確認
+            $response->assertDontSee($items->last());
+        }
+    }
 }

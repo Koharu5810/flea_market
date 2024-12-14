@@ -15,9 +15,9 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'username' => $this->faker->name(),
+            'username' => $this->faker->unique()->name,
             'uuid' => (string) Str::uuid(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => $this->faker->unique()->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => bcrypt('password'), // 初期パスワードを設定
             'remember_token' => Str::random(10),
