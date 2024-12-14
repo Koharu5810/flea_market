@@ -47,7 +47,7 @@ class RegisterTest extends TestCase
     }
     public function test_email_validation_error_when_email_is_missing()
     {
-        $url = route('register');
+        $this->openRegisterPage();
 
         $data = [
             'username' => 'TEST USER',
@@ -56,7 +56,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password123',
         ];
 
-        $response = $this->postJson($url, $data);
+        $response = $this->post(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'email' => 'メールアドレスを入力してください',
@@ -64,7 +64,7 @@ class RegisterTest extends TestCase
     }
     public function test_password_validation_error_when_password_is_missing()
     {
-        $url = route('register');
+        $this->openRegisterPage();
 
         $data = [
             'username' => 'TEST USER',
@@ -73,7 +73,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password123',
         ];
 
-        $response = $this->postJson($url, $data);
+        $response = $this->post(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'password' => 'パスワードを入力してください',
@@ -81,7 +81,7 @@ class RegisterTest extends TestCase
     }
     public function test_password_validation_error_when_password_is_too_short()
     {
-        $url = route('register');
+        $this->openRegisterPage();
 
         $data = [
             'username' => 'TEST USER',
@@ -90,7 +90,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'short12',
         ];
 
-        $response = $this->postJson($url, $data);
+        $response = $this->post(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'password' => 'パスワードは8文字以上で入力してください',
@@ -98,7 +98,7 @@ class RegisterTest extends TestCase
     }
     public function test_password_validation_error_when_password_confirmation_does_not_match()
     {
-        $url = route('register');
+        $this->openRegisterPage();
 
         $data = [
             'username' => 'TEST USER',
@@ -107,7 +107,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password456',
         ];
 
-        $response = $this->postJson($url, $data);
+        $response = $this->post(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'password_confirmation' => 'パスワードと一致しません',
@@ -117,7 +117,7 @@ class RegisterTest extends TestCase
 // 全ての項目が入力されている場合、会員情報が登録されログイン画面に遷移
     public function test_user_can_register_and_redirect_to_profile_edit()
     {
-        $url = route('register');
+        $this->openRegisterPage();
 
         $data = [
             'username' => 'TEST USER',
@@ -126,7 +126,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password123',
         ];
 
-        $response = $this->post($url, $data);
+        $response = $this->post(route('register'), $data);
         $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
         $response->assertRedirect(route('profile.edit'));
 
