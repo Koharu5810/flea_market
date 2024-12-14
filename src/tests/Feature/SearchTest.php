@@ -39,4 +39,30 @@ class SearchTest extends TestCase
         // 部分一致しない商品が表示されていないことを確認
         $response->assertDontSeeText($nonMatchingItem->name);
     }
+    public function test_search_query_is_retained_across_tabs()
+    {
+        // ダミー商品を作成
+        $matchingItem = Item::factory()->create(['name' => 'Sample Product']);
+        $nonMatchingItem = Item::factory()->create(['name' => 'Unrelated Item']);
+
+        /** @var \App\Models\User $user */   // $userの型解析ツールエラーが出るため追記
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        // 商品をお気に入りに登録
+        $user->favorites()->attach($matchingItem->id);
+
+        $response = $this->get(route('home', ['query' => 'Sample']));
+        $response->assertStatus(200);
+
+        // 検索結果が表示されていることを確認
+        $response->assertSeeText($matchingItem->name);
+        $response->assertDontSeeText($nonMatchingItem->name);
+
+        $response = $this->get(route('home', ['tab' => 'mylist', 'query' => 'Sample']));
+        $response->assertStatus(200);
+
+        // 検索状態が保持され、同じ結果が表示されることを確認
+        $response->assertSeeText($matchingItem->name);
+        $response->assertDontSeeText($nonMatchingItem->name);
+    }
 }
