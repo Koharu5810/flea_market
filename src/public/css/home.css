@@ -97,7 +97,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-transform: uppercase; /* 文字を大文字に */
     z-index: 1; /* 画像の上に表示 */
     pointer-events: none; /* クリックを無効化 */
 }
