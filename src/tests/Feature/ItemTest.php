@@ -57,6 +57,7 @@ class ItemTest extends TestCase
             );
         }
     }
+// 自分が出品した商品は非表示
     public function test_user_can_see_their_own_products_on_product_page()
     {
         /** @var \App\Models\User $user */   // $userの型解析ツールエラーが出るため追記
