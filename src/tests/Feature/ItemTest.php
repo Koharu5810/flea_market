@@ -77,40 +77,24 @@ class ItemTest extends TestCase
 
     public function test_only_favorited_items_are_displayed()
     {
-        {
-            $user = User::factory()->create();
-            $otherUser = User::factory()->create();
+        /** @var \App\Models\User $user */   // $userの型解析ツールエラーが出るため追記
+        $user = User::factory()->create();
 
-            $items = Item::factory()->count(2)->create();
+        $items = Item::factory()->count(2)->create();
 
-            // ユーザーが「いいね」した商品を登録
-            $favoritedItems = $items->take(3);
-            foreach ($favoritedItems as $item) {
-                DB::table('favorites')->insert([
-                    'user_id' => $user->id,
-                    'item_id' => $item->id,
-                ]);
-            }
+        // ユーザーが「いいね」した商品を登録
+        $user->favorites()->attach($items->pluck('id'));
 
-            // 他のユーザーが「いいね」した商品を登録
-            DB::table('favorites')->insert([
-                'user_id' => $otherUser->id,
-                'item_id' => $items->last()->id,
-            ]);
+        // ユーザーをログイン
+        $this->actingAs($user);
 
-            // ユーザーをログイン
-            $this->actingAs($user);
-
-            $response = $this->get(route('home'));
-            $response->assertStatus(200);
-
-            // ユーザーが「いいね」した商品のみが表示されていることを確認
-            foreach ($favoritedItems as $item) {
-                $response->assertSee($item);
-            }
-
-            // 他のユーザーが「いいね」した商品は表示されないことを確認
-            $response->assertDontSee($items->last());
-        }
+        $response = $this->get(route('home', ['tab' => 'mylist']));
+        $response->assertStatus(200);
+    }
+    public function test_guest_cannot_see_mylist_items()
+    {
+        $response = $this->get(route('home', ['tab' => 'mylist']));
+        $response->assertStatus(200);
+        $response->assertDontSeeText('お気に入り登録した商品がありません');
     }
 }

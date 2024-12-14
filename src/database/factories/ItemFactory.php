@@ -24,7 +24,7 @@ class ItemFactory extends Factory
             'name' => $this->faker->word,
             'image' => $this->faker->imageUrl(640, 480, 'products', true), // ダミー画像URL
             'item_condition' => $this->faker->numberBetween(1, 4),
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->sentence,
             'brand' => $this->faker->company, // ブランド名 (nullable)
             'price' => $this->faker->randomFloat(0, 100, 10000),
             'is_sold' => $this->faker->boolean,
