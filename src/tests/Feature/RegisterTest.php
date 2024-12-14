@@ -22,7 +22,7 @@ class RegisterTest extends TestCase
 
     public function openRegisterPage()
     {
-        $response = $this->get(route('register'));
+        $response = $this->get(route('register.show'));
         $response->assertStatus(200);
         $response->assertSee('登録する');
 
