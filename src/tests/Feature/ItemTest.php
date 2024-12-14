@@ -7,7 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Item;
+use Tests\Helpers\TestHelper;
 
 class ItemTest extends TestCase
 {
@@ -54,5 +56,20 @@ class ItemTest extends TestCase
                 "Item ID {$item->id} に 'Sold' が表示されていません。"
             );
         }
+    }
+    public function test_user_can_see_their_own_products_on_product_page()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // ログイン中のユーザーが出品
+        $ownItem = Item::factory()->create([
+            'user_id' => $user->id,
+            'name' => 'Test Item',
+        ]);
+
+        $response = $this->get(route('home'));
+        $response->assertStatus(200);
+        $response->assertDontSee($ownItem);
     }
 }
