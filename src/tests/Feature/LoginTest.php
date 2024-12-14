@@ -24,33 +24,41 @@ class LoginTest extends TestCase
         $this->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     }
 
+    public function openLoginPage()
+    {
+        $response = $this->get(route('show.login'));
+        $response->assertStatus(200);
+        $response->assertSee('ログインする');
+
+        return $response;
+    }
+
     public function test_email_validation_error_when_email_is_missing()
     {
-        $url = route('login');
+        $this->openLoginPage();
 
         $data = [
             'username' => '',
             'password' => 'password123',
         ];
 
-        $response = $this->postJson($url, $data);
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors([
+        $response = $this->post(route('login'), $data);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors([
             'username' => 'ユーザー名またはメールアドレスを入力してください',
         ]);
     }
     public function test_password_validation_error_when_password_is_missing()
     {
-        $url = route('register');
-
         $data = [
             'username' => 'TEST USER',
             'password' => '',
         ];
 
-        $response = $this->postJson($url, $data);
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors([
+        // $response = $this->postJson($url, $data);
+        $response = $this->post(route('login'), $data);
+        $response->assertStatus(302);
+        $response->assertSessionHas([
             'password' => 'パスワードを入力してください',
         ]);
     }
@@ -78,7 +86,7 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    // 全ての項目が正しく入力されている場合、ログイン処理実行
+// 全ての項目が正しく入力されている場合、ログイン処理実行
     public function test_user_can_login_and_redirect_to_home()
     {
         $url = route('login');
