@@ -29,10 +29,10 @@ class ItemDetailTest extends TestCase
         }
 
         $imagePath = asset('storage/' . $item->image);
-    dump($imagePath);
+    // dump($imagePath);
 
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-    dump($response->getContent());
+    // dump($response->getContent());
         $response->assertStatus(200);
 
         // $response->assertSee($imagePath, false);
@@ -50,7 +50,7 @@ class ItemDetailTest extends TestCase
 
         // 商品情報が正しく表示されていることを確認
         $response->assertSeeText($item->name);
-        $response->assertSeeText($item->image);
+        $response->assertSee($item->image);
         $response->assertSeeText($item->brand);
         $response->assertSeeText(number_format($item->price));
         $response->assertSeeText($item->item_condition);
