@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use Tests\Helpers\TestHelper;
 
 class LoginTest extends TestCase
 {
@@ -88,12 +89,7 @@ class LoginTest extends TestCase
 // 全ての項目が正しく入力されている場合、ログイン処理実行
     public function test_user_can_login_and_redirect_to_home()
     {
-        // 事前にユーザーを作成
-        $user = User::factory()->create([
-            'username' => 'TEST USER',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-        ]);
+        $user = TestHelper::userLogin();
 
         $data = [
             'username' => 'TEST USER',
