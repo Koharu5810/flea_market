@@ -37,7 +37,7 @@ class LogoutTest extends TestCase
         $response->assertStatus(200);
 
         $response = $this->post(route('logout'));
-        $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
+        $response->assertStatus(302);
         $response->assertRedirect($url);
 
         $this->assertGuest();
