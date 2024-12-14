@@ -79,7 +79,6 @@ class ItemTest extends TestCase
     {
         /** @var \App\Models\User $user */   // $userの型解析ツールエラーが出るため追記
         $user = User::factory()->create();
-
         $items = Item::factory()->count(2)->create();
 
         // ユーザーが「いいね」した商品を登録
@@ -97,4 +96,26 @@ class ItemTest extends TestCase
         $response->assertStatus(200);
         $response->assertDontSeeText('お気に入り登録した商品がありません');
     }
+
+    public function test_sold_items_are_marked_as_sold_in_mylist()
+    {
+        /** @var \App\Models\User $user */
+        $user = User::factory()->create();
+        $items = Item::factory()->count(2)->create();
+
+        // 最初のアイテムを売却済みに設定
+        $soldItem = $items->first();
+        $soldItem->update(['is_sold' => true]);
+
+        $user->favorites()->attach($items->pluck('id'));
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('home', ['tab' => 'mylist']));
+        $response->assertStatus(200);
+
+        $response->assertSeeText('Sold');
+        $response->assertSeeText($soldItem->name);
+    }
+
 }
