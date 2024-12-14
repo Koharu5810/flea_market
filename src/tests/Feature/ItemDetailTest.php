@@ -8,8 +8,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Item;
-use App\Models\Category;
-use App\Models\Comment;
 
 class ItemDetailTest extends TestCase
 {
@@ -25,8 +23,20 @@ class ItemDetailTest extends TestCase
         $this->seed();
         $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->first();
 
+        // データが取得できない場合はエラーハンドリング
+        if (!$item) {
+            $this->fail('No items found in the database. Ensure data is seeded or created.');
+        }
+
+        $imagePath = asset('storage/' . $item->image);
+    dump($imagePath);
+
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+    dump($response->getContent());
         $response->assertStatus(200);
+
+        // $response->assertSee($imagePath, false);
+        $this->assertStringContainsString($imagePath, $response->getContent());
 
         return [$response, $item];
     }
@@ -40,6 +50,7 @@ class ItemDetailTest extends TestCase
 
         // 商品情報が正しく表示されていることを確認
         $response->assertSeeText($item->name);
+        $response->assertSeeText($item->image);
         $response->assertSeeText($item->brand);
         $response->assertSeeText(number_format($item->price));
         $response->assertSeeText($item->item_condition);
