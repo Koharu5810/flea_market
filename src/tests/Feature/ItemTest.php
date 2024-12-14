@@ -117,5 +117,29 @@ class ItemTest extends TestCase
         $response->assertSeeText('Sold');
         $response->assertSeeText($soldItem->name);
     }
+    public function test_user_does_not_see_their_own_items_in_mylist()
+    {
+        /** @var \App\Models\User $user */
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+
+        $ownItem = Item::factory()->create(['user_id' => $user->id]);
+        $otherItem = Item::factory()->create(['user_id' => $otherUser->id]);
+
+        // ユーザーが他のユーザーの商品をお気に入り登録
+        $user->favorites()->attach($otherItem->id);
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('home', ['tab' => 'mylist']));
+        $response->assertStatus(200);
+
+        // 自分が出品した商品が表示されていないことを確認
+        $response->assertDontSeeText($ownItem->name);
+
+        // 他のユーザーが出品した商品が表示されていることを確認
+        $response->assertSeeText($otherItem->name);
+    }
+
 
 }
