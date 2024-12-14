@@ -70,7 +70,7 @@ class LoginTest extends TestCase
         ];
 
         $response = $this->post($url, $data);
-        $response->assertStatus(302);
+        $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
         $response->assertRedirect(route('login'));
         $response->assertSessionHas('auth_error', 'ログイン情報が登録されていません');
 
@@ -96,7 +96,7 @@ class LoginTest extends TestCase
         ];
 
         $response = $this->post($url, $data);
-        $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
+        $response->assertStatus(302);
         $response->assertRedirect(route('home'));
 
         // 認証ユーザであることを確認
