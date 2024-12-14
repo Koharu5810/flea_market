@@ -22,24 +22,8 @@ class ItemDetailTest extends TestCase
 
     public function openItemDetailPage()
     {
-        $categories = Category::take(2)->get();
-
-        // ダミー商品を作成
-        $item = Item::factory()
-            ->create([
-                'name' => 'Test Product',
-                'brand' => 'Test Brand',
-                'price' => 1000,
-                'description' => 'This is a test description.',
-                'item_condition' => 1,
-            ]);
-
-        $item->categories()->attach($categories->pluck('id'));
-
-        Comment::factory(3)->create([
-            'item_id' => $item->id,
-            'user_id' => User::factory()->create()->id,
-        ]);
+        $this->seed();
+        $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->first();
 
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertStatus(200);
@@ -67,8 +51,7 @@ class ItemDetailTest extends TestCase
         }
 
         // コメント情報が正しく表示されていることを確認
-        $comments = Comment::where('item_id', $item->id)->get();
-        foreach ($comments as $comment) {
+        foreach ($item->comments as $comment) {
             $response->assertSeeText($comment->user->username); // コメントしたユーザー名
             $response->assertSeeText($comment->content);    // コメント内容
         }
@@ -77,11 +60,10 @@ class ItemDetailTest extends TestCase
         $response->assertSeeText($item->comments->count());
 
         // 「いいね」アイコンのパスが正しいことを確認
-        if ($item->isFavoriteBy(auth()->user())) {
-            $response->assertSee(asset('storage/app/favorited.png'));
-        } else {
-            $response->assertSee(asset('storage/app/favorite.png'));
-        }
+        $favoriteIcon = $item->isFavoriteBy(auth()->user())
+            ? asset('storage/app/favorited.png')
+            : asset('storage/app/favorite.png');
+        $response->assertSee($favoriteIcon);
         // コメントアイコンのパスが正しいことを確認
         $response->assertSee(asset('storage/app/comment.png'));
     }
