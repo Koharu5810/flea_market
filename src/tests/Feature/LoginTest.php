@@ -55,16 +55,15 @@ class LoginTest extends TestCase
             'password' => '',
         ];
 
-        // $response = $this->postJson($url, $data);
         $response = $this->post(route('login'), $data);
         $response->assertStatus(302);
-        $response->assertSessionHas([
+        $response->assertSessionHasErrors([
             'password' => 'パスワードを入力してください',
         ]);
     }
     public function test_login_fails_with_invalid_credentials()
     {
-        $url = route('login');
+        $this->openLoginPage();
 
         User::factory()->create([
             'username' => 'TEST USER',
@@ -77,8 +76,8 @@ class LoginTest extends TestCase
             'password' => 'wrongpassword',
         ];
 
-        $response = $this->post($url, $data);
-        $response->assertStatus(302);   // ステータスコード302を確認（リダイレクト）
+        $response = $this->post(route('login'), $data);
+        $response->assertStatus(302);
         $response->assertRedirect(route('login'));
         $response->assertSessionHas('auth_error', 'ログイン情報が登録されていません');
 
