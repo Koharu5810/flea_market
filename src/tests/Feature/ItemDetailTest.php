@@ -33,7 +33,7 @@ class ItemDetailTest extends TestCase
         gc_collect_cycles(); // ガベージコレクションを手動で実行
     }
 
-    public function openItemDetailPage()
+    private function openItemDetailPage()
     {
         $this->seed();
         $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->first();
