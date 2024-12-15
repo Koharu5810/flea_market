@@ -86,7 +86,11 @@ class FavoriteTest extends TestCase
     public function test_favorite_icon_changes_color_when_item_is_favorited()
     {
         [$response, $item, $user] = $this->openItemDetailPage();
-        
+
+        $favoriteIcon = asset('storage/app/favorite.png');
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertSee($favoriteIcon, false);
+
         $this->post(route('item.favorite', ['item_id' => $item->id]))
             ->assertStatus(302)
             ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
@@ -99,5 +103,33 @@ class FavoriteTest extends TestCase
         $favoriteIcon = asset('storage/app/favorited.png');
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertSee($favoriteIcon, false);
+    }
+// 再度いいねアイコンを押下するといいねを解除できる
+    public function test_favorite_icon_toggles_off()
+    {
+        [$response, $item, $user] = $this->openItemDetailPage();
+
+        // $favoriteIcon = asset('storage/app/favorite.png');
+        // $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        // $response->assertSee($favoriteIcon, false);
+
+        $this->post(route('item.favorite', ['item_id' => $item->id]))
+            ->assertStatus(302)
+            ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
+
+        $this->assertDatabaseHas('favorites', [
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+        ]);
+
+        // 2回目のクリックでお気に入りを解除
+        $this->post(route('item.favorite', ['item_id' => $item->id]))
+            ->assertStatus(302)
+            ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
+
+        $this->assertDatabaseMissing('favorites', [
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+        ]);
     }
 }
