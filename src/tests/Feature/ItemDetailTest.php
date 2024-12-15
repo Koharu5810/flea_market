@@ -29,14 +29,10 @@ class ItemDetailTest extends TestCase
         }
 
         $imagePath = asset('storage/' . $item->image);
-    // dump($imagePath);
 
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-    // dump($response->getContent());
         $response->assertStatus(200);
-
-        // $response->assertSee($imagePath, false);
-        $this->assertStringContainsString($imagePath, $response->getContent());
+        $response->assertSee($imagePath, false);
 
         return [$response, $item];
     }
