@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // ユーザーとその住所を生成
-        User::factory(10)
+        User::factory(3)
             ->has(
                 UserAddress::factory()->count(1), // 1つの住所を関連付け
                 'user_address'

@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Item;
@@ -17,6 +19,21 @@ class ItemDetailTest extends TestCase
      * @return void
      */
     use RefreshDatabase;
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        gc_collect_cycles(); // ガベージコレクションを手動で実行
+    }
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Cache::flush(); // テスト開始前にキャッシュをクリア
+        Artisan::call('cache:clear');       // キャッシュをクリア
+        Artisan::call('config:clear');      // 設定キャッシュをクリア
+        Artisan::call('route:clear');       // ルートキャッシュをクリア
+        Artisan::call('view:clear');        // ビューキャッシュをクリア
+    }
 
     public function openItemDetailPage()
     {
@@ -75,5 +92,12 @@ class ItemDetailTest extends TestCase
         $response->assertSee(asset('storage/app/comment.png'));
     }
 
+    public function test_item_detail_page_displays_all_categories()
+    {
+        [$response, $item] = $this->openItemDetailPage();
 
+        foreach ($item->categories as $category) {
+            $response->assertSeeText($category->content); // カテゴリ名が含まれているか確認
+        }
+    }
 }
