@@ -30,6 +30,7 @@ class FavoriteTest extends TestCase
         gc_collect_cycles(); // ガベージコレクションを手動で実行
     }
 
+// 共通処理
     private function openItemDetailPage()
     {
         $user = TestHelper::userLogin();
@@ -49,15 +50,18 @@ class FavoriteTest extends TestCase
             ->assertStatus(302)
             ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
     }
+    private function assertFavoriteIcon($item, $favoriteIcon)
+    {
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertSee($favoriteIcon, false);
+    }
 
 // いいねアイコンを押下することでいいねした商品として登録
     public function test_item_can_be_favorited_by_clicking_favorite_icon()
     {
         [$response, $item, $user] = $this->openItemDetailPage();
 
-        $favoriteIcon = asset('storage/app/favorite.png');
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee($favoriteIcon, false);
+        $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
 
         $this->toggleFavorite($item);
 
@@ -71,9 +75,7 @@ class FavoriteTest extends TestCase
     {
         [$response, $item, $user] = $this->openItemDetailPage();
 
-        $favoriteIcon = asset('storage/app/favorite.png');
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee($favoriteIcon, false);
+        $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
 
         $this->toggleFavorite($item);
 
@@ -82,18 +84,15 @@ class FavoriteTest extends TestCase
             'item_id' => $item->id,
         ]);
 
-        $favoritedIcon = asset('storage/app/favorited.png');
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee($favoritedIcon, false);
+        $this->assertFavoriteIcon($item, asset('storage/app/favorited.png'));
+
     }
 // 再度いいねアイコンを押下するといいねを解除できる
     public function test_favorite_icon_toggles_off()
     {
         [$response, $item, $user] = $this->openItemDetailPage();
 
-        $favoriteIcon = asset('storage/app/favorite.png');
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee($favoriteIcon, false);
+        $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
 
         $this->toggleFavorite($item);
 
@@ -102,9 +101,7 @@ class FavoriteTest extends TestCase
             'item_id' => $item->id,
         ]);
 
-        $favoritedIcon = asset('storage/app/favorited.png');
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee($favoritedIcon, false);
+        $this->assertFavoriteIcon($item, asset('storage/app/favorited.png'));
 
         // 2回目のクリックでお気に入りを解除
         $this->toggleFavorite($item);
@@ -114,8 +111,6 @@ class FavoriteTest extends TestCase
             'item_id' => $item->id,
         ]);
 
-        $favoriteIcon = asset('storage/app/favorite.png');
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee($favoriteIcon, false);
+        $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
     }
 }
