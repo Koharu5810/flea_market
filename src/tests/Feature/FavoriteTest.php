@@ -20,32 +20,23 @@ class FavoriteTest extends TestCase
      */
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Cache::flush(); // テスト開始前にキャッシュをクリア
+    }
     protected function tearDown(): void
     {
         parent::tearDown();
         gc_collect_cycles(); // ガベージコレクションを手動で実行
     }
-    protected function setUp(): void
-    {
-        parent::setUp();
-        Cache::flush(); // テスト開始前にキャッシュをクリア
-        // Artisan::call('cache:clear');       // キャッシュをクリア
-        // Artisan::call('config:clear');      // 設定キャッシュをクリア
-        // Artisan::call('route:clear');       // ルートキャッシュをクリア
-        // Artisan::call('view:clear');        // ビューキャッシュをクリア
-    }
 
     public function openItemDetailPage()
     {
         $user = TestHelper::userLogin();
-        $this->seed();
 
         $categories = Category::take(2)->get();
-
-        $item = Item::factory()->create([
-            'name' => 'Test Item',
-        ]);
-
+        $item = Item::factory()->create(['name' => 'Test Item']);
         $item->categories()->attach($categories->pluck('id'));
 
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
@@ -102,7 +93,7 @@ class FavoriteTest extends TestCase
         $favoriteIcon = asset('storage/app/favorite.png');
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertSee($favoriteIcon, false);
-        
+
         $this->post(route('item.favorite', ['item_id' => $item->id]))
             ->assertStatus(302)
             ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
