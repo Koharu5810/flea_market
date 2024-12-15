@@ -18,11 +18,6 @@ class ItemDetailTest extends TestCase
      */
     use RefreshDatabase;
 
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        gc_collect_cycles(); // ガベージコレクションを手動で実行
-    }
     protected function setUp(): void
     {
         parent::setUp();
@@ -31,6 +26,11 @@ class ItemDetailTest extends TestCase
         Artisan::call('config:clear');      // 設定キャッシュをクリア
         Artisan::call('route:clear');       // ルートキャッシュをクリア
         Artisan::call('view:clear');        // ビューキャッシュをクリア
+    }
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        gc_collect_cycles(); // ガベージコレクションを手動で実行
     }
 
     public function openItemDetailPage()
