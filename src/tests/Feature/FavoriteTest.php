@@ -31,7 +31,7 @@ class FavoriteTest extends TestCase
         gc_collect_cycles(); // ガベージコレクションを手動で実行
     }
 
-    public function openItemDetailPage()
+    private function openItemDetailPage()
     {
         $user = TestHelper::userLogin();
 
@@ -44,6 +44,12 @@ class FavoriteTest extends TestCase
 
         return [$response, $item, $user];
     }
+    private function toggleFavorite($item)
+    {
+        return $this->post(route('item.favorite', ['item_id' => $item->id]))
+            ->assertStatus(302)
+            ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
+    }
 
 // いいねアイコンを押下することでいいねした商品として登録
     public function test_item_can_be_favorited_by_clicking_favorite_icon()
@@ -54,9 +60,7 @@ class FavoriteTest extends TestCase
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertSee($favoriteIcon, false);
 
-        $this->post(route('item.favorite', ['item_id' => $item->id]))
-            ->assertStatus(302)
-            ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
+        $this->toggleFavorite($item);
 
         $this->assertDatabaseHas('favorites', [
             'user_id' => $user->id,
@@ -72,9 +76,7 @@ class FavoriteTest extends TestCase
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertSee($favoriteIcon, false);
 
-        $this->post(route('item.favorite', ['item_id' => $item->id]))
-            ->assertStatus(302)
-            ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
+        $this->toggleFavorite($item);
 
         $this->assertDatabaseHas('favorites', [
             'user_id' => $user->id,
@@ -94,9 +96,7 @@ class FavoriteTest extends TestCase
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertSee($favoriteIcon, false);
 
-        $this->post(route('item.favorite', ['item_id' => $item->id]))
-            ->assertStatus(302)
-            ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
+        $this->toggleFavorite($item);
 
         $this->assertDatabaseHas('favorites', [
             'user_id' => $user->id,
@@ -108,9 +108,7 @@ class FavoriteTest extends TestCase
         $response->assertSee($favoritedIcon, false);
 
         // 2回目のクリックでお気に入りを解除
-        $this->post(route('item.favorite', ['item_id' => $item->id]))
-            ->assertStatus(302)
-            ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
+        $this->toggleFavorite($item);
 
         $this->assertDatabaseMissing('favorites', [
             'user_id' => $user->id,
