@@ -55,6 +55,15 @@ class FavoriteTest extends TestCase
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertSee($favoriteIcon, false);
     }
+    private function assertFavoriteDatabase($user, $item, $exists = true)
+    {
+        $method = $exists ? 'assertDatabaseHas' : 'assertDatabaseMissing';
+
+        $this->{$method}('favorites', [
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+        ]);
+    }
 
 // いいねアイコンを押下することでいいねした商品として登録
     public function test_item_can_be_favorited_by_clicking_favorite_icon()
@@ -64,11 +73,7 @@ class FavoriteTest extends TestCase
         $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
 
         $this->toggleFavorite($item);
-
-        $this->assertDatabaseHas('favorites', [
-            'user_id' => $user->id,
-            'item_id' => $item->id,
-        ]);
+        $this->assertFavoriteDatabase($user, $item, true);
     }
 // 追加済のアイコンは色が変化する
     public function test_favorite_icon_changes_color_when_item_is_favorited()
@@ -78,11 +83,7 @@ class FavoriteTest extends TestCase
         $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
 
         $this->toggleFavorite($item);
-
-        $this->assertDatabaseHas('favorites', [
-            'user_id' => $user->id,
-            'item_id' => $item->id,
-        ]);
+        $this->assertFavoriteDatabase($user, $item, true);
 
         $this->assertFavoriteIcon($item, asset('storage/app/favorited.png'));
 
@@ -95,22 +96,12 @@ class FavoriteTest extends TestCase
         $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
 
         $this->toggleFavorite($item);
-
-        $this->assertDatabaseHas('favorites', [
-            'user_id' => $user->id,
-            'item_id' => $item->id,
-        ]);
-
+        $this->assertFavoriteDatabase($user, $item, true);
         $this->assertFavoriteIcon($item, asset('storage/app/favorited.png'));
 
         // 2回目のクリックでお気に入りを解除
         $this->toggleFavorite($item);
-
-        $this->assertDatabaseMissing('favorites', [
-            'user_id' => $user->id,
-            'item_id' => $item->id,
-        ]);
-
+        $this->assertFavoriteDatabase($user, $item, false);
         $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
     }
 }
