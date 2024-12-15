@@ -29,10 +29,10 @@ class FavoriteTest extends TestCase
     {
         parent::setUp();
         Cache::flush(); // テスト開始前にキャッシュをクリア
-        Artisan::call('cache:clear');       // キャッシュをクリア
-        Artisan::call('config:clear');      // 設定キャッシュをクリア
-        Artisan::call('route:clear');       // ルートキャッシュをクリア
-        Artisan::call('view:clear');        // ビューキャッシュをクリア
+        // Artisan::call('cache:clear');       // キャッシュをクリア
+        // Artisan::call('config:clear');      // 設定キャッシュをクリア
+        // Artisan::call('route:clear');       // ルートキャッシュをクリア
+        // Artisan::call('view:clear');        // ビューキャッシュをクリア
     }
 
     public function openItemDetailPage()
@@ -90,15 +90,19 @@ class FavoriteTest extends TestCase
             'item_id' => $item->id,
         ]);
 
-        $favoriteIcon = asset('storage/app/favorited.png');
+        $favoritedIcon = asset('storage/app/favorited.png');
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee($favoriteIcon, false);
+        $response->assertSee($favoritedIcon, false);
     }
 // 再度いいねアイコンを押下するといいねを解除できる
     public function test_favorite_icon_toggles_off()
     {
         [$response, $item, $user] = $this->openItemDetailPage();
 
+        $favoriteIcon = asset('storage/app/favorite.png');
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertSee($favoriteIcon, false);
+        
         $this->post(route('item.favorite', ['item_id' => $item->id]))
             ->assertStatus(302)
             ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
@@ -107,6 +111,10 @@ class FavoriteTest extends TestCase
             'user_id' => $user->id,
             'item_id' => $item->id,
         ]);
+
+        $favoritedIcon = asset('storage/app/favorited.png');
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertSee($favoritedIcon, false);
 
         // 2回目のクリックでお気に入りを解除
         $this->post(route('item.favorite', ['item_id' => $item->id]))
@@ -117,5 +125,9 @@ class FavoriteTest extends TestCase
             'user_id' => $user->id,
             'item_id' => $item->id,
         ]);
+
+        $favoriteIcon = asset('storage/app/favorite.png');
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertSee($favoriteIcon, false);
     }
 }
