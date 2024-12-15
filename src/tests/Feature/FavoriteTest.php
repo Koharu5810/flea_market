@@ -3,11 +3,9 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Item;
 use App\Models\Category;
 use Tests\Helpers\TestHelper;
@@ -41,22 +39,14 @@ class FavoriteTest extends TestCase
     {
         $user = TestHelper::userLogin();
         $this->seed();
-        // $item = Item::with(['categories', 'comments.user', 'favoriteBy'])->first();
 
         $categories = Category::take(2)->get();
 
         $item = Item::factory()->create([
             'name' => 'Test Item',
-            // 'id' => 1,
         ]);
 
         $item->categories()->attach($categories->pluck('id'));
-
-        // $item->categories()->attach([1, 2]); // 適当なカテゴリを付与
-        // $item->comments()->createMany([
-        //     ['content' => 'Comment 1', 'user_id' => $user->id],
-        //     ['content' => 'Comment 2', 'user_id' => $user->id],
-        // ]);
 
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertStatus(200);
@@ -108,10 +98,6 @@ class FavoriteTest extends TestCase
     public function test_favorite_icon_toggles_off()
     {
         [$response, $item, $user] = $this->openItemDetailPage();
-
-        // $favoriteIcon = asset('storage/app/favorite.png');
-        // $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        // $response->assertSee($favoriteIcon, false);
 
         $this->post(route('item.favorite', ['item_id' => $item->id]))
             ->assertStatus(302)
