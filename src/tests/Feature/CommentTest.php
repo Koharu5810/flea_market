@@ -84,9 +84,12 @@ class CommentTest extends TestCase
 
         $commentData = ['comment' => '',];
 
-        $response = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
-        $response->assertStatus(302);
-        $response->assertSessionHasErrors([
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertSee('コメントを送信する');
+
+        $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
+        $postResponse->assertStatus(302);
+        $postResponse->assertSessionHasErrors([
             'comment' => 'コメントを入力してください',
         ]);
     }
@@ -98,9 +101,12 @@ class CommentTest extends TestCase
             'comment' => str_repeat('a', 256),
         ];
 
-        $response = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
-        $response->assertStatus(302);
-        $response->assertSessionHasErrors([
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertSee('コメントを送信する');
+
+        $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
+        $postResponse->assertStatus(302);
+        $postResponse->assertSessionHasErrors([
             'comment' => 'コメントは255文字以内で入力してください',
         ]);
     }
