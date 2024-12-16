@@ -78,4 +78,30 @@ class CommentTest extends TestCase
             'comment' => 'テストコメント',
         ]);
     }
+    public function test_comment_validation_error_when_comment_is_missing()
+    {
+        [$response, $item] = $this->openItemDetailPage();
+
+        $commentData = ['comment' => '',];
+
+        $response = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors([
+            'comment' => 'コメントを入力してください',
+        ]);
+    }
+    public function test_comment_validation_error_when_comment_exceeds_255_characters()
+    {
+        [$response, $item] = $this->openItemDetailPage();
+
+        $commentData = [
+            'comment' => str_repeat('a', 256),
+        ];
+
+        $response = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors([
+            'comment' => 'コメントは255文字以内で入力してください',
+        ]);
+    }
 }
