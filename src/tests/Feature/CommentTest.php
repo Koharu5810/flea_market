@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Item;
 use App\Models\Category;
+use Psy\CodeCleaner\ReturnTypePass;
 use Tests\Helpers\TestHelper;
 
 class CommentTest extends TestCase
@@ -18,13 +19,19 @@ class CommentTest extends TestCase
      */
     use RefreshDatabase;
 
+    private function createItemWithCategories()
+    {
+        $categories = Category::take(2)->get();
+        $item = Item::factory()->create(['name' => 'Test Item']);
+        $item->categories()->attach($categories->pluck('id'));
+
+        return $item;
+    }
     private function openItemDetailPage()
     {
         $user = TestHelper::userLogin();
 
-        $categories = Category::take(2)->get();
-        $item = Item::factory()->create(['name' => 'Test Item']);
-        $item->categories()->attach($categories->pluck('id'));
+        $item = $this->createItemWithCategories();
 
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertStatus(200);
