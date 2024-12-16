@@ -51,4 +51,26 @@ class CommentTest extends TestCase
             'user_id' => $user->id,
         ]);
     }
+    public function test_guest_user_cant_send_comment()
+    {
+        $categories = Category::take(2)->get();
+        $item = Item::factory()->create(['name' => 'Test Item']);
+        $item->categories()->attach($categories->pluck('id'));
+
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertStatus(200);
+
+        $commentData = [
+            'comment' => 'テストコメント',
+        ];
+
+        $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
+
+        $postResponse->assertRedirect(route('login'));
+
+        $this->assertDatabaseMissing('comments', [
+            'item_id' => $item->id,
+            'comment' => 'テストコメント',
+        ]);
+    }
 }

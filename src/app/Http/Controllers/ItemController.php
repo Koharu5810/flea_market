@@ -119,10 +119,6 @@ class ItemController extends Controller
 // コメント送信フォーム
     public function commentStore(CommentRequest $request)
     {
-        if (!auth()->check()) {
-            return redirect()->route('item.login');
-        }
-
         Comment::create([
             'user_id' => Auth::id(),
             'item_id' => $request->item_id,
