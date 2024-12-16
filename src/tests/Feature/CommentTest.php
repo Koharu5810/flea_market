@@ -22,36 +22,34 @@ class CommentTest extends TestCase
     private function createItemWithCategories()
     {
         $categories = Category::take(2)->get();
+
         $item = Item::factory()->create(['name' => 'Test Item']);
         $item->categories()->attach($categories->pluck('id'));
 
         return $item;
     }
-    private function openItemDetailPage()
+    private function loginAndGetItemDetailPage()
     {
         $user = TestHelper::userLogin();
-
         $item = $this->createItemWithCategories();
 
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertStatus(200);
+        $response->assertSee('コメントを送信する');
 
-        return [$response, $item, $user];
+        return [$user, $item, $response];
     }
 
+// ログインユーザはコメントを送信できる
     public function test_login_user_can_send_comment()
     {
-        [$response, $item, $user] = $this->openItemDetailPage();
+        [$user, $item, $response] = $this->loginAndGetItemDetailPage();
 
         $commentData = [
             'comment' => 'テストコメント',
         ];
 
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee('コメントを送信する');
-
         $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
-
         $postResponse->assertStatus(302);
         $postResponse->assertRedirect(route('item.detail', ['item_id' => $item->id]));
 
@@ -87,12 +85,9 @@ class CommentTest extends TestCase
     }
     public function test_comment_validation_error_when_comment_is_missing()
     {
-        [$response, $item] = $this->openItemDetailPage();
+        [$item, $response] = $this->loginAndGetItemDetailPage();
 
         $commentData = ['comment' => '',];
-
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee('コメントを送信する');
 
         $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
         $postResponse->assertStatus(302);
@@ -102,14 +97,11 @@ class CommentTest extends TestCase
     }
     public function test_comment_validation_error_when_comment_exceeds_255_characters()
     {
-        [$response, $item] = $this->openItemDetailPage();
+        [$item, $response] = $this->loginAndGetItemDetailPage();
 
         $commentData = [
             'comment' => str_repeat('a', 256),
         ];
-
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee('コメントを送信する');
 
         $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
         $postResponse->assertStatus(302);
