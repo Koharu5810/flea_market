@@ -39,6 +39,16 @@ class CommentTest extends TestCase
 
         return [$user, $item, $response];
     }
+        private function GetItemDetailPageAsGuest()
+    {
+        $item = $this->createItemWithCategories();
+
+        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
+        $response->assertStatus(200);
+        $response->assertSee('コメントを送信する');
+
+        return [$item, $response];
+    }
 
 // ログインユーザはコメントを送信できる
     public function test_login_user_can_send_comment()
@@ -61,18 +71,11 @@ class CommentTest extends TestCase
     }
     public function test_guest_user_cant_send_comment()
     {
-        $categories = Category::take(2)->get();
-        $item = Item::factory()->create(['name' => 'Test Item']);
-        $item->categories()->attach($categories->pluck('id'));
-
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertStatus(200);
+        [$item, $response] = $this->GetItemDetailPageAsGuest();
 
         $commentData = [
             'comment' => 'テストコメント',
         ];
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee('コメントを送信する');
 
         $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
 
