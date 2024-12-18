@@ -41,10 +41,18 @@
                     <h3 class="parts-title">配送先</h3>
                     <a href="{{ route('edit.purchase.address', ['item_id' => $item->id]) }}" class="change-address-button blue-button">変更する</a>
                 </div>
-                <div class="delivery-detail">
-                    <p>〒 {{ $address->postal_code }}</p>
-                    <p>{{ $address->address }} {{ $address->building }}</p>
-                </div>
+                @if ($address)
+                    <div class="delivery-detail">
+                        <p>〒 {{ $address->postal_code }}</p>
+                        <p>{{ $address->address }} {{ $address->building }}</p>
+                    </div>
+                @else
+                    @if ($errors && $errors->has('address'))
+                        <p class="error-message">
+                            {{ $errors->first('address') }}
+                        </p>
+                    @endif
+                @endif
                 <hr class="page-line">
             </div>
         {{-- 右側 --}}

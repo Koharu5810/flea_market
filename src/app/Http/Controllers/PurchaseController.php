@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\ViewErrorBag;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\PurchaseAddressRequest;
 use Stripe\Stripe;
@@ -21,9 +23,21 @@ class PurchaseController extends Controller
     public function show($item_id)
     {
         $item = Item::findOrFail($item_id);
-        $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
+        $address = UserAddress::where('user_id', auth()->id())->first();
 
-        return view('purchase.index', compact('item', 'address'));
+        $errors = null;
+        if (!$address) {
+            $validator = Validator::make([], [
+                'address' => 'required'
+            ],[
+                'address.required' => '配送先を登録してください'
+            ]);
+
+            $errors = new ViewErrorBag();
+            $errors->put('default', $validator->errors());
+        }
+
+        return view('purchase.index', compact('item', 'address', 'errors'));
     }
 // 商品購入
     public function checkout(PurchaseRequest $request)

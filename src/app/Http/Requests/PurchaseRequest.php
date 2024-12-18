@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PurchaseRequest extends FormRequest
@@ -27,7 +28,6 @@ class PurchaseRequest extends FormRequest
             'payment_method' => 'required|string|in:コンビニ支払い,カード支払い',
         ];
     }
-
     public function messages()
     {
         return [
