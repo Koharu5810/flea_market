@@ -3,10 +3,8 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Tests\Helpers\TestHelper;
-use App\Models\User;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\UserAddress;
@@ -69,5 +67,4 @@ class PurchaseMethodSelectTest extends TestCase
         $purchaseResponse->assertSessionHasNoErrors(); // エラーがないことを確認
         $purchaseResponse->assertRedirect(); // 成功時のリダイレクトを確認
     }
-
 }
