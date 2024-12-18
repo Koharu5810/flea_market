@@ -56,4 +56,18 @@ class PurchaseMethodSelectTest extends TestCase
         ]);
     }
 
+    public function test_valid_payment_method_can_be_submitted()
+    {
+        [$user, $item, $response] = $this->PurchasePageShow();
+
+        $purchaseResponse = $this->actingAs($user)
+            ->post(route('purchase.checkout', ['item_id' => $item->id]), [
+                '_token' => csrf_token(),
+                'payment_method' => 'カード支払い',
+            ]);
+
+        $purchaseResponse->assertSessionHasNoErrors(); // エラーがないことを確認
+        $purchaseResponse->assertRedirect(); // 成功時のリダイレクトを確認
+    }
+
 }
