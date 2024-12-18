@@ -47,7 +47,7 @@
                         <p>{{ $address->address }} {{ $address->building }}</p>
                     </div>
                 @else
-                    @if ($errors && $errors->has('address'))
+                    @if ($errors->has('address'))
                         <p class="error-message">
                             {{ $errors->first('address') }}
                         </p>

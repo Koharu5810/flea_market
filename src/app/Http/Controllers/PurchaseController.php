@@ -25,7 +25,6 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $address = UserAddress::where('user_id', auth()->id())->first();
 
-        $errors = null;
         if (!$address) {
             $validator = Validator::make([], [
                 'address' => 'required'
@@ -35,6 +34,8 @@ class PurchaseController extends Controller
 
             $errors = new ViewErrorBag();
             $errors->put('default', $validator->errors());
+        } else {
+            $errors = new ViewErrorBag();
         }
 
         return view('purchase.index', compact('item', 'address', 'errors'));
