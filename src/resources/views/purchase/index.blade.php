@@ -25,9 +25,9 @@
                 <h3 class="parts-title">支払い方法</h3>
                     <div class="payment-container">
                         <select name="payment_method" id="payment_method" class="pay-select">
-                            <option value="" disabled selected>選択してください</option>
-                            <option value="コンビニ支払い">コンビニ支払い</option>
-                            <option value="カード支払い">カード支払い</option>
+                            <option value="" disabled {{ old('payment_method') == '' ? 'selected' : '' }}>選択してください</option>
+                            <option value="コンビニ支払い" {{ old('payment_method' == 'コンビニ支払い' ? 'selected' : '' ) }}>コンビニ支払い</option>
+                            <option value="カード支払い" {{ old('payment_method' == 'カード支払い' ? 'selected' : '' ) }}>カード支払い</option>
                         </select>
                         @error('payment_method')
                             <p class="error-message">
@@ -64,7 +64,9 @@
                         </tr>
                         <tr>
                             <th>支払い方法</th>
-                            <td id="payment_method_show">選択してください</td>
+                            <td id="payment_method_show">
+                                {{ old('payment_method', '選択してください') }}
+                            </td>
                         </tr>
                     </table>
                 <button type="submit" class="purchase-button form__red-button">購入する</button>
