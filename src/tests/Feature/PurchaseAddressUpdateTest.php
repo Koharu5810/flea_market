@@ -22,7 +22,7 @@ class PurchaseAddressUpdateTest extends TestCase
     private function PurchaseAddressUpdatePageShow()
     {
         $user = TestHelper::userLogin();
-        UserAddress::factory()->create([
+        $userAddress = UserAddress::factory()->create([
             'user_id' => $user->id,
             'postal_code' => '123-4567',
             'address' => 'テスト住所',
@@ -33,10 +33,31 @@ class PurchaseAddressUpdateTest extends TestCase
         $item = Item::factory()->create(['name' => 'Test Item']);
         $item->categories()->attach($categories->pluck('id'));
 
-        $response = $this->get(route('purchase.show', ['item_id' => $item->id]));
+        $response = $this->get(route('edit.purchase.address', ['item_id' => $item->id]));
         $response->assertStatus(200);
-        $response->assertSee('支払い方法');
 
-        return [$user, $item, $response];
+        return [$user, $userAddress, $item, $response];
+    }
+    public function test_address_update()
+    {
+        [$user, $userAddress, $item, $response] = $this->PurchaseAddressUpdatePageShow();
+
+        $response->assertSee('更新する');
+
+        $newAddressData = [
+            'postal_code' => '987-6543',
+            'address' => '新テスト住所',
+            'building' => '新テストビル',
+        ];
+
+        $response = $this->patch(route('update.purchase.address', ['item_id' => $item->id]), $newAddressData);
+        $response->assertRedirect(route('purchase.show', ['item_id' =>1]));
+
+        $this->assertDatabaseHas('user_addresses', [
+            'user_id' => $user->id,
+            'postal_code' => '987-6543',
+            'address' => '新テスト住所',
+            'building' => '新テストビル',
+        ]);
     }
 }
