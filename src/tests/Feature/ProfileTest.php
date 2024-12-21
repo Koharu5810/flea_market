@@ -39,14 +39,15 @@ class ProfileTest extends TestCase
 
         $response = $this->get(route('profile.mypage', $user->id));
         $response->assertStatus(200);
-        $response->assertSee(asset('storage/' . $user->profile_image));
+        if ($user->profile_image) {
+            $response->assertSee(asset('storage/' . $user->profile_image));
+        } else {
+            $response->assertDontSee('<img id="previewImage"');
+        }
         $response->assertSee($user->username);
 
-        $response = $this->get(route('profile.mypage', ['tab' => 'unknown']));
-        $response->assertStatus(200);
-        $response->assertDontSee('Test Item');
-
-
+        // 出品した商品が表示されていることを確認
+        $response = $this->get(route('profile.mypage', ['tab' => 'sell']));
         foreach ($userProducts as $product) {
             $response->assertSee(json_decode($product->name));
         }
@@ -56,5 +57,9 @@ class ProfileTest extends TestCase
         foreach ($purchasedProducts as $product) {
             $response->assertSee(json_decode($product->name));
         }
+
+        $response = $this->get(route('profile.mypage', ['tab' => 'unknown']));
+        $response->assertStatus(200);
+        $response->assertDontSee('Test Product');
     }
 }
