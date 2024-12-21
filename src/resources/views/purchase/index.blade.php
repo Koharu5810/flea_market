@@ -40,7 +40,6 @@
                 <div class="delivery-container">
                     <h3 class="parts-title">配送先</h3>
                     <a href="{{ route('edit.purchase.address', ['item_id' => $item->id]) }}" class="change-address-button blue-button">変更する</a>
-                    {{-- <a href="{{ route('edit.purchase.address') }}" class="change-address-button blue-button">変更する</a> --}}
                 </div>
                 @if ($address)
                     <div class="delivery-detail">
@@ -48,11 +47,11 @@
                         <p>{{ $address->address }} {{ $address->building }}</p>
                     </div>
                 @else
-                    @error ('address')
+                    @if ($errors->has('postal_code') || $errors->has('address') || $errors->has('building'))
                         <p class="error-message">
-                            {{ $message }}
+                            配送先を登録してください
                         </p>
-                    @enderror
+                    @endif
                 @endif
                 <hr class="page-line">
             </div>
