@@ -32,39 +32,49 @@ class PurchaseMethodSelectTest extends TestCase
         $item = Item::factory()->create(['name' => 'Test Item']);
         $item->categories()->attach($categories->pluck('id'));
 
-        $response = $this->get(route('purchase.show', ['item_id' => $item->id]));
+        return [$user, $item];
+    }
+    private function accessPurchasePage($itemId)
+    {
+        $response = $this->get(route('purchase.show', ['item_id' => $itemId]));
         $response->assertStatus(200);
         $response->assertSee('支払い方法');
+        $response->assertSee('123-4567');
+        $response->assertSee('テスト住所');
+        $response->assertSee('テストビル');
 
-        return [$user, $item, $response];
+        return $response;
     }
 
     public function test_payment_method_is_required()
     {
-        [$user, $item, $response] = $this->PurchasePageShow();
+        [$user, $item] = $this->PurchasePageShow();
+        $this->accessPurchasePage($item->id);
 
-        $PurchaseMethodResponse = $this->actingAs($user)
+        $response = $this->actingAs($user)
             ->post(route('purchase.checkout', ['item_id' => $item->id]), [
                 '_token' => csrf_token(),
                 'payment_method' => '', // 支払い方法未選択
             ]);
 
-        $PurchaseMethodResponse->assertSessionHasErrors([
+        $response->assertSessionHasErrors([
             'payment_method' => '支払い方法を選択してください',
         ]);
     }
 
     public function test_valid_payment_method_can_be_submitted()
     {
-        [$user, $item, $response] = $this->PurchasePageShow();
+        [$user, $item] = $this->PurchasePageShow();
+        $this->accessPurchasePage($item->id);
 
-        $purchaseResponse = $this->actingAs($user)
+        $response = $this->actingAs($user)
             ->post(route('purchase.checkout', ['item_id' => $item->id]), [
                 '_token' => csrf_token(),
                 'payment_method' => 'カード支払い',
+                'address' => 'テスト住所',
             ]);
 
-        $purchaseResponse->assertSessionHasNoErrors(); // エラーがないことを確認
-        $purchaseResponse->assertRedirect(); // 成功時のリダイレクトを確認
+        $response->assertSessionHasNoErrors(); // エラーがないことを確認
+        $response->assertRedirect(); // 成功時のリダイレクトを確認
     }
 }
