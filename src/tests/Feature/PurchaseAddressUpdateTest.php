@@ -42,16 +42,16 @@ class PurchaseAddressUpdateTest extends TestCase
     {
         [$user, $userAddress, $item, $response] = $this->PurchaseAddressUpdatePageShow();
 
-        $response->assertSee('更新する');
-
         $newAddressData = [
             'postal_code' => '987-6543',
             'address' => '新テスト住所',
             'building' => '新テストビル',
         ];
 
+        $response->assertSee('更新する');
+
         $response = $this->patch(route('update.purchase.address', ['item_id' => $item->id]), $newAddressData);
-        $response->assertRedirect(route('purchase.show', ['item_id' =>1]));
+        $response->assertRedirect(route('purchase.show', ['item_id' =>$item->id]));
 
         $this->assertDatabaseHas('user_addresses', [
             'user_id' => $user->id,
@@ -59,5 +59,12 @@ class PurchaseAddressUpdateTest extends TestCase
             'address' => '新テスト住所',
             'building' => '新テストビル',
         ]);
+
+        $response = $this->get(route('purchase.show', ['item_id' => $item->id]));
+        $response->assertStatus(200);
+
+        $response->assertSee('987-6543');
+        $response->assertSee('新テスト住所');
+        $response->assertSee('新テストビル');
     }
 }
