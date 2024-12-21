@@ -19,7 +19,7 @@ class PurchaseAddressUpdateTest extends TestCase
      */
     use RefreshDatabase;
 
-    private function PurchaseAddressUpdatePageShow()
+    private function purchaseAddressUpdatePageShow()
     {
         $user = TestHelper::userLogin();
         $userAddress = UserAddress::factory()->create([
@@ -35,33 +35,40 @@ class PurchaseAddressUpdateTest extends TestCase
 
         $response = $this->get(route('edit.purchase.address', ['item_id' => $item->id]));
         $response->assertStatus(200);
+        $response->assertSee('更新する');
 
         return [$user, $userAddress, $item, $response];
     }
-    public function test_address_update()
+    private function updateAddress($item, $user, $newAddressData)
     {
-        [$user, $userAddress, $item, $response] = $this->PurchaseAddressUpdatePageShow();
+        $response = $this->patch(route('update.purchase.address', ['item_id' => $item->id]), $newAddressData);
+        $response->assertRedirect(route('purchase.show', ['item_id' =>$item->id]));
+
+        $this->assertDatabaseHas('user_addresses', array_merge(['user_id' => $user->id], $newAddressData));
+
+        $response = $this->get(route('purchase.show', ['item_id' => $item->id]));
+        $response->assertStatus(200);
+
+        $response->assertSee($newAddressData['postal_code']);
+        $response->assertSee($newAddressData['address']);
+        $response->assertSee($newAddressData['building']);
+    }
+
+// 送付先住所変更画面で登録した住所が商品購入画面に反映されている
+    public function test_address_update_with_purchase()
+    {
+        [$user, $userAddress, $item] = $this->purchaseAddressUpdatePageShow();
 
         $newAddressData = [
+            'user_id' => $user->id,
             'postal_code' => '987-6543',
             'address' => '新テスト住所',
             'building' => '新テストビル',
         ];
 
-        $response->assertSee('更新する');
+        $this->updateAddress($user, $item, $newAddressData);
 
-        $response = $this->patch(route('update.purchase.address', ['item_id' => $item->id]), $newAddressData);
-        $response->assertRedirect(route('purchase.show', ['item_id' =>$item->id]));
-
-        $this->assertDatabaseHas('user_addresses', [
-            'user_id' => $user->id,
-            'postal_code' => '987-6543',
-            'address' => '新テスト住所',
-            'building' => '新テストビル',
-        ]);
-
-        $response = $this->get(route('purchase.show', ['item_id' => $item->id]));
-        $response->assertStatus(200);
+        $response = $this->get(route('purchase.show', ['item_id' =>$item->id]));
 
         $response->assertSee('987-6543');
         $response->assertSee('新テスト住所');

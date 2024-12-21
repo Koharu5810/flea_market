@@ -17,7 +17,7 @@ class PurchaseMethodSelectTest extends TestCase
      */
     use RefreshDatabase;
 
-    private function PurchasePageShow()
+    private function purchasePageShow()
     {
         $user = TestHelper::userLogin();
 
@@ -29,7 +29,7 @@ class PurchaseMethodSelectTest extends TestCase
     }
     public function test_purchase_page_displays_payment_methods()
     {
-        [$user, $item] = $this->PurchasePageShow();
+        [$user, $item] = $this->purchasePageShow();
 
         $response = $this->get(route('purchase.show', ['item_id' => $item->id]));
         $response->assertStatus(200);
@@ -42,7 +42,7 @@ class PurchaseMethodSelectTest extends TestCase
     }
     public function test_select_purchase_method_and_view_is_updated()
     {
-        [$user, $item] = $this->PurchasePageShow();
+        [$user, $item] = $this->purchasePageShow();
 
         $selectedPaymentMethod = 'カード支払い';
         $response = $this->post(route('purchase.checkout', ['item_id' => $item->id]), [
