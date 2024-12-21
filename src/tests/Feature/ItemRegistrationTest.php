@@ -15,11 +15,12 @@ class ItemRegistrationTest extends TestCase
      * @return void
      */
     use RefreshDatabase;
-    
+
     public function test_example()
     {
-        $response = $this->get('/');
+        $user = TestHelper::userLogin();
 
+        $response = $this->get(route('show.sell', $user->id));
         $response->assertStatus(200);
     }
 }
