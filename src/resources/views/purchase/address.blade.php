@@ -18,7 +18,7 @@
                     type="text"
                     id="postal_code"
                     name="postal_code"
-                    value="{{ old('postal_code', $address->postal_code) }}"
+                    value="{{ old('postal_code', $address->postal_code ?? '') }}"
                     class="form__group-input"
                 />
                 @error('postal_code')
@@ -34,7 +34,7 @@
                     type="text"
                     id="address"
                     name="address"
-                    value="{{ old('address', $address->address) }}"
+                    value="{{ old('address', $address->address ?? '') }}"
                     class="form__group-input"
                 />
                 @error('address')
@@ -50,7 +50,7 @@
                     type="text"
                     id="building"
                     name="building"
-                    value="{{ old('building', $address->building) }}"
+                    value="{{ old('building', $address->building ?? '') }}"
                     class="form__group-input"
                 />
                 @error('building')

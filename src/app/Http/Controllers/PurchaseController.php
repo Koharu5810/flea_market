@@ -33,8 +33,6 @@ class PurchaseController extends Controller
         $user = auth()->user();
         $item = Item::findOrFail($request->item_id);
 
-        // dd();
-
         // 一度購入された商品かどうかを確認
         if ($item->is_sold) {
             return redirect()->route('purchase.show', ['item_id' => $item->id])
@@ -128,7 +126,7 @@ class PurchaseController extends Controller
     public function editAddress($item_id)
     {
         $user = Auth::user();
-        $address = UserAddress::where('user_id', auth()->id())->firstOrFail();
+        $address = UserAddress::where('user_id', auth()->id())->first();
         $item = Item::findOrFail($item_id);
 
         return view('purchase.address', compact('item', 'address'));
