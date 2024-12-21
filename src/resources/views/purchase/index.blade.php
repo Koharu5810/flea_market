@@ -47,9 +47,9 @@
                         <p>{{ $address->address }} {{ $address->building }}</p>
                     </div>
                 @else
-                    @if ($errors->has('postal_code') || $errors->has('address') || $errors->has('building'))
+                    @if ($errors->first('postal_code') || $errors->first('address') || $errors->first('building'))
                         <p class="error-message">
-                            配送先を登録してください
+                            {{ $errors->first('postal_code') ?? $errors->first('address') ?? $errors->first('building') }}
                         </p>
                     @endif
                 @endif
