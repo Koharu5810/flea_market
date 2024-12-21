@@ -26,12 +26,14 @@ class PurchaseRequest extends FormRequest
     {
         return [
             'payment_method' => 'required|string|in:コンビニ支払い,カード支払い',
+            'address' => 'required',
         ];
     }
     public function messages()
     {
         return [
             'payment_method.required' => '支払い方法を選択してください',
+            'address.required' => '配送先を登録してください',
         ];
     }
 }

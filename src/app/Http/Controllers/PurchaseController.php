@@ -25,26 +25,15 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $address = UserAddress::where('user_id', auth()->id())->first();
 
-        if (!$address) {
-            $validator = Validator::make([], [
-                'address' => 'required'
-            ],[
-                'address.required' => '配送先を登録してください'
-            ]);
-
-            $errors = new ViewErrorBag();
-            $errors->put('default', $validator->errors());
-        } else {
-            $errors = new ViewErrorBag();
-        }
-
-        return view('purchase.index', compact('item', 'address', 'errors'));
+        return view('purchase.index', compact('item', 'address'));
     }
 // 商品購入
     public function checkout(PurchaseRequest $request)
     {
         $user = auth()->user();
         $item = Item::findOrFail($request->item_id);
+
+        // dd();
 
         // 一度購入された商品かどうかを確認
         if ($item->is_sold) {

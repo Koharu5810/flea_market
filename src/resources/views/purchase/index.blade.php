@@ -47,11 +47,11 @@
                         <p>{{ $address->address }} {{ $address->building }}</p>
                     </div>
                 @else
-                    @if ($errors->has('address'))
+                    @error ('address')
                         <p class="error-message">
-                            {{ $errors->first('address') }}
+                            {{ $message }}
                         </p>
-                    @endif
+                    @enderror
                 @endif
                 <hr class="page-line">
             </div>
