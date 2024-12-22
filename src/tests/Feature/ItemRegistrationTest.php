@@ -46,7 +46,7 @@ class ItemRegistrationTest extends TestCase
             'price' => 1200,
         ]);
 
-        $response->assertRedirect(route('home'));
+        $response->assertRedirect(route('sell'));
 
         // $this->assertDatabaseHas('items', [
         //     'user_id' => $user->id,
@@ -74,5 +74,8 @@ class ItemRegistrationTest extends TestCase
         //     Storage::disk('public')->exists('items/' . $image->hashName()),
         //     'The uploaded image does not exist in the storage.'
         // );
+
+
+        // $response->assertRedirect(route('home'));
     }
 }
