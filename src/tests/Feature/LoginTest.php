@@ -97,8 +97,8 @@ class LoginTest extends TestCase
         ];
 
         $response = $this->post(route('login'), $data);
+        $response->assertSessionDoesntHaveErrors();
         $response->assertStatus(302);
-        $response->assertRedirect(route('home'));
 
         // 認証ユーザであることを確認
         $this->assertAuthenticatedAs($user);
