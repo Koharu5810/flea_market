@@ -39,12 +39,13 @@ class ItemRegistrationTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('出品する');
 
-    $imagePath = storage_path('app/public/images/clock.jpg');
-    $image = new UploadedFile($imagePath, 'clock.jpg', null, null, true);
+        // テスト画像データ作成
+        $imagePath = storage_path('app/public/images/clock.jpg');
+        $image = new UploadedFile($imagePath, 'clock.jpg', null, null, true);
 
         $response = $this->post(route('sell'), [
-        'image' => $image,
-        'category' => $categoryIds,
+            'image' => $image,
+            'category' => $categoryIds,
             'brand' => 'テストブランド',
             'item_condition' => '1',  // 良好
             'name' => 'テスト商品',
@@ -53,8 +54,7 @@ class ItemRegistrationTest extends TestCase
         ]);
 
         $response->assertRedirect(route('home'));
-        // $response->assertRedirect(route('sell'));
-$response->assertSessionDoesntHaveErrors();
+        $response->assertSessionDoesntHaveErrors();
 
         $this->assertDatabaseHas('items', [
             'user_id' => $user->id,
@@ -65,12 +65,11 @@ $response->assertSessionDoesntHaveErrors();
             'price' => 1200,
         ]);
 
-        // foreach ($categoryIds as $categoryId) {
-        //     $this->assertDatabaseHas('category_item', [
-        //         // 'item_id' => $item->id,
-        //         'category_id' => $categoryId,
-        //     ]);
-        // }
+        foreach ($categoryIds as $categoryId) {
+            $this->assertDatabaseHas('item_category', [
+                'category_id' => $categoryId,
+            ]);
+        }
 
         // 中間テーブルにカテゴリが同期されているか確認
         // $this->assertDatabaseHas('category_item', [
