@@ -74,6 +74,7 @@ class ItemRegistrationTest extends TestCase
         }
 
         $response->assertRedirect(route('home'));
+        $response->assertStatus(302);
         $response->assertSessionDoesntHaveErrors();
     }
 }
