@@ -24,12 +24,17 @@ class PurchaseRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'payment_method' => 'required|string|in:コンビニ支払い,カード支払い',
-            'postal_code' => 'required|string',
-            'address' => 'required|string',
-            'building' => 'required|string',
         ];
+
+        if (!$this->user()->address) {
+            $rules['postal_code'] = 'required|string';
+            $rules['address'] = 'required|string';
+            $rules['building'] = 'required|string';
+        }
+
+        return $rules;
     }
     public function messages()
     {

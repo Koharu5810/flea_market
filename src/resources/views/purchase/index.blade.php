@@ -25,9 +25,9 @@
                 <h3 class="parts-title">支払い方法</h3>
                     <div class="payment-container">
                         <select name="payment_method" id="payment_method" class="pay-select">
-                            <option value="" disabled {{ old('payment_method') == '' ? 'selected' : '' }}>選択してください</option>
-                            <option value="コンビニ支払い" {{ old('payment_method' == 'コンビニ支払い' ? 'selected' : '' ) }}>コンビニ支払い</option>
-                            <option value="カード支払い" {{ old('payment_method' == 'カード支払い' ? 'selected' : '' ) }}>カード支払い</option>
+                            <option value="" disabled selected>選択してください</option>
+                            <option value="コンビニ支払い">コンビニ支払い</option>
+                            <option value="カード支払い">カード支払い</option>
                         </select>
                         @error('payment_method')
                             <p class="error-message">
@@ -41,18 +41,32 @@
                     <h3 class="parts-title">配送先</h3>
                     <a href="{{ route('edit.purchase.address', ['item_id' => $item->id]) }}" class="change-address-button blue-button">変更する</a>
                 </div>
-                @if ($address)
-                    <div class="delivery-detail">
-                        <p>〒 {{ $address->postal_code }}</p>
-                        <p>{{ $address->address }} {{ $address->building }}</p>
-                    </div>
-                @else
-                    @if ($errors->first('postal_code') || $errors->first('address') || $errors->first('building'))
-                        <p class="error-message">
-                            {{ $errors->first('postal_code') ?? $errors->first('address') ?? $errors->first('building') }}
-                        </p>
-                    @endif
-                @endif
+                <div class="delivery-detail">
+                    〒 <input
+                        type="text"
+                        name="postal_code"
+                        id="postal_code"
+                        value="{{ old('postal_code', $address->postal_code ?? '') }}"
+                        readonly
+                    />
+                    <input
+                        type="text"
+                        name="address"
+                        id="address"
+                        value="{{ old('address', $address->address ?? '') }}"
+                        readonly
+                    />
+                    <input
+                        type="text"
+                        name="building"
+                        id="building"
+                        value="{{ old('building', $address->building ?? '') }}"
+                        readonly
+                    />
+                    <p class="error-message">
+                        {{ $errors->first('postal_code') ?? $errors->first('address') ?? $errors->first('building') }}
+                    </p>
+                </div>
                 <hr class="page-line">
             </div>
         {{-- 右側 --}}
