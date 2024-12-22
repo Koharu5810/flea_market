@@ -20,13 +20,19 @@ class ItemRegistrationTest extends TestCase
      */
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(); // シーダーを実行
+    }
+
     public function test_login_user_can_create_a_product()
     {
         $user = TestHelper::userLogin();
 
         Storage::fake('public');
 
-        $categories = Category::take(14)->get();
+        $categories = Category::take(3)->get();
         $categoryIds = $categories->pluck('id')->toArray();
 
         $response = $this->get(route('show.sell'));
@@ -46,16 +52,18 @@ class ItemRegistrationTest extends TestCase
             'price' => 1200,
         ]);
 
-        $response->assertRedirect(route('sell'));
+        $response->assertRedirect(route('home'));
+        // $response->assertRedirect(route('sell'));
+$response->assertSessionDoesntHaveErrors();
 
-        // $this->assertDatabaseHas('items', [
-        //     'user_id' => $user->id,
-        //     'brand' => 'テストブランド',
-        //     'item_condition' => '1',  // 良好
-        //     'name' => 'テスト商品',
-        //     'description' => 'テスト商品の説明',
-        //     'price' => 1200,
-        // ]);
+        $this->assertDatabaseHas('items', [
+            'user_id' => $user->id,
+            'brand' => 'テストブランド',
+            'item_condition' => '1',  // 良好
+            'name' => 'テスト商品',
+            'description' => 'テスト商品の説明',
+            'price' => 1200,
+        ]);
 
         // foreach ($categoryIds as $categoryId) {
         //     $this->assertDatabaseHas('category_item', [
@@ -76,6 +84,5 @@ class ItemRegistrationTest extends TestCase
         // );
 
 
-        // $response->assertRedirect(route('home'));
     }
 }
