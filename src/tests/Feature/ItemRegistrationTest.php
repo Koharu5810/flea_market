@@ -3,12 +3,10 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Tests\Helpers\TestHelper;
-use App\Models\Item;
 use App\Models\Category;
 
 class ItemRegistrationTest extends TestCase
@@ -53,9 +51,6 @@ class ItemRegistrationTest extends TestCase
             'price' => 1200,
         ]);
 
-        $response->assertRedirect(route('home'));
-        $response->assertSessionDoesntHaveErrors();
-
         $this->assertDatabaseHas('items', [
             'user_id' => $user->id,
             'brand' => 'テストブランド',
@@ -65,23 +60,20 @@ class ItemRegistrationTest extends TestCase
             'price' => 1200,
         ]);
 
+        // 画像が保存されているか確認
+        $this->assertTrue(
+            Storage::disk('public')->exists('items/' . $image->hashName()),
+            'The uploaded image does not exist in the storage.'
+        );
+
+        // 中間テーブルにカテゴリが同期されているか確認
         foreach ($categoryIds as $categoryId) {
             $this->assertDatabaseHas('item_category', [
                 'category_id' => $categoryId,
             ]);
         }
 
-        // 中間テーブルにカテゴリが同期されているか確認
-        // $this->assertDatabaseHas('category_item', [
-        //     'category_id' => $category->id,
-        // ]);
-
-        // 画像が保存されているか確認
-        // $this->assertTrue(
-        //     Storage::disk('public')->exists('items/' . $image->hashName()),
-        //     'The uploaded image does not exist in the storage.'
-        // );
-
-
+        $response->assertRedirect(route('home'));
+        $response->assertSessionDoesntHaveErrors();
     }
 }
