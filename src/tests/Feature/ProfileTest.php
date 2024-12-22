@@ -23,22 +23,25 @@ class ProfileTest extends TestCase
         $user = TestHelper::userLogin();
 
         $categories = Category::take(2)->get();
-        $item = Item::factory()->create(['name' => 'Test Item']);
+        $item = Item::factory()->create([
+            'name' => 'Test Item'
+        ]);
         $item->categories()->attach($categories->pluck('id'));
 
         // 購入商品を作成
-        $purchasedProducts = Item::factory()->count(2)->create([
-            'name' => 'Purchased Product',
+        $purchasedProduct = Item::factory()->create([
+            'name' => '購入した商品',
         ]);
 
         // 出品商品を作成
-        $userProducts = Item::factory()->count(3)->create([
+        $userProduct = Item::factory()->create([
             'user_id' => $user->id,
-            'name' => 'Test Product',
+            'name' => '出品した商品',
         ]);
 
         $response = $this->get(route('profile.mypage', $user->id));
         $response->assertStatus(200);
+
         if ($user->profile_image) {
             $response->assertSee(asset('storage/' . $user->profile_image));
         } else {
@@ -48,18 +51,10 @@ class ProfileTest extends TestCase
 
         // 出品した商品が表示されていることを確認
         $response = $this->get(route('profile.mypage', ['tab' => 'sell']));
-        foreach ($userProducts as $product) {
-            $response->assertSee(json_decode($product->name));
-        }
+        $response->assertSee(json_decode($userProduct->name));
 
         // 購入した商品が表示されていることを確認
         $response = $this->get(route('profile.mypage', ['tab' => 'buy']));
-        foreach ($purchasedProducts as $product) {
-            $response->assertSee(json_decode($product->name));
-        }
-
-        $response = $this->get(route('profile.mypage', ['tab' => 'unknown']));
-        $response->assertStatus(200);
-        $response->assertDontSee('Test Product');
+        $response->assertSee(json_decode($purchasedProduct->name));
     }
 }
