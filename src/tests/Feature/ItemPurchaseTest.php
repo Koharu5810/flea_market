@@ -50,8 +50,21 @@ class ItemPurchaseTest extends TestCase
 
         return [$address, $item];
     }
+// Stripe関連のモックを設定
+    private function mockStripe()
+    {
+        $this->mock(\Stripe\Stripe::class, function ($mock) {});
+        $this->mock(\Stripe\Checkout\Session::class, function ($mock) {
+            $mock->shouldReceive('retrieve')
+                ->with('test_session_id') // モックが正しいセッションIDを期待する
+                ->andReturn((object)[
+                    'payment_status' => 'paid',
+                    'payment_method_types' => ['card'],
+                ]);
+        });
+    }
 // 商品を購入する
-    private function purchaseItem($item, $sessionId = 'test_session_id')
+    private function purchaseItem($item)
     {
         $response = $this->post(route('purchase.checkout', [
             'item_id' => $item->id,
@@ -67,92 +80,10 @@ class ItemPurchaseTest extends TestCase
             'session_id' => 'test_session_id',
         ]));
     }
-
-// 商品購入テスト
-    public function test_user_can_purchase_item()
+// 購入後の共通確認処理
+    private function verifyPurchase($item, $address, $user)
     {
-        $user = $this->loginUser();
-        [$address, $item] = $this->preparePurchasePage($user);
-
-        $this->purchaseItem($item);
-
-        // Stripe関連の処理をモック
-        $this->mock(\Stripe\Stripe::class, function ($mock) {
-        });
-        $this->mock(\Stripe\Checkout\Session::class, function ($mock) {
-            $mock->shouldReceive('retrieve')
-                ->with('test_session_id') // モックが正しいセッションIDを期待する
-                ->andReturn((object)[
-                    'payment_status' => 'paid',
-                    'payment_method_types' => ['card'],
-                ]);
-        });
-
-        $response = $this->successPurchase($item);
-        // $response->assertStatus(200);
-
-        $item->update([
-            'is_sold' => true,
-            'address_id' => $address->id,
-        ]);
-
-        $purchasedAt = now()->format('Y-m-d H:i:s'); // フォーマットを明示的に指定
-        $order = Order::create([
-            'user_id' => $user->id,
-            'item_id' => $item->id,
-            'address_id' => $address->id,
-            'payment_method' => 'card',
-            'purchased_at' => $purchasedAt,
-        ]);
-
-        $itemAfterUpdate = $item->refresh();
-
-        // データベースの状態確認
-        $this->assertEquals(true, $itemAfterUpdate->is_sold); // 'is_sold'がtrueになっているか確認
-        $this->assertEquals($address->id, $itemAfterUpdate->address_id); // 'address_id'が期待値か確認
-
-        $this->assertDatabaseHas('items', [
-            'id' => $item->id,
-            'is_sold' => true,
-            'address_id' => $address->id,
-        ]);
-
-        // // テーブルの確認
-        $this->assertDatabaseHas('orders', [
-            'uuid' => $order->uuid,
-            'user_id' => $user->id,
-            'item_id' => $item->id,
-            'address_id' => $address->id,
-            'payment_method' => 'card',
-            'purchased_at' => $purchasedAt,
-        ]);
-
-        $response = $this->get(route('home'));
-        $response->assertStatus(200);
-    }
-// 購入後、商品一覧画面で「sold」表示される
-    public function test_user_can_purchase_item_and_item_is_marked_sold()
-    {
-        $user = $this->loginUser();
-        [$address, $item] = $this->preparePurchasePage($user);
-
-        // 商品を購入する
-        $this->purchaseItem($item);
-
-        // Stripe関連の処理をモック
-        $this->mock(\Stripe\Stripe::class, function ($mock) {});
-        $this->mock(\Stripe\Checkout\Session::class, function ($mock) {
-            $mock->shouldReceive('retrieve')
-                ->with('test_session_id') // モックが正しいセッションIDを期待する
-                ->andReturn((object)[
-                    'payment_status' => 'paid',
-                    'payment_method_types' => ['card'],
-                ]);
-        });
-
-        // 購入成功リクエスト
-        $response = $this->successPurchase($item);
-        // $response->assertStatus(200);
+        $purchasedAt = now()->format('Y-m-d H:i:s');
 
         // 商品データを更新
         $item->update([
@@ -161,7 +92,6 @@ class ItemPurchaseTest extends TestCase
         ]);
 
         // 注文情報を作成
-        $purchasedAt = now()->format('Y-m-d H:i:s');
         $order = Order::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
@@ -169,11 +99,6 @@ class ItemPurchaseTest extends TestCase
             'payment_method' => 'card',
             'purchased_at' => $purchasedAt,
         ]);
-
-        // 商品購入後のデータ確認
-        $itemAfterUpdate = $item->refresh();
-        $this->assertEquals(true, $itemAfterUpdate->is_sold); // 'is_sold' が true であることを確認
-        $this->assertEquals($address->id, $itemAfterUpdate->address_id); // 'address_id' が期待値であることを確認
 
         // データベース確認
         $this->assertDatabaseHas('items', [
@@ -191,7 +116,40 @@ class ItemPurchaseTest extends TestCase
             'purchased_at' => $purchasedAt,
         ]);
 
-        // 商品一覧画面を表示
+        return $order;
+    }
+
+// 商品購入テスト
+    public function test_user_can_purchase_item()
+    {
+        $user = $this->loginUser();
+        [$address, $item] = $this->preparePurchasePage($user);
+
+        $this->mockStripe();
+        $this->purchaseItem($item);
+
+        $response = $this->successPurchase($item);
+        // $response->assertStatus(200);
+
+        $this->verifyPurchase($item, $address, $user);
+
+        $response = $this->get(route('home'));
+        $response->assertStatus(200);
+    }
+// 購入後、商品一覧画面で「sold」表示される
+    public function test_user_can_purchase_item_and_item_is_marked_sold()
+    {
+        $user = $this->loginUser();
+        [$address, $item] = $this->preparePurchasePage($user);
+
+        $this->mockStripe();
+        $this->purchaseItem($item);
+
+        $response = $this->successPurchase($item);
+        // $response->assertStatus(200);
+
+        $this->verifyPurchase($item, $address, $user);
+
         $response = $this->get(route('home'));
         $response->assertStatus(200);
 
