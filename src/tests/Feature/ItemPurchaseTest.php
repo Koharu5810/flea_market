@@ -21,9 +21,14 @@ class ItemPurchaseTest extends TestCase
      */
     use RefreshDatabase;
 
-    private function purchasePageShow()
+// ユーザにログインする
+    private function loginUser()
     {
-        $user = TestHelper::userLogin();
+        return TestHelper::userLogin();
+    }
+// 商品と購入画面を準備する
+    private function preparePurchasePage($user)
+    {
         $address = $user->user_address()->create([
             'postal_code' => '123-4567',
             'address' => '東京都新宿区テスト',
@@ -43,16 +48,33 @@ class ItemPurchaseTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('購入する');
 
-        return [$user, $address, $item, $response];
+        return [$address, $item];
     }
-    public function test_user_can_purchase_item()
+// 商品を購入する
+    private function purchaseItem($item, $sessionId = 'test_session_id')
     {
-        [$user, $address, $item, $response] = $this->purchasePageShow();
-
         $response = $this->post(route('purchase.checkout', [
             'item_id' => $item->id,
             'session_id' => 'test_session_id',
         ]));
+        // $response->assertStatus(200);  // バリデーションエラーがないことを確認
+    }
+// 商品購入後処理
+    private function successPurchase($item, $sessionId = 'test_session_id')
+    {
+        $response = $this->get(route('purchase.success', [
+            'item_id' => $item->id,
+            'session_id' => 'test_session_id',
+        ]));
+    }
+
+// 商品購入テスト
+    public function test_user_can_purchase_item()
+    {
+        $user = $this->loginUser();
+        [$address, $item] = $this->preparePurchasePage($user);
+
+        $this->purchaseItem($item);
 
         // Stripe関連の処理をモック
         $this->mock(\Stripe\Stripe::class, function ($mock) {
@@ -66,18 +88,15 @@ class ItemPurchaseTest extends TestCase
                 ]);
         });
 
-        $purchasedAt = now()->format('Y-m-d H:i:s'); // フォーマットを明示的に指定
-
-        $response = $this->get(route('purchase.success', [
-            'item_id' => $item->id,
-            'session_id' => 'test_session_id',
-        ]));
+        $response = $this->successPurchase($item);
+        // $response->assertStatus(200);
 
         $item->update([
             'is_sold' => true,
             'address_id' => $address->id,
         ]);
 
+        $purchasedAt = now()->format('Y-m-d H:i:s'); // フォーマットを明示的に指定
         $order = Order::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
