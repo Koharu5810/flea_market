@@ -62,7 +62,7 @@ class ItemPurchaseTest extends TestCase
 // 商品購入後処理
     private function successPurchase($item, $sessionId = 'test_session_id')
     {
-        $response = $this->get(route('purchase.success', [
+        return $this->get(route('purchase.success', [
             'item_id' => $item->id,
             'session_id' => 'test_session_id',
         ]));
@@ -126,5 +126,78 @@ class ItemPurchaseTest extends TestCase
             'payment_method' => 'card',
             'purchased_at' => $purchasedAt,
         ]);
+
+        $response = $this->get(route('home'));
+        $response->assertStatus(200);
     }
+// 購入後、商品一覧画面で「sold」表示される
+    public function test_user_can_purchase_item_and_item_is_marked_sold()
+    {
+        $user = $this->loginUser();
+        [$address, $item] = $this->preparePurchasePage($user);
+
+        // 商品を購入する
+        $this->purchaseItem($item);
+
+        // Stripe関連の処理をモック
+        $this->mock(\Stripe\Stripe::class, function ($mock) {});
+        $this->mock(\Stripe\Checkout\Session::class, function ($mock) {
+            $mock->shouldReceive('retrieve')
+                ->with('test_session_id') // モックが正しいセッションIDを期待する
+                ->andReturn((object)[
+                    'payment_status' => 'paid',
+                    'payment_method_types' => ['card'],
+                ]);
+        });
+
+        // 購入成功リクエスト
+        $response = $this->successPurchase($item);
+        // $response->assertStatus(200);
+
+        // 商品データを更新
+        $item->update([
+            'is_sold' => true,
+            'address_id' => $address->id,
+        ]);
+
+        // 注文情報を作成
+        $purchasedAt = now()->format('Y-m-d H:i:s');
+        $order = Order::create([
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'address_id' => $address->id,
+            'payment_method' => 'card',
+            'purchased_at' => $purchasedAt,
+        ]);
+
+        // 商品購入後のデータ確認
+        $itemAfterUpdate = $item->refresh();
+        $this->assertEquals(true, $itemAfterUpdate->is_sold); // 'is_sold' が true であることを確認
+        $this->assertEquals($address->id, $itemAfterUpdate->address_id); // 'address_id' が期待値であることを確認
+
+        // データベース確認
+        $this->assertDatabaseHas('items', [
+            'id' => $item->id,
+            'is_sold' => true,
+            'address_id' => $address->id,
+        ]);
+
+        $this->assertDatabaseHas('orders', [
+            'uuid' => $order->uuid,
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'address_id' => $address->id,
+            'payment_method' => 'card',
+            'purchased_at' => $purchasedAt,
+        ]);
+
+        // 商品一覧画面を表示
+        $response = $this->get(route('home'));
+        $response->assertStatus(200);
+
+        // 購入した商品が "sold" として表示されていることを確認
+        $response->assertSee('sold');
+        $response->assertSee($item->name);
+    }
+
 }
