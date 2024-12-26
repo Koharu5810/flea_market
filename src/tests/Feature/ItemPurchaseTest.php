@@ -49,22 +49,26 @@ class ItemPurchaseTest extends TestCase
     {
         [$user, $address, $item, $response] = $this->purchasePageShow();
 
+        $response = $this->post(route('purchase.checkout', [
+            'item_id' => $item->id,
+            'session_id' => 'test_session_id',
+        ]));
+
         // Stripe関連の処理をモック
         $this->mock(\Stripe\Stripe::class, function ($mock) {
         });
         $this->mock(\Stripe\Checkout\Session::class, function ($mock) {
             $mock->shouldReceive('retrieve')
+                ->with('test_session_id') // モックが正しいセッションIDを期待する
                 ->andReturn((object)[
                     'payment_status' => 'paid',
                     'payment_method_types' => ['card'],
                 ]);
         });
 
-        // $uuid = (string) Str::uuid();
-        // $uuid = '56aa6dee-ba58-487f-97bd-bf1756d84e2b';
         $purchasedAt = now()->format('Y-m-d H:i:s'); // フォーマットを明示的に指定
 
-        $response = $this->post(route('purchase.success', [
+        $response = $this->get(route('purchase.success', [
             'item_id' => $item->id,
             'session_id' => 'test_session_id',
         ]));
@@ -75,8 +79,6 @@ class ItemPurchaseTest extends TestCase
         ]);
 
         $order = Order::create([
-            // 'uuid' => $uuid,
-            // 'user_id' => auth()->id(),
             'user_id' => $user->id,
             'item_id' => $item->id,
             'address_id' => $address->id,
@@ -105,10 +107,5 @@ class ItemPurchaseTest extends TestCase
             'payment_method' => 'card',
             'purchased_at' => $purchasedAt,
         ]);
-
-        // $response->assertRedirect(route('purchase.success', ['item_id' => $item->id]));
-
-        // $response->assertStatus(302);
-        // $response->assertRedirect(route('home'));
     }
 }
