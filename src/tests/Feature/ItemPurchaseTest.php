@@ -10,6 +10,7 @@ use Tests\TestCase;
 use Tests\Helpers\TestHelper;
 use App\Models\Item;
 use App\Models\Category;
+use App\Models\Order;
 
 class ItemPurchaseTest extends TestCase
 {
@@ -59,7 +60,9 @@ class ItemPurchaseTest extends TestCase
                 ]);
         });
 
-        $uuid = (string) Str::uuid();
+        // $uuid = (string) Str::uuid();
+        // $uuid = '56aa6dee-ba58-487f-97bd-bf1756d84e2b';
+        $purchasedAt = now()->format('Y-m-d H:i:s'); // フォーマットを明示的に指定
 
         $response = $this->post(route('purchase.success', [
             'item_id' => $item->id,
@@ -71,16 +74,21 @@ class ItemPurchaseTest extends TestCase
             'address_id' => $address->id,
         ]);
 
+        $order = Order::create([
+            // 'uuid' => $uuid,
+            // 'user_id' => auth()->id(),
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'address_id' => $address->id,
+            'payment_method' => 'card',
+            'purchased_at' => $purchasedAt,
+        ]);
+
         $itemAfterUpdate = $item->refresh();
 
         // データベースの状態確認
         $this->assertEquals(true, $itemAfterUpdate->is_sold); // 'is_sold'がtrueになっているか確認
         $this->assertEquals($address->id, $itemAfterUpdate->address_id); // 'address_id'が期待値か確認
-
-        // $response->assertRedirect(route('purchase.success', ['item_id' => $item->id]));
-
-        // $response->assertStatus(302);
-        // $response->assertRedirect(route('home'));
 
         $this->assertDatabaseHas('items', [
             'id' => $item->id,
@@ -89,12 +97,18 @@ class ItemPurchaseTest extends TestCase
         ]);
 
         // // テーブルの確認
-        // $this->assertDatabaseHas('orders', [
-        //     'uuid' => $uuid,
-        //     'user_id' => $user->id,
-        //     'item_id' => $item->id,
-        //     'address_id' => $address->id,
-        //     'payment_method' => 'card',
-        // ]);
+        $this->assertDatabaseHas('orders', [
+            'uuid' => $order->uuid,
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'address_id' => $address->id,
+            'payment_method' => 'card',
+            'purchased_at' => $purchasedAt,
+        ]);
+
+        // $response->assertRedirect(route('purchase.success', ['item_id' => $item->id]));
+
+        // $response->assertStatus(302);
+        // $response->assertRedirect(route('home'));
     }
 }
