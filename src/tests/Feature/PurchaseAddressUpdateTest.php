@@ -9,6 +9,7 @@ use Tests\Helpers\TestHelper;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\UserAddress;
+use App\Models\Order;
 
 class PurchaseAddressUpdateTest extends TestCase
 {
@@ -73,5 +74,74 @@ class PurchaseAddressUpdateTest extends TestCase
         $response->assertSee('987-6543');
         $response->assertSee('新テスト住所');
         $response->assertSee('新テストビル');
+    }
+// 購入した商品に送付先住所が紐づいて登録される
+    public function test_user_can_update_address_and_purchase_item()
+    {
+        [$user, $userAddress, $item] = $this->purchaseAddressUpdatePageShow();
+
+        $newAddressData = [
+            'user_id' => $user->id,
+            'postal_code' => '987-6543',
+            'address' => '新テスト住所',
+            'building' => '新テストビル',
+        ];
+
+        $this->updateAddress($user, $item, $newAddressData);
+
+        $response = $this->get(route('purchase.show', ['item_id' =>$item->id]));
+
+        $this->mock(\Stripe\Stripe::class, function ($mock) {});
+        $this->mock(\Stripe\Checkout\Session::class, function ($mock) {
+            $mock->shouldReceive('retrieve')
+                ->with('test_session_id') // モックが正しいセッションIDを期待する
+                ->andReturn((object)[
+                    'payment_status' => 'paid',
+                    'payment_method_types' => ['card'],
+                ]);
+        });
+
+        $response = $this->post(route('purchase.checkout', [
+            'item_id' => $item->id,
+            'session_id' => 'test_session_id',
+        ]));
+
+        $response = $this->get(route('purchase.success', [
+            'item_id' => $item->id,
+            'session_id' => 'test_session_id',
+        ]));
+
+        $purchasedAt = now()->format('Y-m-d H:i:s');
+
+        // 商品データを更新
+        $item->update([
+            'is_sold' => true,
+            'address_id' => $newAddressData->id,
+        ]);
+
+        // 注文情報を作成
+        $order = Order::create([
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'address_id' => $newAddressData->id,
+            'payment_method' => 'card',
+            'purchased_at' => $purchasedAt,
+        ]);
+
+        // データベース確認
+        $this->assertDatabaseHas('items', [
+            'id' => $item->id,
+            'is_sold' => true,
+            'address_id' => $newAddressData->id,
+        ]);
+
+        $this->assertDatabaseHas('orders', [
+            'uuid' => $order->uuid,
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'address_id' => $newAddressData->id,
+            'payment_method' => 'card',
+            'purchased_at' => $purchasedAt,
+        ]);
     }
 }
