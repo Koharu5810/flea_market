@@ -3,9 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 use Tests\Helpers\TestHelper;
 use App\Models\Item;
@@ -70,7 +67,6 @@ class ItemPurchaseTest extends TestCase
             'item_id' => $item->id,
             'session_id' => 'test_session_id',
         ]));
-        // $response->assertStatus(200);  // バリデーションエラーがないことを確認
     }
 // 商品購入後処理
     private function successPurchase($item, $sessionId = 'test_session_id')
@@ -129,7 +125,6 @@ class ItemPurchaseTest extends TestCase
         $this->purchaseItem($item);
 
         $response = $this->successPurchase($item);
-        // $response->assertStatus(200);
 
         $this->verifyPurchase($item, $address, $user);
 
@@ -146,7 +141,6 @@ class ItemPurchaseTest extends TestCase
         $this->purchaseItem($item);
 
         $response = $this->successPurchase($item);
-        // $response->assertStatus(200);
 
         $this->verifyPurchase($item, $address, $user);
 
@@ -167,7 +161,6 @@ class ItemPurchaseTest extends TestCase
         $this->purchaseItem($item);
 
         $response = $this->successPurchase($item);
-        // $response->assertStatus(200);
 
         $this->verifyPurchase($item, $address, $user);
 
