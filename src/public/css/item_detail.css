@@ -151,7 +151,6 @@
     width: 100%;
 }
 
-
 /* スマホ幅用スタイル */
 @media screen and (max-width: 767px) {
     .item-container {

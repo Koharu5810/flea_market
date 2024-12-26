@@ -94,71 +94,71 @@
         </form>
     </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const fileInput = document.getElementById('fileInput');
-        const imagePreview = document.getElementById('imagePreview');
-        const sellImageContainer = document.querySelector('.sell-image');
-        const categoryButtons = document.querySelectorAll('.sell-category');
-        const selectedCategoriesContainer = document.getElementById('selectedCategoriesContainer');
-        const selectedCategories = new Set();
-        const oldCategories = @json(old('category', []));
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fileInput = document.getElementById('fileInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const sellImageContainer = document.querySelector('.sell-image');
+            const categoryButtons = document.querySelectorAll('.sell-category');
+            const selectedCategoriesContainer = document.getElementById('selectedCategoriesContainer');
+            const selectedCategories = new Set();
+            const oldCategories = @json(old('category', []));
 
-        // ファイル選択時のプレビュー処理
-        fileInput?.addEventListener('change', function () {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                    sellImageContainer.style.justifyContent = 'flex-start';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                imagePreview.src = '';
-                imagePreview.style.display = 'none';
-                sellImageContainer.style.justifyContent = 'center';
-            }
-        });
-
-        // 過去選択されたカテゴリーの復元
-        categoryButtons.forEach(button => {
-            const categoryId = Number(button.dataset.categoryId);
-            if (oldCategories.includes(categoryId)) {
-                button.classList.add('selected');
-                selectedCategories.add(categoryId); // 復元したカテゴリーをセットに追加
-            }
-
-            // カテゴリー選択処理
-            button.addEventListener('click', function () {
-                const categoryId = Number(this.dataset.categoryId);
-                if (selectedCategories.has(categoryId)) {
-                    selectedCategories.delete(categoryId); // 選択解除
-                    this.classList.remove('selected');
+            // ファイル選択時のプレビュー処理
+            fileInput?.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                        sellImageContainer.style.justifyContent = 'flex-start';
+                    };
+                    reader.readAsDataURL(file);
                 } else {
-                    selectedCategories.add(categoryId); // 選択
-                    this.classList.add('selected');
+                    imagePreview.src = '';
+                    imagePreview.style.display = 'none';
+                    sellImageContainer.style.justifyContent = 'center';
                 }
-                updateHiddenFields();
             });
+
+            // 過去選択されたカテゴリーの復元
+            categoryButtons.forEach(button => {
+                const categoryId = Number(button.dataset.categoryId);
+                if (oldCategories.includes(categoryId)) {
+                    button.classList.add('selected');
+                    selectedCategories.add(categoryId); // 復元したカテゴリーをセットに追加
+                }
+
+                // カテゴリー選択処理
+                button.addEventListener('click', function () {
+                    const categoryId = Number(this.dataset.categoryId);
+                    if (selectedCategories.has(categoryId)) {
+                        selectedCategories.delete(categoryId); // 選択解除
+                        this.classList.remove('selected');
+                    } else {
+                        selectedCategories.add(categoryId); // 選択
+                        this.classList.add('selected');
+                    }
+                    updateHiddenFields();
+                });
+            });
+
+            // hiddenフィールドの更新
+            function updateHiddenFields() {
+                selectedCategoriesContainer.innerHTML = ''; // 初期化
+                selectedCategories.forEach(categoryId => {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'category[]'; // 配列形式で送信
+                    hiddenInput.value = categoryId;
+                    selectedCategoriesContainer.appendChild(hiddenInput);
+                });
+            }
+
+            // 初期状態のhiddenフィールドを設定
+            updateHiddenFields();
         });
-
-        // hiddenフィールドの更新
-        function updateHiddenFields() {
-            selectedCategoriesContainer.innerHTML = ''; // 初期化
-            selectedCategories.forEach(categoryId => {
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'category[]'; // 配列形式で送信
-                hiddenInput.value = categoryId;
-                selectedCategoriesContainer.appendChild(hiddenInput);
-            });
-        }
-
-        // 初期状態のhiddenフィールドを設定
-        updateHiddenFields();
-    });
-</script>
+    </script>
 
 @endsection

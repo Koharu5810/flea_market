@@ -4,9 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
-use FontLib\Table\Type\name;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // 会員登録画面
