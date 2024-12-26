@@ -157,5 +157,29 @@ class ItemPurchaseTest extends TestCase
         $response->assertSee('sold');
         $response->assertSee($item->name);
     }
+// 購入後、プロフィール画面で購入した商品一覧に追加されている
+    public function test_user_can_purchase_item_and_it_is_added_to_profile()
+    {
+        $user = $this->loginUser();
+        [$address, $item] = $this->preparePurchasePage($user);
 
+        $this->mockStripe();
+        $this->purchaseItem($item);
+
+        $response = $this->successPurchase($item);
+        // $response->assertStatus(200);
+
+        $this->verifyPurchase($item, $address, $user);
+
+        // プロフィール画面に遷移
+        $response = $this->get(route('profile.mypage', [
+            'user_id' => $user->id,
+            'tab' => 'buy',
+        ]));
+        $response->assertStatus(200);
+
+        // プロフィール画面で購入した商品が「購入した商品一覧」に追加されていることを確認
+        $response->assertSee('購入した商品'); // セクションタイトルが表示されていることを確認
+        $response->assertSee($item->name); // 購入した商品の名前が表示されていることを確認
+    }
 }
