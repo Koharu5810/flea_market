@@ -31,6 +31,7 @@ class PurchaseController extends Controller
         $user = auth()->user();
         $item = Item::findOrFail($request->item_id);
 
+
         // 一度購入された商品かどうかを確認
         if ($item->is_sold) {
             return redirect()->route('purchase.show', ['item_id' => $item->id])

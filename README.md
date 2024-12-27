@@ -13,16 +13,6 @@
 4. DockerDesktop アプリを立ち上げる または `open -a docker`
 5. `docker-compose up -d --build`
 
-
-```bash
-services:
-  mysql:
-    platform: linux/amd64
-
-  phpmyadmin:
-    platform: linux/amd64
-```
-
 **Laravel 環境構築**
 
 1. `docker-compose exec php bash`
@@ -37,6 +27,9 @@ DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
+
+STRIPE_SECRET=pk_test_51QR3XJKVrOD7XAGSthYGfPC68C8Hhy4U3eRYvYcFtHOCdLzmrUPGwNdvBJxjNCbpjJ10GebaH1PMvbU3HsQfytxK00TWKXU5oG
+STRIPE_KEY=pk_test_51QR3XJKVrOD7XAGSthYGfPC68C8Hhy4U3eRYvYcFtHOCdLzmrUPGwNdvBJxjNCbpjJ10GebaH1PMvbU3HsQfytxK00TWKXU5oG
 ```
 
 5. アプリケーションキーの作成
@@ -62,6 +55,11 @@ php artisan db:seed
 php artisan storage:link
 ```
 
+9. Stripeパッケージのインストール
+``` bash
+composer require stripe/stripe-php
+```
+
 ## 使用技術(実行環境)
 
 | 言語・フレームワーク | バージョン |
@@ -69,6 +67,7 @@ php artisan storage:link
 | PHP                  | 8.3.13     |
 | Laravel              | 8.83.27    |
 | MySQL                | 9.0.1      |
+| Stripe               | 9.9.0      |
 
 ## ER 図
 

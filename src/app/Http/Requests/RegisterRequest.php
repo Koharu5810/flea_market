@@ -49,11 +49,4 @@ class RegisterRequest extends FormRequest
             // パスワード不一致エラーメッセージはApp\Rules\PasswordMatchで定義
         ];
     }
-
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        throw new \Illuminate\Validation\ValidationException($validator, response()->json([
-            'errors' => $validator->errors(),
-        ], 422));
-    }
 }
