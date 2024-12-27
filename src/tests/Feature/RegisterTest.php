@@ -11,14 +11,6 @@ class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // CSRF トークン検証を無効化
-        $this->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-    }
-
     public function openRegisterPage()
     {
         $response = $this->get(route('register.show'));
@@ -38,7 +30,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password123',
         ];
 
-        $response = $this->post(route('register'), $data);
+        $response = $this->postJson(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'username' => 'お名前を入力してください',
@@ -55,7 +47,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password123',
         ];
 
-        $response = $this->post(route('register'), $data);
+        $response = $this->postJson(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'email' => 'メールアドレスを入力してください',
@@ -72,7 +64,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password123',
         ];
 
-        $response = $this->post(route('register'), $data);
+        $response = $this->postJson(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'password' => 'パスワードを入力してください',
@@ -89,7 +81,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'short12',
         ];
 
-        $response = $this->post(route('register'), $data);
+        $response = $this->postJson(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'password' => 'パスワードは8文字以上で入力してください',
@@ -106,7 +98,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password456',
         ];
 
-        $response = $this->post(route('register'), $data);
+        $response = $this->postJson(route('register'), $data);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'password_confirmation' => 'パスワードと一致しません',
