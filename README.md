@@ -2,6 +2,7 @@
 
 企業開発の独自フリマアプリ
 アイテムの出品・購入を行える
+メール認証によって、認証済みユーザのみが取引などの操作を行える
 
 ## 環境構築
 
@@ -72,17 +73,13 @@ php artisan storage:link
 composer require stripe/stripe-php
 ```
 
-10. MailHog
-
-``` bash
-
-```
 
 **会員登録後のメール認証**
 アプリケーションをブラウザで確認時に、
 会員登録画面で登録後メール認証を行うには
 http://localhost:8025
 へダイレクトし、本文記載の認証ボタンをクリックする。
+
 
 ## 使用技術(実行環境)
 
@@ -102,4 +99,4 @@ http://localhost:8025
 
 - 開発環境 : http://localhost/products
 - phpMyAdmin : http://localhost:8080/
-- MailHog : http://localhost:8025
+- MailHog : http://localhost:8025/

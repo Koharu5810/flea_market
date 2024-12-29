@@ -1,3 +1,7 @@
+volumes:
+    db-volume:
+    maildir:
+
 services:
     nginx:
         image: nginx:1.26.2   #2024.11.9時点での安定版の最新バージョン
@@ -50,3 +54,5 @@ services:
         environment:
             MH_STORAGE: maildir
             MH_MAILDIR_PATH: /tmp
+        volumes:
+            - maildir:/tmp
