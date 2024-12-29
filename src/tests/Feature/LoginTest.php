@@ -16,6 +16,14 @@ class LoginTest extends TestCase
      */
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // CSRF トークン検証を無効化
+        $this->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    }
+
     private function openLoginPage()
     {
         return $this->get(route('show.login'))
