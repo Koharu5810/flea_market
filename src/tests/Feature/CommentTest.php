@@ -26,40 +26,36 @@ class CommentTest extends TestCase
 
         return $item;
     }
-    private function loginAndGetItemDetailPage()
+    private function getItemDetailPage($isLoggedIn = false)
     {
-        $user = TestHelper::userLogin();
+        $user = null;
+        if ($isLoggedIn) {
+            $user = TestHelper::userLogin();
+        }
+
         $item = $this->createItemWithCategories();
 
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertStatus(200);
-        $response->assertSee('コメントを送信する');
+        $this->get(route('item.detail', ['item_id' => $item->id]))
+            ->assertStatus(200)
+            ->assertSee('コメントを送信する');
 
-        return [$user, $item, $response];
+        return [$user, $item];
     }
-        private function GetItemDetailPageAsGuest()
+    private function sendComment($itemId, $commentData)
     {
-        $item = $this->createItemWithCategories();
-
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertStatus(200);
-        $response->assertSee('コメントを送信する');
-
-        return [$item, $response];
+        return $this->post(route('comments.store', ['item_id' => $itemId]), $commentData);
     }
 
 // ログインユーザはコメントを送信できる
     public function test_login_user_can_send_comment()
     {
-        [$user, $item, $response] = $this->loginAndGetItemDetailPage();
+        [$user, $item] = $this->getItemDetailPage(true);
 
-        $commentData = [
-            'comment' => 'テストコメント',
-        ];
+        $commentData = ['comment' => 'テストコメント'];
 
-        $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
-        $postResponse->assertStatus(302);
-        $postResponse->assertRedirect(route('item.detail', ['item_id' => $item->id]));
+        $this->sendComment($item->id, $commentData)
+            ->assertStatus(302)
+            ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
 
         $this->assertDatabaseHas('comments', [
             'item_id' => $item->id,
@@ -67,47 +63,45 @@ class CommentTest extends TestCase
             'user_id' => $user->id,
         ]);
     }
+// 未認証ユーザはコメントを送信できない
     public function test_guest_user_cant_send_comment()
     {
-        [$item, $response] = $this->GetItemDetailPageAsGuest();
+        [$user, $item] = $this->getItemDetailPage(false);
 
-        $commentData = [
-            'comment' => 'テストコメント',
-        ];
+        $commentData = ['comment' => 'テストコメント'];
 
-        $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
-
-        $postResponse->assertRedirect(route('login'));
+        $this->sendComment($item->id, $commentData)
+            ->assertRedirect(route('login'));
 
         $this->assertDatabaseMissing('comments', [
             'item_id' => $item->id,
             'comment' => 'テストコメント',
         ]);
     }
+// コメントを空送信するとバリデーションエラー
     public function test_comment_validation_error_when_comment_is_missing()
     {
-        [$item, $response] = $this->loginAndGetItemDetailPage();
+        [$item] = $this->getItemDetailPage(true);
 
         $commentData = ['comment' => '',];
 
-        $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
-        $postResponse->assertStatus(302);
-        $postResponse->assertSessionHasErrors([
-            'comment' => 'コメントを入力してください',
-        ]);
+        $this->sendComment($item->id, $commentData)
+            ->assertStatus(302)
+            ->assertSessionHasErrors([
+                'comment' => 'コメントを入力してください',
+            ]);
     }
+// コメントを256文字以上で送信
     public function test_comment_validation_error_when_comment_exceeds_255_characters()
     {
-        [$item, $response] = $this->loginAndGetItemDetailPage();
+        [$item] = $this->getItemDetailPage(true);
 
-        $commentData = [
-            'comment' => str_repeat('a', 256),
-        ];
+        $commentData = ['comment' => str_repeat('a', 256)];
 
-        $postResponse = $this->post(route('comments.store', ['item_id' => $item->id]), $commentData);
-        $postResponse->assertStatus(302);
-        $postResponse->assertSessionHasErrors([
-            'comment' => 'コメントは255文字以内で入力してください',
-        ]);
+        $this->sendComment($item->id, $commentData)
+            ->assertStatus(302)
+            ->assertSessionHasErrors([
+                'comment' => 'コメントは255文字以内で入力してください',
+            ]);
     }
 }
