@@ -6,7 +6,9 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
+Auth::routes(['verify' => true]);
 // 会員登録画面
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withoutMiddleware(['auth'])->name('register.show');
 Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth'])->name('register');
