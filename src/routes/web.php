@@ -4,11 +4,19 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\Auth\VerificationController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+// mailhog使用のためのルート設定
 Auth::routes(['verify' => true]);
+Route::get('/email/verify', [VerificationController::class, 'notice'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+
 // 会員登録画面
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->withoutMiddleware(['auth'])->name('register.show');
 Route::post('/register', [AuthController::class, 'register'])->withoutMiddleware(['auth'])->name('register');
@@ -24,7 +32,7 @@ Route::get('/item/{item_id}', [ItemController::class, 'showDetail'])->name('item
 // 検索機能
 Route::get('/search', [ItemController::class, 'search'])->name('search');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     // お気に入り機能
     Route::post('/item/{item_id}/favorite', [ItemController::class, 'toggleFavorite'])->name('item.favorite');
     // コメント送信フォーム

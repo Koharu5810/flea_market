@@ -30,6 +30,15 @@ DB_PASSWORD=laravel_pass
 
 STRIPE_SECRET=sk_test_51QR3XJKVrOD7XAGSKYoa3PDLsaZXllvCCr8tN9LPsKYGPpVbaBM769bNNp91FiOHTKhMYHtiHKnuasa8OnhcOK3v00kiVkBdKr
 STRIPE_KEY=pk_test_51QR3XJKVrOD7XAGSthYGfPC68C8Hhy4U3eRYvYcFtHOCdLzmrUPGwNdvBJxjNCbpjJ10GebaH1PMvbU3HsQfytxK00TWKXU5oG
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=test
+MAIL_PASSWORD=pass
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=test@abc.com
+MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 5. アプリケーションキーの作成
@@ -68,6 +77,7 @@ composer require stripe/stripe-php
 | Laravel              | 8.83.27    |
 | MySQL                | 9.0.1      |
 | Stripe               | 9.9.0      |
+| MailHog              |            |
 
 ## ER 図
 
