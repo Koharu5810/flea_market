@@ -26,7 +26,7 @@ class VerificationController extends Controller
     public function resend(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->route('profile.edit'); // 既に認証済みの場合のリダイレクト先
+            return redirect()->route('home'); // 既に認証済みの場合のリダイレクト先
         }
 
         $request->user()->sendEmailVerificationNotification();
