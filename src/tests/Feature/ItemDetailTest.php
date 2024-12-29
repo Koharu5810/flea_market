@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Item;
@@ -17,21 +15,6 @@ class ItemDetailTest extends TestCase
      * @return void
      */
     use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        Cache::flush(); // テスト開始前にキャッシュをクリア
-        Artisan::call('cache:clear');       // キャッシュをクリア
-        Artisan::call('config:clear');      // 設定キャッシュをクリア
-        Artisan::call('route:clear');       // ルートキャッシュをクリア
-        Artisan::call('view:clear');        // ビューキャッシュをクリア
-    }
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        gc_collect_cycles(); // ガベージコレクションを手動で実行
-    }
 
     private function openItemDetailPage()
     {
@@ -49,12 +32,12 @@ class ItemDetailTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee($imagePath, false);
 
-        return [$response, $item];
+        return [$item, $response];
     }
 
     public function test_item_detail_page_displays_correct_information()
     {
-        [$response, $item] = $this->openItemDetailPage();
+        [$item, $response] = $this->openItemDetailPage();
 
         // 商品に「いいね」を付与
         $item->favoriteBy()->attach(User::factory()->count(5)->create()->pluck('id'));
@@ -92,7 +75,7 @@ class ItemDetailTest extends TestCase
 
     public function test_item_detail_page_displays_all_categories()
     {
-        [$response, $item] = $this->openItemDetailPage();
+        [$item, $response] = $this->openItemDetailPage();
 
         foreach ($item->categories as $category) {
             $response->assertSeeText($category->content); // カテゴリ名が含まれているか確認
