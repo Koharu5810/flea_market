@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use Tests\Helpers\TestHelper;
@@ -17,21 +16,17 @@ class LoginTest extends TestCase
      */
     use RefreshDatabase;
 
-    protected function setUp(): void
+    private function openLoginPage()
     {
-        parent::setUp();
-
-        // CSRF トークン検証を無効化
-        $this->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+        return $this->get(route('show.login'))
+            ->assertStatus(200)
+            ->assertSee('ログインする');
     }
-
-    public function openLoginPage()
+    private function assertValidationError($data, $expectedErrors)
     {
-        $response = $this->get(route('show.login'));
-        $response->assertStatus(200);
-        $response->assertSee('ログインする');
-
-        return $response;
+        $response = $this->post(route('login'), $data);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors($expectedErrors);
     }
 
     public function test_email_validation_error_when_email_is_missing()
@@ -42,25 +37,21 @@ class LoginTest extends TestCase
             'username' => '',
             'password' => 'password123',
         ];
+        $expectedErrors = ['username' => 'ユーザー名またはメールアドレスを入力してください'];
 
-        $response = $this->post(route('login'), $data);
-        $response->assertStatus(302);
-        $response->assertSessionHasErrors([
-            'username' => 'ユーザー名またはメールアドレスを入力してください',
-        ]);
+        $this->assertValidationError($data, $expectedErrors);
     }
     public function test_password_validation_error_when_password_is_missing()
     {
+        $this->openLoginPage();
+
         $data = [
             'username' => 'TEST USER',
             'password' => '',
         ];
+        $expectedErrors = ['password' => 'パスワードを入力してください'];
 
-        $response = $this->post(route('login'), $data);
-        $response->assertStatus(302);
-        $response->assertSessionHasErrors([
-            'password' => 'パスワードを入力してください',
-        ]);
+        $this->assertValidationError($data, $expectedErrors);
     }
     public function test_login_fails_with_invalid_credentials()
     {
@@ -78,9 +69,9 @@ class LoginTest extends TestCase
         ];
 
         $response = $this->post(route('login'), $data);
-        $response->assertStatus(302);
-        $response->assertRedirect(route('login'));
-        $response->assertSessionHas('auth_error', 'ログイン情報が登録されていません');
+        $response->assertStatus(302)
+            ->assertRedirect(route('login'))
+            ->assertSessionHas('auth_error', 'ログイン情報が登録されていません');
 
         // ユーザーが認証されていないことを確認
         $this->assertGuest();

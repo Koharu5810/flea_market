@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Item;
-use Tests\Helpers\TestHelper;
 
 class ItemTest extends TestCase
 {
