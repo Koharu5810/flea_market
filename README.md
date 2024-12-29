@@ -60,14 +60,25 @@ php artisan db:seed
 ```
 
 8. シンボリックリンクの作成
+
 ``` bash
 php artisan storage:link
 ```
 
 9. Stripeパッケージのインストール
+
 ``` bash
 composer require stripe/stripe-php
 ```
+
+10. MailHog
+
+``` bash
+
+```
+
+**会員登録後のメール認証**
+会員登録ページで
 
 ## 使用技術(実行環境)
 
@@ -87,3 +98,4 @@ composer require stripe/stripe-php
 
 - 開発環境 : http://localhost/products
 - phpMyAdmin : http://localhost:8080/
+- MailHog : http://localhost:8025
