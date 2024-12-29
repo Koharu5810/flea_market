@@ -40,3 +40,15 @@ services:
             - mysql
         ports:
             - 8080:80
+
+    mailhog:
+        image: mailhog/mailhog   # chatGPT出力
+        # image: 'mailhog/mailhog:latest'    # ネット記載
+        ports:
+            - "1025:1025"
+            - "8025:8025"
+        environment:
+            MH_STORAGE: maildir
+            MH_MAILDIR_PATH: /tmp
+        # volumes:
+        #     - maildir:/tmp
