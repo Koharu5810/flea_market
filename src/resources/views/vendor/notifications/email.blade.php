@@ -2,18 +2,18 @@
 
 {{-- Greeting --}}
 @if (! empty($greeting))
-# {{ $greeting }}
+    # {{ $greeting }}
 @else
     @if ($level === 'error')
     # @lang('Whoops!')
-    @else
+@else
     # @lang('Hello!')
     @endif
 @endif
 
 {{-- Intro Lines --}}
 @foreach ($introLines as $line)
-{{ $line }}
+    {{ $line }}
 
 @endforeach
 
@@ -36,15 +36,15 @@
 
 {{-- Outro Lines --}}
 @foreach ($outroLines as $line)
-{{ $line }}
+    {{ $line }}
 
 @endforeach
 
 {{-- Salutation --}}
 @if (! empty($salutation))
-{{ $salutation }}
+    {{ $salutation }}
 @else
-    @lang(''),<br>
+    @lang('Regards'),<br>
     {{ config('app.name') }}
 @endif
 
@@ -52,12 +52,11 @@
 @isset($actionText)
     @slot('subcopy')
         @lang(
-            ""\「:actionText」\"」ボタンをクリックできない場合は、以下のURLをコピーしてWebブラウザに貼り付けてください:",
+            "\":actionText\" ボタンをクリックできない場合は、以下のURLをコピーしてWebブラウザに貼り付けてください:",
             [
                 'actionText' => $actionText,
             ]
-        )
-        <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+        ) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
         @endslot
     @endisset
 @endcomponent

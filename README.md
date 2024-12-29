@@ -32,6 +32,7 @@ STRIPE_SECRET=sk_test_51QR3XJKVrOD7XAGSKYoa3PDLsaZXllvCCr8tN9LPsKYGPpVbaBM769bNN
 STRIPE_KEY=pk_test_51QR3XJKVrOD7XAGSthYGfPC68C8Hhy4U3eRYvYcFtHOCdLzmrUPGwNdvBJxjNCbpjJ10GebaH1PMvbU3HsQfytxK00TWKXU5oG
 
 MAIL_MAILER=smtp
+MAIL_ENCODING=UTF-8
 MAIL_HOST=mailhog
 MAIL_PORT=1025
 MAIL_USERNAME=test
@@ -78,7 +79,10 @@ composer require stripe/stripe-php
 ```
 
 **会員登録後のメール認証**
-会員登録ページで
+アプリケーションをブラウザで確認時に、
+会員登録画面で登録後メール認証を行うには
+http://localhost:8025
+へダイレクトし、本文記載の認証ボタンをクリックする。
 
 ## 使用技術(実行環境)
 
