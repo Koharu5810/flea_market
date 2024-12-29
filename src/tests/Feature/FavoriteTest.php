@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 use App\Models\Item;
 use App\Models\Category;
@@ -19,17 +18,6 @@ class FavoriteTest extends TestCase
      */
     use RefreshDatabase;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        Cache::flush(); // テスト開始前にキャッシュをクリア
-    }
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        gc_collect_cycles(); // ガベージコレクションを手動で実行
-    }
-
 // 共通処理
     private function openItemDetailPage()
     {
@@ -39,26 +27,24 @@ class FavoriteTest extends TestCase
         $item = Item::factory()->create(['name' => 'Test Item']);
         $item->categories()->attach($categories->pluck('id'));
 
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertStatus(200);
+        $this->get(route('item.detail', ['item_id' => $item->id]))
+            ->assertStatus(200);
 
-        return [$response, $item, $user];
+        return [$user, $item];
     }
     private function toggleFavorite($item)
     {
-        return $this->post(route('item.favorite', ['item_id' => $item->id]))
+        $this->post(route('item.favorite', ['item_id' => $item->id]))
             ->assertStatus(302)
             ->assertRedirect(route('item.detail', ['item_id' => $item->id]));
     }
-    private function assertFavoriteIcon($item, $favoriteIcon)
+    private function assertFavoriteState($user, $item, $isFavorited)
     {
-        $response = $this->get(route('item.detail', ['item_id' => $item->id]));
-        $response->assertSee($favoriteIcon, false);
-    }
-    private function assertFavoriteDatabase($user, $item, $exists = true)
-    {
-        $method = $exists ? 'assertDatabaseHas' : 'assertDatabaseMissing';
+        $icon = $isFavorited ? 'favorited.png' : 'favorite.png';
+        $this->get(route('item.detail', ['item_id' => $item->id]))
+            ->assertSee(asset("storage/app/{$icon}"), false);
 
+        $method = $isFavorited ? 'assertDatabaseHas' : 'assertDatabaseMissing';
         $this->{$method}('favorites', [
             'user_id' => $user->id,
             'item_id' => $item->id,
@@ -68,40 +54,32 @@ class FavoriteTest extends TestCase
 // いいねアイコンを押下することでいいねした商品として登録
     public function test_item_can_be_favorited_by_clicking_favorite_icon()
     {
-        [$response, $item, $user] = $this->openItemDetailPage();
+        [$user, $item] = $this->openItemDetailPage();
 
-        $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
-
-        $this->toggleFavorite($item);
-        $this->assertFavoriteDatabase($user, $item, true);
+        $this->assertFavoriteState($user, $item, false); // 初期状態: いいねしていない
+        $this->toggleFavorite($item);                   // いいね処理
+        $this->assertFavoriteState($user, $item, true); // 状態確認: いいね済み
     }
 // 追加済のアイコンは色が変化する
     public function test_favorite_icon_changes_color_when_item_is_favorited()
     {
-        [$response, $item, $user] = $this->openItemDetailPage();
+        [$user, $item] = $this->openItemDetailPage();
 
-        $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
-
+        $this->assertFavoriteState($user, $item, false);
         $this->toggleFavorite($item);
-        $this->assertFavoriteDatabase($user, $item, true);
-
-        $this->assertFavoriteIcon($item, asset('storage/app/favorited.png'));
-
+        $this->assertFavoriteState($user, $item, true);
     }
 // 再度いいねアイコンを押下するといいねを解除できる
     public function test_favorite_icon_toggles_off()
     {
-        [$response, $item, $user] = $this->openItemDetailPage();
+        [$user, $item] = $this->openItemDetailPage();
 
-        $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
-
+        $this->assertFavoriteState($user, $item, false);
         $this->toggleFavorite($item);
-        $this->assertFavoriteDatabase($user, $item, true);
-        $this->assertFavoriteIcon($item, asset('storage/app/favorited.png'));
+        $this->assertFavoriteState($user, $item, true);
 
         // 2回目のクリックでお気に入りを解除
         $this->toggleFavorite($item);
-        $this->assertFavoriteDatabase($user, $item, false);
-        $this->assertFavoriteIcon($item, asset('storage/app/favorite.png'));
+        $this->assertFavoriteState($user, $item, false);
     }
 }
