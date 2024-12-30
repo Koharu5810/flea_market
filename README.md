@@ -18,7 +18,8 @@
 
 1. `docker-compose exec php bash`
 2. `composer install`
-3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。または、新しく.env ファイルを作成
+3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。
+    または、新しく.env ファイルを作成（`cp .env.example .env`）。
 4. .env に以下の環境変数を追加
 
 ```text
@@ -75,10 +76,11 @@ composer require stripe/stripe-php
 
 
 **会員登録後のメール認証**
-アプリケーションをブラウザで確認時に、
-会員登録画面で登録後メール認証を行うには
-http://localhost:8025
-へダイレクトし、本文記載の認証ボタンをクリックする。
+
+アプリケーションをブラウザで確認時に、  
+会員登録画面で登録後メール認証を行うには  
+http://localhost:8025  
+へダイレクトし、本文記載の認証ボタンをクリックする。  
 
 
 ## 使用技術(実行環境)
@@ -97,6 +99,6 @@ http://localhost:8025
 
 ## URL
 
-- 開発環境 : http://localhost/products
+- 開発環境 : http://localhost/
 - phpMyAdmin : http://localhost:8080/
 - MailHog : http://localhost:8025/
