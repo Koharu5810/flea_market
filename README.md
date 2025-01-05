@@ -11,7 +11,7 @@
 1. アプリケーションをクローンするディレクトリに移動
 2. `git clone git@github.com:Koharu5810/flea_market.git`
 3. `cd flea_market`
-4. DockerDesktop アプリを立ち上げる または `open -a docker`
+4. DockerDesktop アプリを立ち上げる（`open -a docker`）。
 5. `docker-compose up -d --build`
 
 **Laravel 環境構築**
@@ -81,6 +81,14 @@ composer require stripe/stripe-php
 http://localhost:8025  
 へダイレクトし、本文記載の認証ボタンをクリックする。
 <br><br>
+
+**商品購入処理実行時のStripe操作**
+
+アプリケーションをブラウザで確認時に、商品購入画面から遷移したStripeでの購入処理実行には  
+カード支払いを選択し、カード番号に「4242 4242 4242 4242」を入力する。  
+（その他の入力情報は適当なデータでOK）
+<br><br>
+
 
 ## 使用技術(実行環境)
 
