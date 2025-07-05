@@ -27,8 +27,12 @@ class ItemController extends Controller
 
         if ($tab === 'mylist') {
             if (auth()->check()) {
+                $userId = auth()->id();
+
                 // 認証ユーザはお気に入りリストを取得
-                $items = auth()->user()->favorites();
+                $items = auth()->user()->favorites()
+                    ->where('items.user_id', '!=', $userId);
+
                 if (!empty($query)) {
                     $items->where('name', 'like', '%' . $query . '%');
                 }
