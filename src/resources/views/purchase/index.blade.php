@@ -11,7 +11,7 @@
         <div class="left-container">
         {{-- 商品情報 --}}
             <div class="detail-container">
-                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image" />
+                <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" class="item-image" />
                 <div class="item-detail">
                     <h2 class="item-name">{{ $item->name }}</h2>
                     <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span></p>

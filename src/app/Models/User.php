@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Cashier\Billable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -74,6 +75,15 @@ class User extends Authenticatable implements MustVerifyEmail
                 $user->uuid = (string) Str::uuid();
             }
         });
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        if (Hash::needsRehash($value)) {
+            $this->attributes['password'] = Hash::make($value);
+        } else {
+            $this->attributes['password'] = $value;
+        }
     }
 
     public function getProfileImageUrlAttribute() {
