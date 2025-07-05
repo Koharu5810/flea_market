@@ -29,7 +29,6 @@ class UsersTableSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            // User::updateOrCreate(
             $createdUser= User::updateOrCreate(
                 ['id' => $user['id']],
                 [
@@ -46,11 +45,5 @@ class UsersTableSeeder extends Seeder
                 'building' => 'テストビル' . $user['id'],
             ]);
         }
-        // User::factory(3)
-        //     ->has(
-        //         UserAddress::factory()->count(1), // 1つの住所を関連付け
-        //         'user_address'
-        //     )
-        //     ->create();
     }
 }

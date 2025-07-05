@@ -32,8 +32,7 @@
                                 <span class="sold-label visually-hidden">Sold</span> <!-- 非表示にする -->
                             @endif
                             @if ($item->image)
-                                <div class="item-image">
-                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
+                                <div class="item-image">                                    <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" />
                                 </div>
                             @else
                                 <div class="item-image">商品画像</div>
