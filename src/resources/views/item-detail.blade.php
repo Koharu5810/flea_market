@@ -16,7 +16,7 @@
     {{-- 左側 --}}
         <div class="left-container">
             <div class="item-image">
-                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
+                <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" />
             </div>
         </div>
     {{-- 右側 --}}
