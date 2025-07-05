@@ -45,10 +45,6 @@ class Item extends Model
 
         return $this->favoriteBy()->where('user_id', $user->id)->exists();
     }
-    public function favorites()
-    {
-        return $this->hasMany(Favorite::class);
-    }
     // 出品アイテムが複数のユーザがコメントを投稿する場合のリレーション
     public function comments() {
         return $this->hasMany(Comment::class);

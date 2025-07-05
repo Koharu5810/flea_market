@@ -46,6 +46,10 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<string, string>
      */
+    /**
+     * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany favorites()
+     */
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
