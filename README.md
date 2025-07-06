@@ -110,7 +110,14 @@ php artisan config:clear
 php artisan cache:clear
 ```
 
-4. テスト用データベースにマイグレーションとシーディングを適用する
+4. Stripe連携の設定を記述する
+
+```text
+STRIPE_KEY=pk_test_あなたの公開可能キー
+STRIPE_SECRET=sk_test_あなたの公開可能キー
+```
+
+5. テスト用データベースにマイグレーションとシーディングを適用する
 
 ``` bash
 php artisan migrate --env=testing

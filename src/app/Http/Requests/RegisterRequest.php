@@ -45,7 +45,7 @@ class RegisterRequest extends FormRequest
             'email.unique' => '既に登録されているメールアドレスです',
             'password.required' => 'パスワードを入力してください',
             'password.min' => 'パスワードは8文字以上で入力してください',
-            'password_confirmation.required' => '確認用パスワードを入力してください',
+            'password_confirmation.required' => 'パスワードと一致しません',
             // パスワード不一致エラーメッセージはApp\Rules\PasswordMatchで定義
         ];
     }

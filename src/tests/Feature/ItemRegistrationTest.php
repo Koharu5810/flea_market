@@ -38,8 +38,9 @@ class ItemRegistrationTest extends TestCase
         $response->assertSee('出品する');
 
         // テスト画像データ作成
-        $imagePath = storage_path('app/public/images/clock.jpg');
-        $image = new UploadedFile($imagePath, 'clock.jpg', null, null, true);
+        $imagePath = storage_path('app/public/images/phone.jpg');
+        $image = new UploadedFile($imagePath, 'phone.jpg', null, null, true);
+        // $image = UploadedFile::fake()->image('clock.jpg');
 
         $response = $this->post(route('sell'), [
             'image' => $image,
