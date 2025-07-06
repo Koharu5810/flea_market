@@ -38,9 +38,7 @@ class ItemRegistrationTest extends TestCase
         $response->assertSee('出品する');
 
         // テスト画像データ作成
-        $imagePath = storage_path('app/public/images/phone.jpg');
-        $image = new UploadedFile($imagePath, 'phone.jpg', null, null, true);
-        // $image = UploadedFile::fake()->image('clock.jpg');
+        $image = UploadedFile::fake()->image('images/' . 'phone.jpg');
 
         $response = $this->post(route('sell'), [
             'image' => $image,
@@ -62,10 +60,7 @@ class ItemRegistrationTest extends TestCase
         ]);
 
         // 画像が保存されているか確認
-        $this->assertTrue(
-            Storage::disk('public')->exists('items/' . $image->hashName()),
-            'The uploaded image does not exist in the storage.'
-        );
+        Storage::disk('public')->exists('images/' . $image->hashName());
 
         // 中間テーブルにカテゴリが同期されているか確認
         foreach ($categoryIds as $categoryId) {

@@ -68,11 +68,13 @@ composer require stripe/stripe-php
 php artisan serve
 ```
 
-6. マイグレーション・シーディングの実行、シンボリックリンクの作成
+6. シンボリックリンクの作成、マイグレーション・シーディングの実行
 
 ```bash
-php artisan migrate --seed
 php artisan storage:link
+cp public/images/*.jpg storage/app/public/dummy/
+
+php artisan migrate --seed
 ```
 <br>
 

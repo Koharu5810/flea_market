@@ -46,7 +46,7 @@
                         <div class="item-container">
                             @if ($item->image)
                                 <div class="item-image">
-                                    <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" />
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
                                 </div>
                             @else
                                 <div class="item-image">商品画像</div>

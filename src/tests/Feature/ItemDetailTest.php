@@ -26,8 +26,7 @@ class ItemDetailTest extends TestCase
             $this->fail('No items found in the database. Ensure data is seeded or created.');
         }
 
-        // $imagePath = asset('storage/' . $item->image);
-        $imagePath = asset($item->image);
+        $imagePath = asset('storage/' . $item->image);
 
         $response = $this->get(route('item.detail', ['item_id' => $item->id]));
         $response->assertStatus(200);
