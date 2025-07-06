@@ -18,7 +18,7 @@
 
 1. `docker-compose exec php bash`
 2. `composer install`
-3. .env ファイルを作成（cp .env.example .env）し、以下の環境変数を修正する
+3. .env ファイルを作成（`cp .env.example .env`）し、以下の環境変数を修正する
 
 ```text
 DB_CONNECTION=mysql
@@ -149,13 +149,23 @@ UsersTableSeederに記述のメールアドレス、パスワードを使用
 <br><br>
 
 
+## トラブルシューティング
+
+・GDなどPHP拡張はDockerfileに記述済みのため、別途インストール不要です
+・php artisan storage:linkを忘れると画像が404になります
+・.envのAPP_KEY生成を忘れるとエラーが出ます
+・Stripeのキーを間違えると購入画面でエラーとなります
+
+
 ## 使用技術(実行環境)
 
 | 言語・フレームワーク | バージョン |
 | :------------------- | :--------- |
+| DockerDesktop        | 28.0.1     |
 | PHP                  | 8.3.13     |
 | Laravel              | 8.83.27    |
-| MySQL                | 9.0.1      |
+| MySQL(Homebrew)      | 9.0.1      |
+| MySQL(Docker)        | 8.0.26     |
 | Stripe               | 9.9.0      |
 | MailHog              |            |
 
