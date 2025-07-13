@@ -1,10 +1,15 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/auth/verify.css') }}" />
+@endsection
+
 @section('content')
-<div>
-    <h1>メールアドレスを認証してください</h1>
-    <p>登録したメールアドレスにメールが届いていることを確認してください。</p>
-    <p>メールが届かない場合は、下のボタンをクリックして再送信してください。</p>
+<div class="verify-container">
+    <p class="verify-message">
+        登録していただいたメールアドレスに認証メールを送付しました。<br>
+        メール認証を完了してください。
+    </p>
 
     @if (session('message'))
         <p>{{ session('message') }}</p>
@@ -12,7 +17,7 @@
 
     <form method="POST" action="{{ route('verification.resend') }}">
         @csrf
-        <button type="submit">確認メールを再送信する</button>
+        <button class="blue-button resend-button" type="submit">認証メールを再送する</button>
     </form>
 </div>
 @endsection
