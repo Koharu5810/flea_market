@@ -132,16 +132,12 @@ main {
     display: inline-block;
     padding: 5px 10px;
     background-color: transparent;
-    border: 1px solid #ff5555;
-    border-radius: 5px;
+    border: 2px solid #ff5555;
+    border-radius: 10px;
     color: #ff5555;
-    font-size: 12px;
-    font-weight: bold;
+    font: normal 700 clamp(18px, 5vw, 26px) "Inter", sans-serif;
     text-align: center;
     cursor: pointer;
-}
-.edit__red-button a {
-    color: #ff5555;
     text-decoration: none;
 }
 /* リンク用 青文字ボタン */

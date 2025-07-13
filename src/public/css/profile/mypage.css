@@ -30,7 +30,7 @@
     object-fit: cover;
 }
 .profile__username {
-    margin-right: 100px;
+    margin-right: clamp(7px, 2vw, 40px);
     font: normal 700 clamp(24px, 5vw, 36px) "Inter", sans-serif;
 }
 
