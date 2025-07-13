@@ -57,7 +57,7 @@
                     <button type="submit" class="purchase-button form__red-button">購入手続きへ</button>
                 </form>
             @else
-                <div class="purchase-button form__red-button" style="pointer-events: none;">Sold Out</div>
+                <div class="purchase-button form__red-button soldout-button">Sold Out</div>
             @endif
     {{-- 商品説明・商品の情報 --}}
             <div class="item-description">

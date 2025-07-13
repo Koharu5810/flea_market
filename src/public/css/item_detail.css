@@ -80,6 +80,13 @@
     margin-top: 0;
     width: 100%;
 }
+.soldout-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.6;
+    pointer-events: none;
+}
 
 .item__title {
     margin-top: 50px;
