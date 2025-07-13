@@ -36,7 +36,7 @@
                             type="text"
                             name="query"
                             value="{{ request('query') }}"
-                            placeholder="なにをお探しですか？"
+                            placeholder="   なにをお探しですか？"
                             class="header__search-input"
                         />
                     </form>
