@@ -161,22 +161,7 @@
             updateHiddenFields();
         });
 
-        // document.addEventListener('DOMContentLoaded', function () {
-        // const input = document.getElementById('priceInput');
-
-        //     input.addEventListener('input', function () {
-        //         // 半角数字だけを抽出
-        //         let rawValue = input.value.replace(/,/g, '').replace(/[^\d]/g, '');
-
-        //         if (rawValue === '') {
-        //         input.value = '';
-        //         return;
-        //         }
-
-        //         // 数字に変換してカンマをつける
-        //         input.value = Number(rawValue).toLocaleString();
-        //     });
-        // });
+        // 価格を入力中にリアルタイムでカンマをつける
         const input = document.getElementById('priceInput');
         const hidden = document.getElementById('hiddenPrice');
 
