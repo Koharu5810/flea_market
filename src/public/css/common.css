@@ -50,6 +50,7 @@ html {
     box-sizing: border-box;
     border: none;
     font: normal 700 clamp(14px, 5vw, 22px) "Inter", sans-serif;
+    line-height: 1.2;
 }
 
 /* ボタン類 */
@@ -73,6 +74,7 @@ html {
     cursor: pointer;
     text-decoration: none;
     line-height: 1.2;
+    white-space: nowrap;
 }
 .header__sell-button {
     display: flex;
@@ -82,12 +84,13 @@ html {
     padding: 7px 12px;
     background-color: #FFF;
     color: #000;
-    font: normal 400 clamp(12px, 1vw, 24px) "Inter", sans-serif;
+    font: normal 400 clamp(12px, 2vw, 24px) "Inter", sans-serif;
     border: none;
     border-radius: 3px;
     text-decoration: none;
     cursor: pointer;
     line-height: 1.2;
+    white-space: nowrap;
 }
 
 main {
