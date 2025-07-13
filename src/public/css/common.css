@@ -66,7 +66,7 @@ html {
     margin-right: 10px;
     background-color: transparent;
     color: #CCC;
-    font: normal 400 clamp(12px, 1vw, 24px) "Inter", sans-serif;
+    font: normal 400 clamp(16px, 1vw, 24px) "Inter", sans-serif;
     border: none;
     cursor: pointer;
     text-decoration: none;

@@ -12,12 +12,12 @@
     justify-content: center;
     align-items: center;
     gap: 50px;
-    margin-bottom: 30px;
+    margin-bottom: 70px;
 }
 .profile__image {
     background-color: #f0f0f0;
-    width: 70px;
-    height: 70px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -30,9 +30,8 @@
     object-fit: cover;
 }
 .profile__username {
-    font-size: 20px;
-    font-weight: bold;
     margin-right: 100px;
+    font: normal 700 clamp(24px, 5vw, 36px) "Inter", sans-serif;
 }
 
 .item__header {
@@ -42,7 +41,7 @@
     margin-bottom: 0;
     display: flex;
     align-items: flex-end;
-    gap: 20px;
+    gap: 50px;
 }
 .item__header a {
     color: #000;
@@ -50,35 +49,31 @@
 }
 .item__header h2 {
     margin: 0;
-    font-size: 16px;
     line-height: 2;
+    font: normal 700 clamp(16px, 5vw, 24px) "Inter", sans-serif;
 }
 .item__tab.active {
-    color: #ff0000;
+    color: #FF0000;
 }
 /* 水平線のスタイル */
 .item__divider {
     width: 100vw;
     height: 1px; /* 線の太さ */
     border: none;
-    background-color: #ccc;
+    background-color: #CCC;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     left: 0;
     margin-left: calc(-50vw + 50%);
 }
 
-.item-link {
-    color: #000;
-    text-decoration: none;
-}
 .item__main {
     width: 80vw;
     max-width: 1230px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 20px;
     justify-items: center;
     justify-content: center;
     align-items: start;
@@ -87,14 +82,21 @@
     white-space: nowrap;  /* 折り返しを防ぐ */
     width: auto;
 }
+.item-link {
+    color: #000;
+    text-decoration: none;
+}
 .item-container {
-    width: 150px;
-    height: 170px;
-    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    text-align: center;
+    width: 100%;
+    max-width: 290px;
+    height: 310px;
+    box-sizing: border-box;
+    padding-left: 5px;
 }
 .item-image {
     display: flex;
@@ -110,7 +112,6 @@
 }
 .item-name {
     width: 100%;
-    font-size: 12px;
-    font-weight: bold;
     text-align: left;
+    font: normal 400 clamp(17px, 5vw, 25px) "Inter", sans-serif;
 }

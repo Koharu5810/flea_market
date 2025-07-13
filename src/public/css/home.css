@@ -23,7 +23,6 @@
 }
 .home__header h2 {
     margin: 0;
-    font-size: 16px;
     line-height: 2;
     font: normal 700 clamp(16px, 5vw, 24px) "Inter", sans-serif;
 }
@@ -35,9 +34,9 @@
     width: 100vw;
     height: 1px; /* 線の太さ */
     border: none;
-    background-color: #ccc;
+    background-color: #CCC;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     left: 0;
     margin-left: calc(-50vw + 50%);
 }
@@ -66,10 +65,10 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    text-align: center;
     width: 100%;
     max-width: 290px;
     height: 310px;
-    text-align: center;
     box-sizing: border-box;
     padding-left: 5px;
 }
@@ -106,8 +105,6 @@
 }
 .item-name {
     width: 100%;
-    /* font-size: 12px; */
-    font-weight: bold;
     text-align: left;
     font: normal 400 clamp(17px, 5vw, 25px) "Inter", sans-serif;
 }
