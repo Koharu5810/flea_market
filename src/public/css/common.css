@@ -101,8 +101,9 @@ main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;  /* ラベル・入力欄を左揃え */
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     box-sizing: border-box;
+    border: none;
 }
 /* 入力フォーム・ラベル */
 .form__group label {
@@ -121,7 +122,7 @@ main {
 .form__red-button {
     width: 80%;
     height: 60px;
-    background-color: #ff6666;
+    background-color: #ff5555;
     color: #fff;
     font: normal 700 clamp(16px, 5vw, 26px) "Inter", sans-serif;
     justify-content: center;
@@ -135,29 +136,29 @@ main {
     display: inline-block;
     padding: 5px 10px;
     background-color: transparent;
-    border: 1px solid #ff6666;
+    border: 1px solid #ff5555;
     border-radius: 5px;
-    color: #ff6666;
+    color: #ff5555;
     font-size: 12px;
     font-weight: bold;
     text-align: center;
     cursor: pointer;
 }
 .edit__red-button a {
-    color: #ff6666;
+    color: #ff5555;
     text-decoration: none;
 }
 /* リンク用 青文字ボタン */
 .blue-button {
-    color: #8FC1E9;
+    color: #0073CC;
     font: normal 400 clamp(14px, 5vw, 20px) "Inter", sans-serif;
     text-decoration: none;
     cursor: pointer;
 }
 /* バリデーションエラーメッセージ */
 .error-message {
-    color: #ff6666;
-    font-size: 12px;
+    color: #ff5555;
+    font: normal 400 clamp(14px, 5vw, 20px) "Inter", sans-serif;
 }
 
 .content {
