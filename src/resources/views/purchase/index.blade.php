@@ -11,7 +11,7 @@
         <div class="left-container">
         {{-- 商品情報 --}}
             <div class="detail-container">
-                <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" class="item-image" />
+                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ 'storage/' . $item->name }}" class="item-image" />
                 <div class="item-detail">
                     <h2 class="item-name">{{ $item->name }}</h2>
                     <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span></p>
@@ -42,7 +42,7 @@
                     <a href="{{ route('edit.purchase.address', ['item_id' => $item->id]) }}" class="change-address-button blue-button">変更する</a>
                 </div>
                 <div class="delivery-detail">
-                    〒 <input
+                    <span>〒</span> <input
                         type="text"
                         name="postal_code"
                         id="postal_code"
@@ -74,7 +74,7 @@
                     <table class="confirmation-table">
                         <tr>
                             <th>商品代金</th>
-                            <td>&yen;<span>{{ number_format($item->price) }}</span></td>
+                            <td>&yen;   <span>{{ number_format($item->price) }}</span></td>
                         </tr>
                         <tr>
                             <th>支払い方法</th>

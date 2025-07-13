@@ -9,15 +9,12 @@
     padding-right: 30px;
     align-items: center;
 }
-.left-container h3 {
-    font-size: 16px;
-}
 .detail-container {
     display: flex;
 }
 .item-image {
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -31,21 +28,16 @@
 }
 .item-name {
     margin: 0;
-    font-size: 24px;
-    font-weight: bold;
     box-sizing: border-box;
+    font: normal 700 clamp(18px, 50vw, 30px) "Inter", sans-serif;
 }
-.item-brand {
-    margin: 0;
-    font-size: 10px;
+.item-price {
+    font: normal 400 clamp(16px, 50vw, 27px) "Inter", sans-serif;
 }
 .item-price span {
-    font-size: 20px;
+    font: normal 400 clamp(20px, 50vw, 32px) "Inter", sans-serif;
 }
-.item__title {
-    margin-top: 30px;
-    margin-bottom: 10px;
-}
+
 .page-line {
     margin-top: 30px;
     margin-bottom: 20px;
@@ -54,6 +46,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font: normal 700 clamp(12px, 5vw, 20px) "Inter", sans-serif;
 }
 .payment-container,
 .delivery-detail {
@@ -64,6 +57,8 @@
     width: 60%;
     padding: 3px;
     border-radius: 3px;
+    color: #5F5F5F;
+    border: 1px solid #5F5F5F;
 }
 .delivery-container {
     margin-top: 0;
@@ -78,17 +73,19 @@
     margin: 0;
     padding: 0;
 }
+.delivery-detail span,
 .delivery-detail input[readonly] {
     margin: 0;
-    font-size: 16px;
     border: none;
     user-select: none; /* 選択不可にする */
     pointer-events: none; /* ポインタ操作を無効にする */
+    font: normal 600 clamp(12px, 50vw, 20px) "Inter", sans-serif;
 }
 .change-address-button {
     margin-right: 30px;
     border: none;
     background-color: transparent;
+    font: normal 400 clamp(12px, 50vw, 20px) "Inter", sans-serif;
 }
 
 /* 右側 */
@@ -105,11 +102,19 @@
 .confirmation-table tr {
     border: 1px solid #000;
 }
-.confirmation-table th,td {
+.confirmation-table th, td {
     padding: 30px 20px;
     text-align: center;
-    font-weight: 400;
     white-space: nowrap;
+}
+.confirmation-table th {
+    font: normal 400 clamp(12px, 50vw, 20px) "Inter", sans-serif;
+}
+.confirmation-table td {
+    font: normal 400 clamp(14px, 50vw, 24px) "Inter", sans-serif;
+}
+.confirmation-table td span {
+    font: normal 400 clamp(16px, 50vw, 28px) "Inter", sans-serif;
 }
 .purchase-button {
     width: 100%;
