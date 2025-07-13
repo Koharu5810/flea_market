@@ -18,16 +18,17 @@
     gap: 50px;
 }
 .home__header a {
-    color: #000;
+    color: #5F5F5F;
     text-decoration: none;
 }
 .home__header h2 {
     margin: 0;
     font-size: 16px;
     line-height: 2;
+    font: normal 700 clamp(16px, 5vw, 24px) "Inter", sans-serif;
 }
 .home__tab.active {
-    color: #ff6666;
+    color: #FF0000;
 }
 /* 水平線のスタイル */
 .home__divider {
@@ -46,7 +47,7 @@
     max-width: 1230px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     gap: 20px;
     justify-items: center;
     justify-content: center;
@@ -61,13 +62,16 @@
     text-decoration: none;
 }
 .item-container {
-    width: 150px;
-    height: 170px;
-    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 290px;
+    height: 310px;
+    text-align: center;
+    box-sizing: border-box;
+    padding-left: 5px;
 }
 .item-image {
     display: flex;
@@ -102,9 +106,10 @@
 }
 .item-name {
     width: 100%;
-    font-size: 12px;
+    /* font-size: 12px; */
     font-weight: bold;
     text-align: left;
+    font: normal 400 clamp(17px, 5vw, 25px) "Inter", sans-serif;
 }
 .visually-hidden {
     position: absolute;
