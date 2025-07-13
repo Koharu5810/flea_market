@@ -49,6 +49,7 @@ html {
     border-radius: 3px;
     box-sizing: border-box;
     border: none;
+    font: normal 700 clamp(14px, 5vw, 22px) "Inter", sans-serif;
 }
 
 /* ボタン類 */
@@ -66,7 +67,7 @@ html {
     margin-right: 10px;
     background-color: transparent;
     color: #CCC;
-    font: normal 400 clamp(16px, 1vw, 24px) "Inter", sans-serif;
+    font: normal 400 clamp(16px, 50vw, 24px) "Inter", sans-serif;
     border: none;
     cursor: pointer;
     text-decoration: none;
