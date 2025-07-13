@@ -11,10 +11,10 @@
         メール認証を完了してください。
     </p>
 
-    <button class="verify-button">認証はこちらから</button>
+    <a href="http://localhost:8025" class="verify-button">認証はこちらから</a>
 
     @if (session('message'))
-        <p>{{ session('message') }}</p>
+        <p class="resend-message">{{ session('message') }}</p>
     @endif
 
     <form method="POST" action="{{ route('verification.resend') }}">
