@@ -87,12 +87,12 @@
 }
 .item-container.soldout
 .item-image::after{
-    content: 'Sold'; /* 表示するテキスト */
+    content: 'S o l d'; /* 表示するテキスト */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* 中央に配置 */
-    font-size: 1.2em;
+    font: normal 700 clamp(24px, 4vw, 36px) "Inter", sans-serif;
     color: rgba(255, 255, 255, 0.8);
     background-color: rgba(255, 102, 102, 0.5);
     width: 70%;
