@@ -62,7 +62,9 @@
     {{-- 商品説明・商品の情報 --}}
             <div class="item-description">
                 <h3 class="item__title">商品説明</h3>
-                {!! nl2br(e($item->description)) !!}
+                <div class="item__description">
+                    {!! nl2br(e($item->description)) !!}
+                </div>
                 <h3 class="item__title">商品の情報</h3>
                 <table class="item__info-table">
                     <tr>
@@ -95,7 +97,9 @@
                             @endif
                             <p class="user-name">{{ $comment->user->username }}</p>
                         </div>
-                        <p class="user-comment">{!! nl2br(e($comment->comment)) !!}</p>
+                        <p class="user-comment">
+                            {!! nl2br(e($comment->comment)) !!}
+                        </p>
                     </div>
                 @endforeach
                 <h4 class="comment-form__text-title">商品へのコメント</h4>
