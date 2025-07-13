@@ -65,13 +65,10 @@ html {
     padding: 0;
     margin-right: 10px;
     background-color: transparent;
-    color: #ccc;
-    font-size: 14px;
+    color: #CCC;
+    font: normal 400 clamp(12px, 1vw, 24px) "Inter", sans-serif;
     border: none;
     cursor: pointer;
-}
-.header__mypage-button a {
-    color: #ccc;
     text-decoration: none;
 }
 .header__sell-button {
@@ -79,15 +76,14 @@ html {
     justify-content: center;
     align-items: center;
     margin-left: 5px;
-    padding: 3px 7px;
-    background-color: #fff;
-    border-radius: 3px;
-    border: none;
-    cursor: pointer;
-}
-.header__sell-button a {
+    padding: 7px 12px;
+    background-color: #FFF;
     color: #000;
+    font: normal 400 clamp(12px, 1vw, 24px) "Inter", sans-serif;
+    border: none;
+    border-radius: 3px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 main {

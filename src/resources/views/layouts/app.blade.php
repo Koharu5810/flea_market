@@ -59,9 +59,10 @@
                         </form>
                     @endif
             {{-- マイページボタン --}}
-                    <button class="header__mypage-button"><a href="{{ route('profile.mypage') }}">マイページ</a></button>
+                    <a href="{{ route('profile.mypage') }}" class="header__mypage-button">マイページ</a>
+
             {{-- 出品ボタン --}}
-                    <button class="header__sell-button"><a href="{{ route('sell') }}">出品</a></button>
+                    <a href="{{ route('sell') }}" class="header__sell-button">出品</a>
                 </div>
             @endif
         </div>
