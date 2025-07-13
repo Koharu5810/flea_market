@@ -9,13 +9,14 @@
 }
 .sell-component {
     margin-top: 30px;
-    font-size: 18px;
-    color: #777777;
-    border-bottom: 1px solid #777777;
+    font: normal 700 clamp(18px, 5vw, 30px) "Inter", sans-serif;
+    color: #5F5F5F;
+    border-bottom: 1px solid #5F5F5F;
 }
 .sell-title {
-    margin-bottom: 3px;
-    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font: normal 700 clamp(16px, 5vw, 24px) "Inter", sans-serif;
 }
 .sell-image {
     width: auto;
@@ -48,7 +49,7 @@
     max-height: 200px;
     object-fit: cover;
     display: none;
-    border: 1px solid #ccc;
+    border: 1px solid #CCC;
 }
 .sell-image__input {
     display: none;
@@ -63,17 +64,21 @@
     margin: auto 0;
     padding: 5px 15px;
     background-color: transparent;
-    border-radius: 20px;
-    color: #ff6666;
-    font-size: 12px;
+    color: #FF5655;
+    font: normal 500 clamp(10px, 5vw, 15px) "Inter", sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 1px solid #ff6666;
+    border-radius: 20px;
+    border: 2px solid #FF5655;
+}
+.sell-category:hover {
+    color: #FFF;
+    background-color: #FF5655;
 }
 .sell-category.selected {
-    background-color: #ff6666;
-    color: #fff;
-    border-color: #ff6666;
+    background-color: #FF5655;
+    color: #FFF;
+    border-color: #FF5655;
 }
 .sell-brand,
 .sell-select,
@@ -81,29 +86,35 @@
 .sell-description,
 .sell-price {
     width: 100%;
-    padding: 5px;
+    height: 45px;
+    padding: 5px 10px;
     resize: none;
+    color: #5F5F5F;
+    font: normal 700 clamp(10px, 5vw, 16px) "Inter", sans-serif;
     border-radius: 3px;
-    border: 1px solid #ccc;
+    border: 1px solid #5F5F5F;
 }
 .sell-select {
     cursor: pointer;
 }
 .sell-description {
-    height: 90px;
+    height: 120px;
 }
 .price-container {
     position: relative;
 }
 .price-container::before {
+    padding-left: 10px;
     content: "¥";
+    font: normal 700 clamp(16px, 5vw, 24px) "Inter", sans-serif;
     position: absolute;
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
 }
 .sell-price {
-    padding-left: 30px;
+    padding-left: 50px;
+    font: normal 700 clamp(10px, 5vw, 16px) "Inter", sans-serif;
 }
 .sell-form__button {
     margin-top: 50px;

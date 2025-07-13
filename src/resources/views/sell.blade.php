@@ -82,7 +82,8 @@
             @enderror
             <h3 class="sell-title">販売価格</h3>
             <div class="price-container">
-                <input type="text" name="price" value="{{ old('price') }}" class="sell-price" />
+                <input type="text" name="price" value="{{ old('price') }}" class="sell-price" id="priceInput" />
+                <input type="hidden" name="price" id="hiddenPrice" />
             </div>
             @error('price')
                 <p class="error-message">
@@ -158,6 +159,31 @@
 
             // 初期状態のhiddenフィールドを設定
             updateHiddenFields();
+        });
+
+        // document.addEventListener('DOMContentLoaded', function () {
+        // const input = document.getElementById('priceInput');
+
+        //     input.addEventListener('input', function () {
+        //         // 半角数字だけを抽出
+        //         let rawValue = input.value.replace(/,/g, '').replace(/[^\d]/g, '');
+
+        //         if (rawValue === '') {
+        //         input.value = '';
+        //         return;
+        //         }
+
+        //         // 数字に変換してカンマをつける
+        //         input.value = Number(rawValue).toLocaleString();
+        //     });
+        // });
+        const input = document.getElementById('priceInput');
+        const hidden = document.getElementById('hiddenPrice');
+
+        input.addEventListener('input', function () {
+            const raw = input.value.replace(/,/g, '').replace(/[^\d]/g, '');
+            input.value = raw ? Number(raw).toLocaleString() : '';
+            hidden.value = raw;
         });
     </script>
 
