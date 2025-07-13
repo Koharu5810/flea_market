@@ -55,6 +55,7 @@ html {
 /* ボタン類 */
 .header-right {
     justify-content: flex-end;
+    min-width: 150px;
     gap: 10px;
 }
 .header__login-button,
@@ -67,10 +68,11 @@ html {
     margin-right: 10px;
     background-color: transparent;
     color: #CCC;
-    font: normal 400 clamp(16px, 50vw, 24px) "Inter", sans-serif;
+    font: normal 400 clamp(16px, 2vw, 24px) "Inter", sans-serif;
     border: none;
     cursor: pointer;
     text-decoration: none;
+    line-height: 1.2;
 }
 .header__sell-button {
     display: flex;
@@ -85,6 +87,7 @@ html {
     border-radius: 3px;
     text-decoration: none;
     cursor: pointer;
+    line-height: 1.2;
 }
 
 main {
@@ -172,10 +175,36 @@ main {
 
 /* タブレット幅用スタイル */
 @media screen and (min-width: 768px) and (max-width: 850px) {
+    .header {
+        padding: 0 10px;
+        gap: 5px;
+    }
     .header__logo {
         width: 90%;
         height: auto;
     }
+    .header__search {
+        height: auto;
+        width: 100%;
+    }
+    .header__search-input {
+        font-size: clamp(12px, 2vw, 16px);
+        padding: 6px;
+    }
+    .header-right {
+        gap: 0;
+    }
+    .header__login-button,
+    .header__logout-button,
+    .header__mypage-button,
+    .header__sell-button {
+        padding: 4px 5px;
+        height: auto;
+        font-size: clamp(12px, 2vw, 16px);
+        white-space: nowrap;
+        line-height: 1.2;
+    }
+
     .content {
         max-width: 95vw;
     }
@@ -192,21 +221,30 @@ main {
         padding: 0;
         gap: 2px;
     }
+    .header__logo {
+        width: 80%;
+        height: auto;
+    }
     .header__search {
-        height: 20px;
+        height: auto;
+        width: 90%;
     }
     .header__search-input {
-        font-size: 10px;
+        padding: 3px;
+        font-size: clamp(10px, 2vw, 14px);
     }
     .header-right {
-        gap: 2px;
+        gap: 0;
     }
     .header__login-button,
     .header__logout-button,
-    .header__mypage-button {
-        font-size: 10px;
-        padding: 0;
-        margin: 0;
+    .header__mypage-button,
+    .header__sell-button {
+        padding: 4px 3px;
+        height: auto;
+        font-size: clamp(10px, 2vw, 14px);
+        white-space: nowrap;
+        line-height: 1.2;
     }
     .header__sell-button {
         font-size: 10px;
