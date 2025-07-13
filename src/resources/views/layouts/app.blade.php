@@ -20,8 +20,15 @@
                 </a>
             </div>
 
+            @php
+                $hideOnPages = request()->is('register') ||
+                            request()->is('login') ||
+                            request()->is('verify*') ||
+                            request()->is('email/verify*');
+            @endphp
+
             {{-- ログイン・会員登録画面では非表示 --}}
-            @if (!request()->is('register') && !request()->is('login'))
+            @if (!$hideOnPages)
                 <div class="header-center">
                     {{-- 検索フォーム --}}
                     <form action="{{ route('search') }}" method="GET" class="header__search">
@@ -37,7 +44,7 @@
             @endif
 
     {{-- ボタンコンテナ --}}
-            @if (!request()->is('register') && !request()->is('login'))
+            @if (!$hideOnPages)
                 <div class="header-right">
             {{-- ログイン・ログアウトボタン --}}
                     @if (Auth::check())
