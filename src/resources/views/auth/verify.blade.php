@@ -11,6 +11,8 @@
         メール認証を完了してください。
     </p>
 
+    <button class="verify-button">認証はこちらから</button>
+
     @if (session('message'))
         <p>{{ session('message') }}</p>
     @endif
