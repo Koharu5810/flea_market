@@ -6,7 +6,7 @@ html {
     position: fixed;
     z-index: 1000;
     width: 100%;
-    height: 50px;
+    height: 82px;
     padding: 0 20px;
     gap: 10px;
     display: flex;
@@ -97,33 +97,33 @@ main {
 }
 /* 入力フォーム・グループ */
 .form__group {
-    width: 60%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;  /* ラベル・入力欄を左揃え */
-    margin-bottom: 15px;
+    margin-bottom: 30px;
     box-sizing: border-box;
 }
 /* 入力フォーム・ラベル */
 .form__group label {
-    font-weight: bold;
+    font: normal 700 clamp(16px, 5vw, 24px) "Inter", sans-serif;
 }
 .form__group-input {
     width: 100%;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    height: 50px;
+    padding: 5px 10px;
+    font-size: clamp(16px, 5vw, 22px);
     display: block;
-    border-radius: 3px;
+    border-radius: 4px;
     border: 1px solid #ccc;
 }
 /* フォーム送信用 背景赤色ボタン */
 .form__red-button {
-    width: 60%;
+    width: 80%;
+    height: 60px;
     background-color: #ff6666;
     color: #fff;
-    font-size: 16px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    font: normal 700 clamp(16px, 5vw, 26px) "Inter", sans-serif;
     justify-content: center;
     text-align: center;
     border-radius: 3px;
@@ -150,6 +150,7 @@ main {
 /* リンク用 青文字ボタン */
 .blue-button {
     color: #8FC1E9;
+    font: normal 400 clamp(14px, 5vw, 20px) "Inter", sans-serif;
     text-decoration: none;
     cursor: pointer;
 }
@@ -169,9 +170,10 @@ main {
     justify-content: center;
 }
 .content__title {
-    margin-top: 40px;
+    margin-top: 96px;
     margin-bottom: 30px;
-    font-size: 22px;
+    font-size: 36px;
+    font: bold 700 clamp(18px, 5vw, 24px) "Inter", sans-serif;
 }
 
 /* タブレット幅用スタイル */
