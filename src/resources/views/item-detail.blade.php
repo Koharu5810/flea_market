@@ -39,7 +39,7 @@
                             @csrf
                             <button type="submit" id="favorite-button">
                                 <img
-                                    src="{{ $item->isFavoriteBy(auth()->user()) ? asset('storage/app/favorited.png') : asset('storage/app/favorite.png') }}"
+                                    src="{{ $item->isFavoriteBy(auth()->user()) ? asset('images/app/favorited.png') : asset('images/app/favorite.png') }}"
                                     alt="{{ $item->isFavoriteBy(auth()->user()) ?  'お気に入り登録済み' : 'お気に入り' }}"
                                 />
                             </button>
@@ -47,7 +47,7 @@
                         </form>
                     </div>
                     <div class="comment-icon">
-                        <img src="{{ asset('storage/app/comment.png') }}" alt="コメント" />
+                        <img src="{{ asset('images/app/comment.png') }}" alt="コメント" />
                         <p>{{ $item->comments->count() }}</p>
                     </div>
                 </div>

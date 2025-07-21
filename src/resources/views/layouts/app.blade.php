@@ -16,7 +16,7 @@
         {{-- ロゴ表示 --}}
             <div class="header-left">
                 <a href="{{ route('home') }}">
-                    <img class="header__logo" src="{{ asset('storage/app/logo.svg') }}" alt="ロゴ" />
+                    <img class="header__logo" src="{{ asset('images/app/logo.svg') }}" alt="ロゴ" />
                 </a>
             </div>
 
