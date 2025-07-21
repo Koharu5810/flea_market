@@ -10,13 +10,15 @@ docker-compose.override.yml
 /.env
 /.env.*
 src/.env.testing
+
+# storage 配下
 /storage/*.log
-/storage/app/*
+/storage/app/public/items/*
+!/storage/app/public/items/.gitkeep
+
 !/storage/app/public
 
-/storage/framework/*
-!/storage/framework/cache
-!/storage/framework/sessions
-!/storage/framework/views
-
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
 /storage/logs/*
