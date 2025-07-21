@@ -1,0 +1,22 @@
+# MySQL data
+docker/mysql/data/
+
+# Docker関連
+docker-compose.override.yml
+
+# Laravel
+/vendor
+/node_modules
+/.env
+/.env.*
+src/.env.testing
+/storage/*.log
+/storage/app/*
+!/storage/app/public
+
+/storage/framework/*
+!/storage/framework/cache
+!/storage/framework/sessions
+!/storage/framework/views
+
+/storage/logs/*
