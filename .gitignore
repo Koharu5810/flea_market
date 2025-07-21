@@ -7,20 +7,19 @@ docker-compose.override.yml
 # Laravel
 /vendor
 /node_modules
-/.env
-/.env.*
+/src/.env
+/src/.env.*
 src/.env.testing
 
 # storage 配下
 /storage/*.log
-/storage/app/public/items/*
-!/storage/app/public/items/.gitkeep
+/src/storage/app/public/items/*
+!/src/storage/app/public/items/.gitkeep
+/src/storage/app/public/dummy/*
 
-/storage/app/public/dummy/*
+!/src/storage/app/public
 
-!/storage/app/public
-
-/storage/framework/cache/*
-/storage/framework/sessions/*
-/storage/framework/views/*
-/storage/logs/*
+/src/storage/framework/cache/*
+/src/storage/framework/sessions/*
+/src/storage/framework/views/*
+/src/storage/logs/*
