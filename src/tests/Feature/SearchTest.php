@@ -21,7 +21,8 @@ class SearchTest extends TestCase
         // 検索フォームが表示されていることを確認
         $response->assertSee('<form action="', false);
         $response->assertSee('name="query"', false);
-        $response->assertSee('placeholder="なにをお探しですか？"', false);
+        $this->assertMatchesRegularExpression('/placeholder="\s*なにをお探しですか？"/', $response->getContent());
+
     }
     public function test_items_can_be_searched_by_name()
     {

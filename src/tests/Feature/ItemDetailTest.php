@@ -66,11 +66,11 @@ class ItemDetailTest extends TestCase
 
         // 「いいね」アイコンのパスが正しいことを確認
         $favoriteIcon = $item->isFavoriteBy(auth()->user())
-            ? asset('storage/app/favorited.png')
-            : asset('storage/app/favorite.png');
+            ? asset('images/app/favorited.png')
+            : asset('images/app/favorite.png');
         $response->assertSee($favoriteIcon);
         // コメントアイコンのパスが正しいことを確認
-        $response->assertSee(asset('storage/app/comment.png'));
+        $response->assertSee(asset('images/app/comment.png'));
     }
 
     public function test_item_detail_page_displays_all_categories()

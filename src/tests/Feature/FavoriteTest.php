@@ -42,7 +42,7 @@ class FavoriteTest extends TestCase
     {
         $icon = $isFavorited ? 'favorited.png' : 'favorite.png';
         $this->get(route('item.detail', ['item_id' => $item->id]))
-            ->assertSee(asset("storage/app/{$icon}"), false);
+            ->assertSee(asset("images/app/{$icon}"), false);
 
         $method = $isFavorited ? 'assertDatabaseHas' : 'assertDatabaseMissing';
         $this->{$method}('favorites', [
