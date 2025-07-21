@@ -16,6 +16,8 @@ src/.env.testing
 /storage/app/public/items/*
 !/storage/app/public/items/.gitkeep
 
+/storage/app/public/dummy/*
+
 !/storage/app/public
 
 /storage/framework/cache/*
