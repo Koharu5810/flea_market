@@ -18,7 +18,7 @@
                     @else
                         <div class="default-icon"></div>
                     @endif
-                    <span class="user-name">{{ $order->user->username }}さんとの取引画面</span>
+                    <span class="trade-with-name">{{ $order->user->username }}さんとの取引画面</span>
                 </div>
 
                 <button class="complete-button">取引を完了する</button>
@@ -48,20 +48,20 @@
                     @endphp
 
                     <div class="chat-message {{ $isMine ? 'mine' : 'theirs' }}">
-            {{-- アイコン --}}
-                        @if ($sender->profile_image_url)
-                            <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
-                        @else
-                            <div class="message-avatar default-icon"></div>
-                        @endif
+                        <div class="message-meta">
+                {{-- アイコン --}}
+                            @if ($sender->profile_image_url)
+                                <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
+                            @else
+                                <div class="message-avatar default-icon"></div>
+                            @endif
 
-                        <div class="message-content">
-            {{-- ユーザー名 --}}
+                {{-- ユーザー名 --}}
                             <span class="user-name">{{ $sender->username }}</span>
-
-            {{-- メッセージ内容 --}}
-                            <div class="message-bubble">{{ $message->content }}</div>
                         </div>
+
+                {{-- メッセージ内容 --}}
+                        <div class="message-bubble">{{ $message->content }}</div>
                     </div>
                 @endforeach
 
