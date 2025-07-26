@@ -22,8 +22,20 @@ class UserController extends Controller
         $tab = $request->query('tab', 'sell');
 
         $items = match ($tab) {
-            'buy' => $user->orders()->with('item')->get()->map(fn($order) => $order->item),  // 購入した商品タブ
-            'sell' => $user->items,  // 出品した商品タブ
+            // 出品した商品タブ
+            'sell' => $user->items,
+
+            // 購入した商品タブ
+            'buy' => $user->orders()->with('item')->get()->map(fn($order) => $order->item),
+
+            // 取引中の商品（購入者 or 出品者どちらかとして関わっているもの）
+            'trading' => \App\Models\Order::whereHas('item', fn($q) =>
+                            $q->where('user_id', $user->id)) // 出品者として
+                            ->orWhere('user_id', $user->id)     // 購入者として
+                            ->with('item')
+                            ->get()
+                            ->map(fn($order) => $order->item),
+
             default => collect(),   // デフォルトでは空を返す
         };
 
