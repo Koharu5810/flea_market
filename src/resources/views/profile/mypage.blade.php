@@ -18,7 +18,10 @@
                     <div class="profile__image"></div>
                 @endif
             </div>
-            <div class="profile__username">{{ $user->username }}</div>
+            <div class="profile__username">
+                <p>{{ $user->username }}</p>
+                <p class="">★★★★★</p>
+            </div>
             <a href="{{ route('profile.edit') }}" class="edit__red-button">プロフィールを編集</a>
         </div>
         <div class="item__header">
@@ -27,6 +30,9 @@
             </a>
             <a href="{{ route('profile.mypage', ['tab' => 'buy']) }}" class="item__tab {{ $tab === 'buy' ? 'active' : '' }}">
                 <h2>購入した商品</h2>
+            </a>
+            <a href="{{ route('profile.mypage', ['tab' => 'trading']) }}" class="item__tab {{ $tab === 'trading' ? 'active' : '' }}">
+                <h2>取引中の商品</h2>
             </a>
         </div>
         <hr class="item__divider" />
@@ -38,6 +44,8 @@
                         購入した商品がありません
                     @elseif ($tab === 'sell')
                         出品した商品がありません
+                    @elseif ($tab === 'trading')
+                        取引中の商品がありません
                     @endif
                 </p>
             @else
