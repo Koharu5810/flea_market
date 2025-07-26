@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Item;
-// use App\Models\User;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -103,10 +102,8 @@ class ItemsTableSeeder extends Seeder
 
         // 各アイテムに1〜4のコンディションを順番に挿入するための初期値設定
         $conditionId = 1;
-        // $users = User::all();
 
         foreach ($items as $item) {
-            // $randomUser = $users->random();
             $randomBrand = $brands[array_rand($brands)];
 
             // itemsテーブルへ挿入
@@ -116,7 +113,6 @@ class ItemsTableSeeder extends Seeder
                 'description' => $item['description'],
                 'image' => $item['image'],
                 'item_condition' => $conditionId,
-                // 'user_id' => $randomUser->id,
                 'user_id' => $item['user_id'],
                 'address_id' => null,
                 'brand' => $randomBrand,
