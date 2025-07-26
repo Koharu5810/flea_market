@@ -25,6 +25,7 @@ class ItemsTableSeeder extends Seeder
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
                 'image' => 'dummy/clock.jpg',
                 'categories' => ['メンズ', 'ファッション', 'アクセサリー'],
+                'is_sold' => true,
             ],
             [
                 'user_id' => 1,
@@ -116,6 +117,7 @@ class ItemsTableSeeder extends Seeder
                 'user_id' => $item['user_id'],
                 'address_id' => null,
                 'brand' => $randomBrand,
+                'is_sold' => $item['is_sold'] ?? false,
             ]);
 
             // アイテムのコンディションIDを設定（1〜4でローテーション）
