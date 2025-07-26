@@ -24,7 +24,8 @@ class UserController extends Controller
         $tab = $request->query('tab', 'sell');
 
         // 出品者 or 購入者として関わっている注文
-        $tradingOrders = Order::where(function ($q) use ($user) {
+        $tradingOrders = Order::where('status', 'trading')
+            ->where(function ($q) use ($user) {
                     $q->whereHas('item', fn($q) => $q->where('user_id', $user->id))
                         ->orWhere('user_id', $user->id);
                 })

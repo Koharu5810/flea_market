@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('address_id')->constrained('user_addresses')->cascadeOnDelete();
             $table->string('payment_method');
             $table->timestamp('purchased_at');
+            $table->string('status')->default('trading');  // 取引状況ステータス
             $table->timestamps();
         });
     }

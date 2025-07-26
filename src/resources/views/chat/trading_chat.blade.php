@@ -6,13 +6,13 @@
 @endsection
 
 @section('content')
+    <div class="home-container">
 
-チャット画面！！！
+        @foreach($messages as $message)
 
-    @foreach($order->messages as $message)
+            <p>{{ $message->content }}</p>
 
-        <p>{{ $order->message}}</p>
+        @endforeach
 
-    @endforeach
-
+    </div>
 @endsection

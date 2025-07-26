@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 use App\Models\ChatRoom;
 use App\Models\Message;
 
@@ -12,11 +13,16 @@ class ChatController extends Controller
     public function show(ChatRoom $chatRoom)
     {
         $this->authorize('view', $chatRoom);  // 出品者 or 購入者のみ
-
-        $messages = $chatRoom->messages()->with('sender')->get();
         $hideOnPages = true;  // ヘッダーボタン類非表示フラグ
 
-        return view('chat.trading_chat', compact('chatRoom', 'messages', 'hideOnPages'));
+        $messages = $chatRoom->messages()->with('sender')->get();
+        $order = $chatRoom->order;
+        $item = $order->item;
+
+        $user = auth()->user();
+        $opponent = $order->user_id === $user->id ? $item->user : $order->user;
+
+        return view('chat.trading_chat', compact('chatRoom', 'hideOnPages', 'messages', 'order', 'item', 'user', 'opponent'));
     }
 
 // メッセージ送信

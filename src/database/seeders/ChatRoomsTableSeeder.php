@@ -32,7 +32,7 @@ class ChatRoomsTableSeeder extends Seeder
             // 購入者の住所取得
             $addressId = UserAddress::where('user_id', $data['buyer_id'])->value('id');
 
-            // order作成
+            // order作成または更新
             $order = Order::updateOrCreate(
                 [
                     'item_id' => $data['item_id'],
@@ -42,6 +42,7 @@ class ChatRoomsTableSeeder extends Seeder
                     'address_id' => $addressId,
                     'payment_method' => 'credit_card',
                     'purchased_at' => now(),
+                    'status' => 'trading',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]
