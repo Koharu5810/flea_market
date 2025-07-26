@@ -12,7 +12,9 @@ class AuthController extends Controller
 {
 // 会員登録画面表示
     public function showRegistrationForm() {
-        return view('auth.register');
+        $hideOnPages = true;  // ヘッダーボタン類非表示フラグ
+
+        return view('auth.register', compact('hideOnPages'));
     }
 // 会員登録処理
     public function register(RegisterRequest $request) {
@@ -31,7 +33,9 @@ class AuthController extends Controller
 
 // ログイン画面表示
     public function showLoginForm() {
-        return view('auth.login');
+        $hideOnPages = true;  // ヘッダーボタン類非表示フラグ
+
+        return view('auth.login', compact('hideOnPages'));
     }
 // ログイン処理
     public function login(LoginRequest $request) {

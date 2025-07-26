@@ -12,9 +12,11 @@ class ChatController extends Controller
     public function show(ChatRoom $chatRoom)
     {
         $this->authorize('view', $chatRoom);  // 出品者 or 購入者のみ
-        $messages = $chatRoom->messages()->with('sender')->get();
 
-        return view('chat.trading_chat', compact('chatRoom', 'messages'));
+        $messages = $chatRoom->messages()->with('sender')->get();
+        $hideOnPages = true;  // ヘッダーボタン類非表示フラグ
+
+        return view('chat.trading_chat', compact('chatRoom', 'messages', 'hideOnPages'));
     }
 
 // メッセージ送信

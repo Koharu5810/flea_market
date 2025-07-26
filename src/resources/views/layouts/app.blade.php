@@ -21,10 +21,10 @@
             </div>
 
             @php
-                $hideOnPages = request()->is('register') ||
-                            request()->is('login') ||
-                            request()->is('verify*') ||
-                            request()->is('email/verify*');
+                if (!isset($hideOnPages)) {
+                        $hideOnPages = request()->is('verify*') ||
+                                    request()->is('email/verify*');
+                }
             @endphp
 
             {{-- ログイン・会員登録画面では非表示 --}}
