@@ -24,6 +24,7 @@
             </div>
             <a href="{{ route('profile.edit') }}" class="edit__red-button">プロフィールを編集</a>
         </div>
+
         <div class="item__header">
             <a href="{{ route('profile.mypage', ['tab' => 'sell']) }}" class="item__tab {{ $tab === 'sell' ? 'active' : '' }}">
                 <h2>出品した商品</h2>
@@ -32,50 +33,41 @@
                 <h2>購入した商品</h2>
             </a>
             <a href="{{ route('profile.mypage', ['tab' => 'trading']) }}" class="item__tab {{ $tab === 'trading' ? 'active' : '' }}">
-                <h2>取引中の商品</h2>
+                <h2>取引中の商品
+                    @if ( $tradingMessageCount > 0)
+                        <span>{{ $tradingMessageCount }}</span>
+                    @endif
+                </h2>
             </a>
         </div>
+
         <hr class="item__divider" />
     {{-- アイテムリスト（タブ表示） --}}
         <div class="item__main">
-            @if ($items->isEmpty())
+            @if ($displayItems->isEmpty())
                 <p>
-                    @if ($tab === 'buy')
-                        購入した商品がありません
-                    @elseif ($tab === 'sell')
-                        出品した商品がありません
-                    @elseif ($tab === 'trading')
-                        取引中の商品がありません
-                    @endif
+                    @switch($tab)
+                        @case('buy') 購入した商品がありません @break
+                        @case('sell') 出品した商品がありません @break
+                        @case('trading') 取引中の商品がありません @break
+                    @endswitch
                 </p>
             @else
-                @foreach ($items as $item)
-
-            @php
-                // tradingタブの場合はordersとchat_roomを使ってチャットルームを取得
-                $chatRoomId = null;
-                if ($tab === 'trading') {
-                    $order = \App\Models\Order::where('item_id', $item->id)->first();
-                    $chatRoomId = $order?->chatRoom?->id;
-                }
-            @endphp
-                    <a
-                        href="{{ $tab === 'trading'
-                            ? route('chat.show', ['chatRoom' => $chatRoomId])
-                            : route('item.detail', ['item_id' => $item->id]) }}"
-                        class="item-link"
-                    >
+                @foreach ($displayItems as $entry)
+                    @php
+                        $item = $entry['item'];
+                        $link = $entry['link'];
+                    @endphp
+                    <a href="{{ $link }}" class="item-link">
                         <div class="item-container">
-                            @if ($item->image)
-                                <div class="item-image">
-                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
-                                </div>
-                            @else
-                                <div class="item-image">商品画像</div>
-                            @endif
-                            <div class="item-name">
-                                {{ $item->name }}
+                            <div class="item-image">
+                                @if ($item->image)
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+                                @else
+                                    商品画像
+                                @endif
                             </div>
+                            <div class="item-name">{{ $item->name }}</div>
                         </div>
                     </a>
                 @endforeach

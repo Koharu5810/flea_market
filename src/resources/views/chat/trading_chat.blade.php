@@ -9,4 +9,10 @@
 
 チャット画面！！！
 
+    @foreach($order->messages as $message)
+
+        <p>{{ $order->message}}</p>
+
+    @endforeach
+
 @endsection
