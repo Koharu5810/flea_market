@@ -34,19 +34,35 @@
         <hr>
 
 {{-- チャット欄 --}}
-        <div class="chat__message">
+        <div class="chat__message-container">
             @foreach($messages as $message)
-                @if ($order->user->profile_image_url)
-                    <img src="{{ $order->user->profile_image_url }}" alt="アイコン" class="user-icon" />
-                @else
-                    <div class="default-icon"></div>
-                @endif
-                <span class="user-name">{{ $order->user->username }}</span>
+                @php
+                    $isMine = $message->sender_id === auth()->id();
+                    $sender = $message->sender;
+                @endphp
 
-                <p>{{ $message->content }}</p>
+                <div class="chat-message {{ $isMine ? 'mine' : 'theirs' }}">
+                {{-- アイコン --}}
+                    @if ($sender->profile_image_url)
+                        <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="user-icon" />
+                    @else
+                        <div class="default-icon"></div>
+                    @endif
+
+                {{-- ユーザー名 --}}
+                    <span class="user-name">
+                        {{ $sender->username }}
+                    </span>
+
+                {{-- メッセージ内容 --}}
+                    <p class="message-content">{{ $message->content }}</p>
+                </div>
             @endforeach
 
-            <form action="{{ route('search') }}" method="GET" class="">
+    {{-- メッセージ送信フォーム --}}
+            {{-- <form action="{{ route('comments.store', ['item_id' => $item->id]) }}" method="POST"> --}}
+            <form action="" method="POST"></form>
+                @csrf
                 <input
                     type="text"
                     name="query"
