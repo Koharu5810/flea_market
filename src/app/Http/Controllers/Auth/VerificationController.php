@@ -11,7 +11,9 @@ class VerificationController extends Controller
 // メール確認通知を表示
     public function notice()
     {
-        return view('auth.verify');
+        $hideOnPages = true;  // ヘッダーボタン類非表示フラグ
+
+        return view('auth.verify', compact('hideOnPages'));
     }
 
 // 認証ユーザをメール認証ページへリダイレクト
