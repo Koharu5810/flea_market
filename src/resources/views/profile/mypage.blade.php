@@ -50,7 +50,21 @@
                 </p>
             @else
                 @foreach ($items as $item)
-                    <a href="{{ route('item.detail', ['item_id' => $item->id]) }} " class="item-link">
+
+            @php
+                // tradingタブの場合はordersとchat_roomを使ってチャットルームを取得
+                $chatRoomId = null;
+                if ($tab === 'trading') {
+                    $order = \App\Models\Order::where('item_id', $item->id)->first();
+                    $chatRoomId = $order?->chatRoom?->id;
+                }
+            @endphp
+                    <a
+                        href="{{ $tab === 'trading'
+                            ? route('chat.show', ['chatRoom' => $chatRoomId])
+                            : route('item.detail', ['item_id' => $item->id]) }}"
+                        class="item-link"
+                    >
                         <div class="item-container">
                             @if ($item->image)
                                 <div class="item-image">

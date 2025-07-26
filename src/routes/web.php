@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Auth\VerificationController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
@@ -54,5 +55,9 @@ Route::middleware('auth', 'verified')->group(function () {
     // プロフィール編集画面
     Route::get('/mypage/profile', [UserController::class, 'showProfileForm'])->name('profile.edit');
     Route::post('/mypage/profile', [UserController::class, 'save'])->name('profile.save');
+
+    // 商品取引チャット画面
+        Route::get('/chat/{chatRoom}', [ChatController::class, 'show'])->name('chat.show');
+        Route::post('/chat/{chatRoom}', [ChatController::class, 'store'])->name('chat.store');
 });
 
