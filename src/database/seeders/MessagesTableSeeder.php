@@ -22,7 +22,7 @@ class MessagesTableSeeder extends Seeder
             1 => [
                 ['sender' => 'seller', 'content' => 'ご購入ありがとうございます！'],
                 ['sender' => 'buyer', 'content' => '短い間ですがよろしくお願いします'],
-                ['sender' => 'seller', 'content' => '入金が確認できたので、発送します！'],
+                ['sender' => 'buyer', 'content' => '入金いたしましたのでご確認をお願いします'],
             ],
             3 => [
                 ['sender' => 'seller', 'content' => 'ご購入ありがとうございます！'],

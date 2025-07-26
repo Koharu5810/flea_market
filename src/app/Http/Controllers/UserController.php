@@ -31,7 +31,7 @@ class UserController extends Controller
                 ->with(['item', 'chatRoom.messages'])
                 ->get();
 
-        // 未読チャットメッセージ数（自分が送信したものを除く）を表示
+        // 全体の未読メッセージ総数（マイページ上部表示用）
         $unreadMessageCount = Message::whereHas('chatRoom.order', function ($q) use ($user) {
                 $q->whereHas('item', fn($q) => $q->where('user_id', $user->id))
                 ->orWhere('user_id', $user->id);
@@ -45,21 +45,36 @@ class UserController extends Controller
             'sell' => $user->items->map(fn($item) => [
                 'item' => $item,
                 'link' => route('item.detail', ['item_id' => $item->id]),
+                'unread_count' => null,
             ]),
 
             'buy' => $user->orders()->with('item')->get()->map(fn($order) => [
                 'item' => $order->item,
                 'link' => route('item.detail', ['item_id' => $order->item->id]),
+                'unread_count' => null,
             ]),
 
             'trading' => $tradingOrders
                 ->filter(fn($order) => $order->item && $order->chatRoom)
-                ->sortByDesc(fn($order) => optional($order->chatRoom->messages->last())->created_at)
-                ->values()
-                ->map(fn($order) => [
+                ->map(function ($order) use ($user) {
+                    $latestMessage = $order->chatRoom->messages
+                        ->sortByDesc('updated_at')
+                        ->first();
+
+                    $unread = $order->chatRoom->messages
+                        ->where('sender_id', '!=', $user->id)
+                        ->where('is_read', false)
+                        ->count();
+
+                return [
                     'item' => $order->item,
                     'link' => route('chat.show', ['chatRoom' => $order->chatRoom->id]),
-                ]),
+                    'unread_count' => $unread,            'last_message_at' => optional($latestMessage)->updated_at,
+
+                ];
+            })
+            ->sortByDesc('last_message_at')
+            ->values(),
 
             default => collect(),
         };

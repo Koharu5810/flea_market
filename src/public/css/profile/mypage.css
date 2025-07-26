@@ -115,3 +115,17 @@
     text-align: left;
     font: normal 400 clamp(17px, 5vw, 25px) "Inter", sans-serif;
 }
+.unread-badge {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    z-index: 2;
+    top: 6px;
+    left: 6px;
+    background-color: #FF0000;
+    color: white;
+    font: normal 700 12px "Inter", sans-serif;
+    border-radius: 50%;
+}

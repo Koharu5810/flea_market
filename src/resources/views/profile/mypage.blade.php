@@ -57,16 +57,24 @@
                     @php
                         $item = $entry['item'];
                         $link = $entry['link'];
+                        $unreadCount = $entry['unread_count'];
                     @endphp
+
                     <a href="{{ $link }}" class="item-link">
                         <div class="item-container">
-                            <div class="item-image">
+                            <div class="item-image" style="position: relative;">
                                 @if ($item->image)
                                     <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
                                 @else
                                     商品画像
                                 @endif
+
+                                {{-- 未読バッジ --}}
+                                @if ($unreadCount > 0)
+                                    <span class="unread-badge">{{ $unreadCount }}</span>
+                                @endif
                             </div>
+
                             <div class="item-name">{{ $item->name }}</div>
                         </div>
                     </a>
