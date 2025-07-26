@@ -58,7 +58,13 @@ Route::middleware('auth', 'verified')->group(function () {
 
     // 商品取引チャット画面
     Route::get('/chat/{chatRoom}', [ChatController::class, 'show'])->name('chat.show');
-    Route::post('/chat/{chatRoom}/send', [ChatController::class, 'send'])->name('chat.send');
     // チャット送信
+    Route::post('/chat/{chatRoom}/send', [ChatController::class, 'send'])->name('chat.send');
+    // チャット修正
+    Route::get('/chat/{chatRoom}/{message}/edit', [ChatController::class, 'edit'])->name('chat.edit');
+    Route::put('/chat/{chatRoom}/{message}', [ChatController::class, 'update'])->name('chat.update');
+    Route::post('/chat/{chatRoom}/cancel-edit', [ChatController::class, 'cancelEdit'])->name('chat.cancelEdit');
+    // チャット削除
+    Route::delete('/chat/{chatRoom}/{message}', [ChatController::class, 'delete'])->name('chat.delete');
 });
 

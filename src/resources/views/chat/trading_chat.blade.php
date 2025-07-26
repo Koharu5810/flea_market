@@ -60,13 +60,46 @@
                             <span class="user-name">{{ $sender->username }}</span>
                         </div>
 
-                {{-- メッセージ内容 --}}
-                        <div class="message-bubble">
-                            {{ $message->content }}
+                {{-- メッセージ／修正・削除ボタン（自分の投稿のみ） --}}
+                        @if (session('edit_id') === $message->id)
+                            {{-- <form action="{{ route('chat.update', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="text" name="content" value="{{ old('content', $message->content) }}" class="message-edit-input">
+                                <button type="submit">更新</button>
+                            </form>
+
+                            <form action="{{ route('chat.cancelEdit', ['chatRoom' => $chatRoom->id]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit">キャンセル</button>
+                            </form> --}}
+                            <form action="{{ route('chat.update', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="text" name="content" value="{{ old('content', $message->content) }}" class="message-edit-input">
+
+                                <button type="submit">更新</button>
+                                <button type="button" onclick="window.location.href='{{ route('chat.show', ['chatRoom' => $chatRoom->id]) }}'">キャンセル</button>
+                            </form>
+
+                        @else
+                            <div class="message-bubble">{{ $message->content }}</div>
                             @if ($message->image_path)
                                 <img src="{{ asset('storage/' . $message->image_path) }}" alt="画像" class="chat-image" />
                             @endif
-                        </div>
+                        @endif
+
+                        @if ($isMine && session('edit_id') !== $message->id)
+                            <div class="message-actions">
+                                <a href="{{ route('chat.edit', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" class="edit-button">編集</a>
+                                <form action="{{ route('chat.delete', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="delete-button" onclick="return confirm('削除してもよろしいですか？')">削除</button>
+                                </form>
+                            </div>
+                        @endif
+
                     </div>
                 @endforeach
 
