@@ -11,10 +11,10 @@ class ChatController extends Controller
 // 特定のチャットルームを表示
     public function show(ChatRoom $chatRoom)
     {
-        $this->authorize('view', $chatRoom); // 出品者 or 購入者のみ
+        $this->authorize('view', $chatRoom);  // 出品者 or 購入者のみ
         $messages = $chatRoom->messages()->with('sender')->get();
 
-        return view('chat.show', compact('chatRoom', 'messages'));
+        return view('chat.trading_chat', compact('chatRoom', 'messages'));
     }
 
 // メッセージ送信

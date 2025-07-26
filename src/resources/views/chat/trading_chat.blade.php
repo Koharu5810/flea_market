@@ -7,5 +7,6 @@
 
 @section('content')
 
+チャット画面！！！
 
 @endsection
