@@ -159,13 +159,6 @@ main {
     gap: 10px;
     align-items: center;
 }
-.sell-image__input {
-    display: none;
-}
-.message-send-button {
-    width: 80px;
-    height: auto;
-}
 .message-input {
     flex: 1;
     padding: 12px;
@@ -173,4 +166,19 @@ main {
     border-radius: 20px;
     outline: none;
     font-size: 14px;
+}
+.sell-image__input {
+    display: none;
+}
+.message-send-button {
+    width: 80px;
+    height: auto;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.message-send-button img {
+    width: 40px;
+    height: auto;
 }

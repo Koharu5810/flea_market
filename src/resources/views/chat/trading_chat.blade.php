@@ -61,18 +61,22 @@
                         </div>
 
                 {{-- メッセージ内容 --}}
-                        <div class="message-bubble">{{ $message->content }}</div>
+                        <div class="message-bubble">
+                            {{ $message->content }}
+                            @if ($message->image_path)
+                                <img src="{{ asset('storage/' . $message->image_path) }}" alt="画像" class="chat-image" />
+                            @endif
+                        </div>
                     </div>
                 @endforeach
 
         {{-- メッセージ送信フォーム --}}
-                {{-- <form action="{{ route('comments.store', ['item_id' => $item->id]) }}" method="POST"> --}}
-                <form action="" method="POST" class="message-input-area">
+                <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
                     @csrf
                     <input
                         type="text"
-                        name="query"
-                        value="{{ request('query') }}"
+                        name="content"
+                        value="{{ old('content') }}"
                         placeholder="取引メッセージを記入してください"
                         class="message-input"
                     />
@@ -90,7 +94,9 @@
                         </p>
                     @enderror
 
-                    <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" class="message-send-button" />
+                    <button type="submit"  class="message-send-button">
+                        <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
+                    </button>
                 </form>
 
             </div>

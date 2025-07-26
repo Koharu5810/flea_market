@@ -26,19 +26,20 @@ class ChatController extends Controller
     }
 
 // メッセージ送信
-    public function store(Request $request, ChatRoom $chatRoom)
+    public function send(Request $request, ChatRoom $chatRoom)
     {
-        $this->authorize('view', $chatRoom);
+        $message = new Message();
+        $message->chat_room_id = $chatRoom->id;
+        $message->sender_id = auth()->id();
+        $message->content = $request->input('content');
 
-        $request->validate([
-            'content' => 'required|string|max:500',
-        ]);
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('chat_images', 'public');
+            $message->image_path = $path;
+        }
 
-        $chatRoom->messages()->create([
-            'sender_id' => auth()->id(),
-            'content'   => $request->content,
-        ]);
+        $message->save();
 
-        return back();
+        return back()->with('success', 'メッセージを送信しました');
     }
 }

@@ -57,7 +57,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('/mypage/profile', [UserController::class, 'save'])->name('profile.save');
 
     // 商品取引チャット画面
-        Route::get('/chat/{chatRoom}', [ChatController::class, 'show'])->name('chat.show');
-        Route::post('/chat/{chatRoom}', [ChatController::class, 'store'])->name('chat.store');
+    Route::get('/chat/{chatRoom}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{chatRoom}/send', [ChatController::class, 'send'])->name('chat.send');
+    // チャット送信
 });
 
