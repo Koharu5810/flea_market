@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserAddress;
+use App\Models\Message;
+use App\Models\Order;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Support\Facades\Auth;
@@ -21,50 +23,48 @@ class UserController extends Controller
 
         $tab = $request->query('tab', 'sell');
 
-        $tradingOrders = \App\Models\Order::where(function ($q) use ($user) {
+        // 出品者 or 購入者として関わっている注文
+        $tradingOrders = Order::where(function ($q) use ($user) {
                     $q->whereHas('item', fn($q) => $q->where('user_id', $user->id))
                         ->orWhere('user_id', $user->id);
                 })
                 ->with(['item', 'chatRoom.messages'])
                 ->get();
 
-        $tradingMessageCount = $tradingOrders->filter(function ($order) {
-            return optional($order->chatRoom)?->messages->isNotEmpty();
-        })->count();
+        // 未読チャットメッセージ数（自分が送信したものを除く）を表示
+        $unreadMessageCount = Message::whereHas('chatRoom.order', function ($q) use ($user) {
+                $q->whereHas('item', fn($q) => $q->where('user_id', $user->id))
+                ->orWhere('user_id', $user->id);
+            })
+            ->where('sender_id', '!=', $user->id)
+            ->where('is_read', false)
+            ->count();
 
+        // タブ表示設定
+        $displayItems = match ($tab) {
+            'sell' => $user->items->map(fn($item) => [
+                'item' => $item,
+                'link' => route('item.detail', ['item_id' => $item->id]),
+            ]),
 
-        $displayItems = collect();
+            'buy' => $user->orders()->with('item')->get()->map(fn($order) => [
+                'item' => $order->item,
+                'link' => route('item.detail', ['item_id' => $order->item->id]),
+            ]),
 
-        switch ($tab) {
-            case 'sell':
-                $displayItems = $user->items->map(function ($item) {
-                    return [
-                        'item' => $item,
-                        'link' => route('item.detail', ['item_id' => $item->id]),
-                    ];
-                });
-                break;
-
-            case 'buy':
-                $displayItems = $user->orders()->with('item')->get()->map(function ($order) {
-                    return [
-                        'item' => $order->item,
-                        'link' => route('item.detail', ['item_id' => $order->item->id]),
-                    ];
-                });
-                break;
-
-            case 'trading':
-                $displayItems = $tradingOrders->filter(fn($order) => $order->item && $order->chatRoom)
+            'trading' => $tradingOrders
+                ->filter(fn($order) => $order->item && $order->chatRoom)
+                ->sortByDesc(fn($order) => optional($order->chatRoom->messages->last())->created_at)
+                ->values()
                 ->map(fn($order) => [
                     'item' => $order->item,
                     'link' => route('chat.show', ['chatRoom' => $order->chatRoom->id]),
-                ]);
+                ]),
 
-                break;
-        }
+            default => collect(),
+        };
 
-        return view('profile.mypage', compact('user', 'profileImage', 'tab', 'tradingMessageCount', 'displayItems'));
+        return view('profile.mypage', compact('user', 'profileImage', 'tab', 'unreadMessageCount', 'displayItems'));
     }
 
 // プロフィール編集画面の表示

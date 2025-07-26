@@ -42,6 +42,7 @@ class ItemsTableSeeder extends Seeder
                 'description' => '新鮮な玉ねぎの3束セット',
                 'image' => 'dummy/onion.jpg',
                 'categories' => ['キッチン'],
+                'is_sold' => true,
             ],
             [
                 'user_id' => 1,
@@ -58,6 +59,7 @@ class ItemsTableSeeder extends Seeder
                 'description' => '高性能なノートパソコン',
                 'image' => 'dummy/PC.jpg',
                 'categories' => ['家電'],
+                'is_sold' => true,
             ],
             [
                 'user_id' => 2,

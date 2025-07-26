@@ -34,8 +34,8 @@
             </a>
             <a href="{{ route('profile.mypage', ['tab' => 'trading']) }}" class="item__tab {{ $tab === 'trading' ? 'active' : '' }}">
                 <h2>取引中の商品
-                    @if ( $tradingMessageCount > 0)
-                        <span>{{ $tradingMessageCount }}</span>
+                    @if ( $unreadMessageCount > 0)
+                        <span>{{ $unreadMessageCount }}</span>
                     @endif
                 </h2>
             </a>
