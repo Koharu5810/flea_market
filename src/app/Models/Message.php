@@ -17,4 +17,9 @@ class Message extends Model
     {
         return $this->belongsTo(User::class, 'sender_id');
     }
+    public function readers()
+    {
+        return $this->belongsToMany(User::class, 'message_reads')
+                    ->withTimestamps();  // 既読時間の記録
+    }
 }

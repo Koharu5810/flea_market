@@ -69,6 +69,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function comments() {
         return $this->hasMany(Comment::class);
     }
+    public function readMessages() {
+        return $this->belongsToMany(Message::class, 'message_reads')
+                    ->withTimestamps();
+    }
 
     protected static function boot() {
         parent::boot();

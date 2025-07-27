@@ -28,6 +28,10 @@ class ChatController extends Controller
 
         $opponent = $isBuyer ? $item->user : $order->user;
 
+        foreach ($chatRoom->messages()->where('sender_id', '!=', $user->id)->get() as $message) {
+            $user->readMessages()->syncWithoutDetaching([$message->id]);
+        }
+
         // 購入者評価後、出品者に評価モーダルを表示
         $shouldShowRatingModal = $isSeller && $order->status === 'buyer_rated';
 
