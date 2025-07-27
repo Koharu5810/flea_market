@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\ChatRoom;
 use App\Models\Message;
 use App\Http\Requests\ChatRequest;
-
+use App\Mail\SellerRated;
+use Illuminate\Support\Facades\Mail;
 
 class ChatController extends Controller
 {
@@ -136,6 +137,9 @@ class ChatController extends Controller
         $order->rating = $request->rating;
         $order->rated_at = now();
         $order->save();
+
+        // 出品者へ取引完了メール送信
+        Mail::to($seller->email)->send(new SellerRated($order, $request->rating));
 
         return redirect()->route('home')->with('success', '出品者を評価しました');
     }
