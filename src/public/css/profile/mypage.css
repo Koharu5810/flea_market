@@ -75,6 +75,8 @@
 .item__tab.active {
     color: #FF0000;
 }
+
+
 /* 水平線のスタイル */
 .item__divider {
     width: 100vw;
@@ -85,6 +87,16 @@
     margin-bottom: 60px;
     left: 0;
     margin-left: calc(-50vw + 50%);
+}
+.total-unread-badge {
+    display: inline-block;
+    margin-left: 2px;
+    padding: 2px 6px;
+    background-color: #FF0000;
+    color: #FFF;
+    font-size: 0.75rem;
+    border-radius: 999px;
+    vertical-align: middle;
 }
 
 .item__main {
