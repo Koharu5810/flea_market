@@ -54,43 +54,37 @@ class ChatController extends Controller
             abort(403, '自分のメッセージ以外は編集できません');
         }
 
-        // セッションに編集中のIDを保存して戻る（再表示時にフォームが切り替わる）
-        // session(['edit_id' => $message->id]);
         session()->put('edit_id', $message->id);
 
         return back();
-        // return view('chat.edit_message', compact('chatRoom', 'message'));
     }
+// 編集キャンセル
     public function cancelEdit(ChatRoom $chatRoom)
     {
         session()->forget('edit_id');
-        return back();
+        return redirect()->route('chat.show', ['chatRoom' => $chatRoom]);
     }
+// チャット編集後更新
     public function update(Request $request, ChatRoom $chatRoom, Message $message)
     {
         if ($message->chat_room_id !== $chatRoom->id || $message->sender_id !== auth()->id()) {
             abort(403);
         }
 
-        // $message->content = $request->input('content');
-        // $message->save();
+        if ($request->input('action') === 'cancel') {
+            return redirect()->route('chat.show', ['chatRoom' => $chatRoom->id])
+                            ->with('info', '編集をキャンセルしました');
+        }
 
-    if ($request->input('action') === 'cancel') {
-        return redirect()->route('chat.show', ['chatRoom' => $chatRoom->id])
-                        ->with('info', '編集をキャンセルしました');
-    }
-
-    // 通常の更新処理
-    $message->content = $request->input('content');
-    $message->save();
-
+        // 通常の更新処理
+        $message->content = $request->input('content');
+        $message->save();
 
         // セッションから削除
         session()->forget('edit_id');
 
-        // return back()->with('success', 'メッセージを更新しました');
-    return redirect()->route('chat.show', ['chatRoom' => $chatRoom->id])
-                    ->with('success', 'メッセージを更新しました');
+        return redirect()->route('chat.show', ['chatRoom' => $chatRoom->id])
+                        ->with('success', 'メッセージを更新しました');
     }
 
 // チャット削除
