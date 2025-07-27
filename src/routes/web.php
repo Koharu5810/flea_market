@@ -68,7 +68,6 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::delete('/chat/{chatRoom}/{message}', [ChatController::class, 'delete'])->name('chat.delete');
 
     // 取引完了機能（購入者）
-    Route::post('/chat/{chatRoom}/complete', [ChatController::class, 'completeOrder'])->name('chat.completeOrder');
-
+    Route::post('/chat/{chatRoom}/buyer-rate', [ChatController::class, 'buyerRate'])->name('chat.buyerRate');
+    Route::post('/chat/{chatRoom}/seller-rate', [ChatController::class, 'sellerRate'])->name('chat.sellerRate');
 });
-

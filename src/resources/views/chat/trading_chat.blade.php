@@ -22,26 +22,26 @@
                 <span class="trade-with-name">{{ $order->user->username }}さんとの取引画面</span>
             </div>
 
-    {{-- 取引完了モーダル --}}
+    {{-- 購入者取引完了モーダル --}}
             @if ($isBuyer && $order->status !== 'complete')
                 {{-- ボタン --}}
-                <button class="complete-button" onclick="openCompleteModal()">取引を完了する</button>
+                <button class="complete-button" onclick="openBuyerModal()">取引を完了する</button>
 
                 {{-- モーダル --}}
-                <div id="completeModal" class="modal hidden">
+                <div id="buyerModal" class="modal hidden">
                     <div class="modal-content">
                         <p>取引が完了しました。</p>
 
                         <hr class="section-divider">
 
                         <p>今回の取引相手はどうでしたか？</p>
-                        <form action="{{ route('chat.completeOrder', ['chatRoom' => $chatRoom->id]) }}" method="POST">
+                        <form action="{{ route('chat.buyerRate', ['chatRoom' => $chatRoom->id]) }}" method="POST">
                             @csrf
 
                             <div class="star-rating">
                                 @for ($i = 5; $i >= 1; $i--)
-                                    <input type="radio" name="rating" id="star{{ $i }}" value="{{ $i }}">
-                                    <label for="star{{ $i }}">★</label>
+                                    <input type="radio" name="rating" id="buyer-star{{ $i }}" value="{{ $i }}">
+                                    <label for="buyer-star{{ $i }}">★</label>
                                 @endfor
                             </div>
 
@@ -52,10 +52,10 @@
                             @enderror
 
                         {{-- バリデーション時にモーダルを再表示 --}}
-                            @if ($errors->has('rating'))
+                            @if ($errors->has('rating') && $isBuyer)
                                 <script>
                                     window.addEventListener('DOMContentLoaded', function () {
-                                        document.getElementById('completeModal')?.classList.remove('hidden');
+                                        document.getElementById('buyerModal')?.classList.remove('hidden');
                                     });
                                 </script>
                             @endif
@@ -67,6 +67,55 @@
                     </div>
                 </div>
             @endif
+
+        {{-- 購入者評価後、出品者に評価モーダル表示 --}}
+            @if ($shouldShowRatingModal)
+                <script>
+                    window.addEventListener('DOMContentLoaded', function () {
+                        openSellerModal();
+                    });
+                </script>
+            @endif
+
+        {{-- 出品者用評価モーダル --}}
+            <div id="sellerModal" class="modal hidden">
+                <div class="modal-content">
+                    <p>取引が完了しました。</p>
+
+                    <hr class="section-divider">
+
+                    <p>今回の取引相手はどうでしたか？</p>
+                    <form action="{{ route('chat.sellerRate', ['chatRoom' => $chatRoom->id]) }}" method="POST">
+                        @csrf
+
+                        <div class="star-rating">
+                            @for ($i = 5; $i >= 1; $i--)
+                                <input type="radio" name="rating" id="seller-star{{ $i }}" value="{{ $i }}">
+                                <label for="seller-star{{ $i }}">★</label>
+                            @endfor
+                        </div>
+
+                        @error('rating')
+                            <div class="error-message">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    {{-- バリデーション時にモーダルを再表示 --}}
+                        @if ($errors->has('buyer_rated') && $isSeller)
+                            <script>
+                                window.addEventListener('DOMContentLoaded', function () {
+                                    document.getElementById('sellerModal')?.classList.remove('hidden');
+                                });
+                            </script>
+                        @endif
+
+                        <hr class="section-divider">
+
+                        <button type="submit">送信する</button>
+                    </form>
+                </div>
+            </div>
 
         </section>
 
@@ -229,12 +278,17 @@
         localStorage.removeItem(storageKey);
     });
 
-// モーダル開閉処理
-    function openCompleteModal() {
-        document.getElementById('completeModal').classList.remove('hidden');
+// 購入者・評価モーダル開閉処理
+    function openBuyerModal() {
+        document.getElementById('buyerModal')?.classList.remove('hidden');
     }
-    function closeCompleteModal() {
-        document.getElementById('completeModal').classList.add('hidden');
+    function closeBuyerModal() {
+        document.getElementById('buyerModal')?.classList.add('hidden');
+    }
+
+// 出品者モーダル表示処理
+    function openSellerModal() {
+        document.getElementById('sellerModal')?.classList.remove('hidden');
     }
 </script>
 

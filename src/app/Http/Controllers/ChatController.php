@@ -27,7 +27,20 @@ class ChatController extends Controller
 
         $opponent = $isBuyer ? $item->user : $order->user;
 
-        return view('chat.trading_chat', compact('chatRoom', 'messages', 'order', 'item', 'user', 'opponent', 'isSeller', 'isBuyer'));
+        // 購入者評価後、出品者に評価モーダルを表示
+        $shouldShowRatingModal = $isSeller && $order->status === 'buyer_rated';
+
+        return view('chat.trading_chat', compact(
+            'chatRoom',
+            'messages',
+            'order',
+            'item',
+            'user',
+            'opponent',
+            'isSeller',
+            'isBuyer',
+            'shouldShowRatingModal',
+        ));
     }
 
 // メッセージ送信
@@ -108,7 +121,7 @@ class ChatController extends Controller
     }
 
 // 取引完了（購入者）
-    public function completeOrder(Request $request, ChatRoom $chatRoom)
+    public function buyerRate(Request $request, ChatRoom $chatRoom)
     {
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
@@ -148,4 +161,38 @@ class ChatController extends Controller
 
         return redirect()->route('home')->with('success', '出品者を評価しました');
     }
+// 取引完了（出品者）
+    public function sellerRate(Request $request, ChatRoom $chatRoom)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+        ], [
+            'rating.required' => '★1以上で評価してください',
+        ]);
+
+        $order = $chatRoom->order;
+
+        // 出品者かどうか確認
+        if (auth()->id() !== optional($order->item)->user_id) {
+            abort(403);
+        }
+
+        // 二重評価防止（statusがbuyer_ratedのときのみ評価可能）
+        if ($order->status !== 'buyer_rated') {
+            return back()->with('error', '評価できる状態ではありません。');
+        }
+
+        // 購入者に評価を加算
+        $buyer = $order->user;
+        $buyer->rating_total += $request->rating;
+        $buyer->rating_count += 1;
+        $buyer->save();
+
+        // ステータスを「取引完了」に更新
+        $order->status = 'complete';
+        $order->save();
+
+        return redirect()->route('home')->with('success', '購入者を評価しました。');
+    }
+
 }
