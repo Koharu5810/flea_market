@@ -106,57 +106,6 @@ class ChatController extends Controller
     }
 
 // 取引完了（購入者）
-    // public function completeOrder(Request $request, ChatRoom $chatRoom)
-    // {
-    //     $order = $chatRoom->order;
-
-    //     // 購入者本人以外はアクセス不可
-    //     if (auth()->id() !== optional($order->user)->id) {
-    //         abort(403);
-    //     }
-
-    //     $order->status = 'complete';
-    //     $order->save();
-
-    //     return redirect()->route('home')
-    //                     ->with('success', '取引が完了しました');
-    // }
-// 取引相手評価（購入者）
-    // public function rate(Request $request, ChatRoom $chatRoom)
-    // {
-    //     $request->validate([
-    //         'rating' => 'required|integer|min:1|max:5',
-    //     ], [
-    //         'rating.required' => '★1以上で評価してください',
-    //     ]);
-
-    //     $order = $chatRoom->order;
-
-    //     // 二重評価防止
-    //     if (!is_null($order->rated_at)) {
-    //         return back()->with('error', 'この取引はすでに評価されています。');
-    //     }
-
-    //     $user = auth()->user();
-
-    //     // 購入者チェック
-    //     if ($user->id !== optional($order->user)->id) {
-    //         abort(403);
-    //     }
-
-    //     // 出品者に加算
-    //     $seller = $order->item->user;
-    //     $seller->rating_total += $request->rating;
-    //     $seller->rating_count += 1;
-    //     $seller->save();
-
-    //     // オーダーに評価記録
-    //     $order->rated_at = now();
-    //     $order->rating = $request->rating;
-    //     $order->save();
-
-    //     return back()->with('success', '出品者を評価しました。');
-    // }
     public function completeOrder(Request $request, ChatRoom $chatRoom)
     {
         $request->validate([
@@ -170,9 +119,8 @@ class ChatController extends Controller
         if (auth()->id() !== optional($order->user)->id) {
             abort(403);
         }
-
         if (!is_null($order->rated_at)) {
-            return back()->with('error', 'この取引はすでに完了・評価されています。');
+            return back()->with('error', 'この取引はすでに評価されています');
         }
 
         // 取引完了
@@ -184,12 +132,12 @@ class ChatController extends Controller
         $seller->rating_count += 1;
         $seller->save();
 
-        // 注文にも評価記録
+        // 注文に評価記録
         $order->rating = $request->rating;
         $order->rated_at = now();
         $order->save();
 
-        return redirect()->route('home')->with('success', '取引を完了し、出品者を評価しました。');
+        return redirect()->route('home')->with('success', '出品者を評価しました');
     }
 
 }
