@@ -1,8 +1,13 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* ブラウザ全体でのスクロールを防ぐ */
+}
 .chat-container {
     display: flex;
     flex: 1;
-    overflow: hidden;
     margin-top: 82px;
+    height: 100vh; /* 画面全体に広げる */
 }
 
 /* サイドバー */
@@ -14,6 +19,7 @@
     width: 260px;
     height: 100%;
     padding: 20px;
+    overflow-y: auto; /* サイドバーだけ縦スクロール */
     background-color: #868686;
     color: #FFF;
 }
@@ -38,10 +44,6 @@
     text-decoration: none;
 }
 
-main {
-    margin: 0;
-    padding: 0;
-}
 /* モーダル */
 .modal {
     position: fixed;
@@ -60,6 +62,12 @@ main {
     padding: 20px;
     border-radius: 8px;
     text-align: center;
+}
+.modal-divider {
+    margin: 20px 0;
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ddd;
 }
 .star-rating {
     direction: rtl; /* 右から左に表示（5→1） */
@@ -84,10 +92,12 @@ main {
     color: #FFF048;
 }
 
-
-/* 取引先相手表示 */
+/* メインコンテンツ */
 .main-area {
+    margin: 0;
+    padding: 0;
     flex: 1;
+    overflow-y: auto; /* ← メイン部分独立して縦スクロール */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -97,7 +107,7 @@ main {
     margin: 20px 0;
     width: 100%;
     border: none;
-    border-top: 1px solid #ddd;
+    border-top: 2px solid #5F5F5F;
 }
 
 /* 取引相手情報 */
@@ -107,11 +117,11 @@ main {
     justify-content: space-between;
     margin-top: 0;
     gap: 15px;
-    border: 1px solid green;
 }
 .user-meta {
     display: flex;
     align-items: center;
+    gap: 15px;
 }
 .user-icon,
 .default-icon {
@@ -128,20 +138,20 @@ main {
     display: inline-block;
 }
 .trade-with-name {
-    font-size: 36px;
+    font: 700 clamp(24px, 5vw, 36px) "Inter", sans-serif;
 }
-.complete-button {
-    margin-right: 20px;
-    padding: 10px 20px;
-    background-color: #ff6b6b;
-    font-size: 14px;
+.buyer-rate-button {
+    margin-right: 40px;
+    padding: 15px 20px;
+    background-color: #FF8282;
+    font: 700 clamp(12px, 5vw, 20px) "Inter", sans-serif;
     color: #FFF;
     border: none;
-    border-radius: 20px;
+    border-radius: 30px;
     cursor: pointer;
 }
-.complete-button:hover {
-    background-color: #ff5252;
+.buyer-rate-button:hover {
+    background-color: #FF5252;
 }
 
 /* 取引商品情報 */
@@ -149,11 +159,9 @@ main {
     padding: 20px;
     display: flex;
     gap: 20px;
+    border: 1px solid green;
 }
 .item-image-container {
-
-}
-.item-image {
     max-width: 200px;
     height: auto;
     aspect-ratio: 1 / 1;  /* 縦横比を1：1に維持 */
@@ -161,20 +169,22 @@ main {
     overflow: hidden;
     box-sizing: border-box;
 }
-.item-image img {
+.item-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 .item-info {
+    border: 1px solid pink;
 
 }
 .item-name {
-    font-size: 18px;
-    margin-bottom: 10px;
+    margin: 0;
+    font: 700 clamp(36px, 5vw, 48px) "Inter", sans-serif;
 }
 .item-price {
-    font-size: 16px;
+    margin: 0;
+    font: 400 clamp(24px, 5vw, 36px) "Inter", sans-serif;
 }
 
 /* チャット欄 */
@@ -194,14 +204,14 @@ main {
 }
 .message-meta {
     display: flex; /* 横並びにする */
-    align-items: flex-end;
+    align-items: center;
     max-width: 60%;
 }
-.message-avatar {
+.message-icon {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #ccc;
+    background-color: #D9D9D9;
     object-fit: cover;
 }
 .chat-message.theirs {
@@ -212,8 +222,8 @@ main {
     align-items: flex-end;
     text-align: right;
 }
-.user-name {
-    font-size: 20px;
+.sender-name {
+    font: 700 clamp(12px, 5vw, 20px) "Inter", sans-serif;
 }
 /* 送信済みチャット編集フォーム */
 .edit-form {
@@ -231,29 +241,35 @@ main {
 .update-buttons {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 20px;
+    margin-top: 0;
+    margin-right: 10px;
     border: 1px solid yellowgreen;
 }
 .edit-button,
 .update-button,
 .cancel-button,
 .delete-button {
-    padding: 6px 12px;
-    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 0;
     background-color: transparent;
     text-decoration: none;
-    color: #000;
-    font-size: 14px;
+    color: #5F5F5F;
+    text-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    font: 400 clamp(12px, 5vw, 15px) "Inter", sans-serif;
     border: none;
+    cursor: pointer;
     border: 1px solid yellow;
 }
 /* 送信済みチャット */
 .message-bubble {
-    background-color: #f0f0f0;
+    height: 60px;
+    margin-bottom: 0px;
     padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 5px;
+    background-color: #D9D9D9;
+    border-radius: 4px;
+    font: 400 clamp(12px, 5vw, 20px) "Inter", sans-serif;
 }
 /* 送信済み画像 */
 .chat-image {

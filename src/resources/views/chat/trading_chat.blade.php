@@ -35,14 +35,14 @@
     {{-- 購入者取引完了モーダル --}}
             @if ($isBuyer && $order->status !== 'complete')
                 {{-- ボタン --}}
-                <button class="complete-button" onclick="openBuyerModal()">取引を完了する</button>
+                <button class="buyer-rate-button" onclick="openBuyerModal()">取引を完了する</button>
 
                 {{-- モーダル --}}
                 <div id="buyerModal" class="modal hidden">
                     <div class="modal-content">
                         <p>取引が完了しました。</p>
 
-                        <hr class="section-divider">
+                        <hr class="modal-divider">
 
                         <p>今回の取引相手はどうでしたか？</p>
                         <form action="{{ route('chat.buyerRate', ['chatRoom' => $chatRoom->id]) }}" method="POST">
@@ -70,7 +70,7 @@
                                 </script>
                             @endif
 
-                            <hr class="section-divider">
+                            <hr class="modal-divider">
 
                             <button type="submit">送信する</button>
                         </form>
@@ -92,7 +92,7 @@
                 <div class="modal-content">
                     <p>取引が完了しました。</p>
 
-                    <hr class="section-divider">
+                    <hr class="modal-divider">
 
                     <p>今回の取引相手はどうでしたか？</p>
                     <form action="{{ route('chat.sellerRate', ['chatRoom' => $chatRoom->id]) }}" method="POST">
@@ -120,7 +120,7 @@
                             </script>
                         @endif
 
-                        <hr class="section-divider">
+                        <hr class="modal-divider">
 
                         <button type="submit">送信する</button>
                     </form>
@@ -134,7 +134,7 @@
 {{-- 取引商品表示 --}}
         <section class="item-area">
             <div class="item-image-container">
-                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image" />
+                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
             </div>
             <div class="item-info">
                 <h3 class="item-name">{{ $item->name }}</h3>
@@ -158,11 +158,11 @@
                         @if ($sender->profile_image_url)
                             <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
                         @else
-                            <div class="message-avatar default-icon"></div>
+                            <div class="message-icon default-icon"></div>
                         @endif
 
             {{-- ユーザー名 --}}
-                        <span class="user-name">{{ $sender->username }}</span>
+                        <span class="sender-name">{{ $sender->username }}</span>
                     </div>
 
             {{-- 自分のチャットには更新・更新キャンセルボタンを表示（編集時） --}}
