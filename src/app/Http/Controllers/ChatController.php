@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ChatRoom;
+use App\Models\Order;
 use App\Models\Message;
 use App\Http\Requests\ChatRequest;
 use App\Http\Requests\RateRequest;
@@ -29,12 +30,20 @@ class ChatController extends Controller
         $opponent = $isBuyer ? $item->user : $order->user;
 
         // サイドバーに他の取引中の注文を取得（現在のチャットルーム以外）
-        $otherOrders = \App\Models\Order::where('id', '!=', $order->id)
+        $otherOrders = Order::where('id', '!=', $order->id)
             ->where(function ($q) use ($user) {
-                $q->whereHas('item', fn($q2) => $q2->where('user_id', $user->id)) // 出品者
-                ->orWhere('user_id', $user->id); // 購入者
+                $q->where(function ($q2) use ($user) {
+                    // 出品者としての注文
+                    $q2->whereHas('item', function ($q3) use ($user) {
+                        $q3->where('user_id', $user->id);
+                    })
+                    ->where('status', '!=', 'complete');
+                })->orWhere(function ($q2) use ($user) {
+                    // 購入者としての注文
+                    $q2->where('user_id', $user->id)
+                        ->where('status', '!=', 'buyer_rated');
+                });
             })
-            ->where('status', '!=', 'complete')
             ->with(['item', 'chatRoom'])
             ->get();
 
