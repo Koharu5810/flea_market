@@ -13,17 +13,19 @@ class ChatController extends Controller
 // 特定のチャットルームを表示
     public function show(ChatRoom $chatRoom)
     {
-        $this->authorize('view', $chatRoom);  // 出品者 or 購入者のみ
-        $hideOnPages = true;  // ヘッダーボタン類非表示フラグ
+        $this->authorize('view', $chatRoom);  // 出品者と購入者のみ表示可能
 
         $messages = $chatRoom->messages()->with('sender')->get();
         $order = $chatRoom->order;
         $item = $order->item;
 
         $user = auth()->user();
-        $opponent = $order->user_id === $user->id ? $item->user : $order->user;
+        $isSeller = $user->id === $item->user_id;   // 出品者
+        $isBuyer = $user->id === $order->user->id;  // 購入者
 
-        return view('chat.trading_chat', compact('chatRoom', 'hideOnPages', 'messages', 'order', 'item', 'user', 'opponent'));
+        $opponent = $isBuyer ? $item->user : $order->user;
+
+        return view('chat.trading_chat', compact('chatRoom', 'messages', 'order', 'item', 'user', 'opponent', 'isSeller', 'isBuyer'));
     }
 
 // メッセージ送信

@@ -22,7 +22,9 @@
                 <span class="trade-with-name">{{ $order->user->username }}さんとの取引画面</span>
             </div>
 
-            <button class="complete-button">取引を完了する</button>
+            @if ($isBuyer)
+                <button class="complete-button">取引を完了する</button>
+            @endif
         </section>
 
         <hr class="section-divider">
