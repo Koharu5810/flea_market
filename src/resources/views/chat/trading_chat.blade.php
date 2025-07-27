@@ -13,7 +13,7 @@
             @foreach ($otherOrders as $other)
                 <div class="sidebar-item">
                     <a href="{{ route('chat.show', ['chatRoom' => $other->chatRoom->id]) }}">
-                        {{ $other->item->name ?? '商品名なし' }} {{-- エラー対応 --}}
+                        {{ $other->item->name ?? '取引中商品なし' }} {{-- エラー対応 --}}
                     </a>
                 </div>
             @endforeach
