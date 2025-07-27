@@ -178,6 +178,10 @@ main {
     background-color: #fff;
     border: 1px solid pink;
 }
+.image-preview-wrapper {
+    position: relative;
+    display: none;
+}
 .preview-image {
     max-width: 50px;
     max-height: 50px;
@@ -191,7 +195,19 @@ main {
     outline: none;
     font-size: 14px;
 }
-
+.remove-image-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #CCC;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 12px;
+}
 
 
 

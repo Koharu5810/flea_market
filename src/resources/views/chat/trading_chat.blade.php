@@ -217,7 +217,14 @@
                 <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
                     @csrf
                     <div class="textarea-with-preview">
-                        <img id="imagePreview" class="preview-image" style="display: none;" />
+                        <div class="image-preview-wrapper" id="previewWrapper">
+                            <img
+                                id="imagePreview"
+                                alt="プレビュー画像"
+                                class="preview-image"
+                            />
+                            <button type="button" id="removeImageBtn" class="remove-image-btn">✕</button>
+                        </div>
 
                         <textarea
                             name="content"
@@ -227,18 +234,8 @@
                         >{{ old('content') }}</textarea>
                     </div>
 
-                    <div class="sell-image">
-                        <div class="image-preview-container">
-                            <img
-                                id="imagePreview"
-                                alt="プレビュー画像"
-                                class="image-preview"
-                                style="display: none;"
-                            />
-                        </div>
-                        <label for="fileInput" class="edit__red-button">画像を追加</label>
-                        <input type="file" name="image" id="fileInput" class="sell-image__input">
-                    </div>
+                    <label for="fileInput" class="edit__red-button">画像を追加</label>
+                    <input type="file" name="image" id="fileInput" class="sell-image__input">
 
                     <button type="submit"  class="message-send-button">
                         <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
@@ -251,7 +248,7 @@
 </div>
 
 <script>
-// 更新キャンセルボタン
+// 送信済みチャット更新キャンセルボタン
     function cancelEdit() {
         const form = document.createElement('form');
         form.method = 'POST';
@@ -291,21 +288,29 @@
     });
 
 // 画像プレビュー
-    document.getElementById('fileInput').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        const preview = document.getElementById('imagePreview');
+    document.addEventListener('DOMContentLoaded', () => {
+        const fileInput = document.getElementById('fileInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const removeBtn = document.getElementById('removeImageBtn');
+        const previewWrapper = document.getElementById('previewWrapper');
 
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = '';
-            preview.style.display = 'none';
-        }
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    imagePreview.src = e.target.result;
+                    previewWrapper.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        removeBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            imagePreview.src = '';
+            previewWrapper.style.display = 'none';
+        });
     });
 
 // 購入者・評価モーダル開閉処理
@@ -315,7 +320,6 @@
     function closeBuyerModal() {
         document.getElementById('buyerModal')?.classList.add('hidden');
     }
-
 // 出品者モーダル表示処理
     function openSellerModal() {
         document.getElementById('sellerModal')?.classList.remove('hidden');
