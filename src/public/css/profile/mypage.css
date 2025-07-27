@@ -30,8 +30,28 @@
     object-fit: cover;
 }
 .profile__username {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
     margin-right: clamp(7px, 2vw, 40px);
     font: normal 700 clamp(24px, 5vw, 36px) "Inter", sans-serif;
+}
+.username {
+    margin-bottom: auto; /* 上側に押し上げる */
+}
+.star-display {
+    margin-top: auto; /* 下に寄せる */
+    white-space: nowrap;
+    display: inline-block;
+    gap: 4px;
+    font-size: 40px;
+}
+.filled {
+    color: #FFF048;
+}
+.empty {
+    color: #D9D9D9;
 }
 
 .item__header {
