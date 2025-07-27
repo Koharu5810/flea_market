@@ -75,7 +75,22 @@
 .item__tab.active {
     color: #FF0000;
 }
-
+.item-title-with-badge {
+    display: inline-flex;
+    align-items: center; /* 高さを揃える */
+    gap: 6px;
+}
+.total-unread-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    background-color: #FF0000;
+    color: #FFF;
+    font: normal 700 clamp(16px, 5vw, 22px) "Inter", sans-serif;
+    border-radius: 10px;
+}
 
 /* 水平線のスタイル */
 .item__divider {
@@ -87,16 +102,6 @@
     margin-bottom: 60px;
     left: 0;
     margin-left: calc(-50vw + 50%);
-}
-.total-unread-badge {
-    display: inline-block;
-    margin-left: 2px;
-    padding: 2px 6px;
-    background-color: #FF0000;
-    color: #FFF;
-    font-size: 0.75rem;
-    border-radius: 999px;
-    vertical-align: middle;
 }
 
 .item__main {
@@ -149,16 +154,18 @@
     font: normal 400 clamp(17px, 5vw, 25px) "Inter", sans-serif;
 }
 .unread-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     width: 20px;
     height: 20px;
-    text-align: center;
     line-height: 20px;
     z-index: 2;
-    top: 6px;
-    left: 6px;
+    top: 4px;
+    left: 4px;
     background-color: #FF0000;
     color: white;
-    font: normal 700 12px "Inter", sans-serif;
+    font: normal 700 10px "Inter", sans-serif;
     border-radius: 50%;
 }

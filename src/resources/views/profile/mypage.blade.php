@@ -46,7 +46,7 @@
             <h2>購入した商品</h2>
         </a>
         <a href="{{ route('profile.mypage', ['tab' => 'trading']) }}" class="item__tab {{ $tab === 'trading' ? 'active' : '' }}">
-            <h2>
+            <h2 class="item-title-with-badge">
                 取引中の商品
                 @if ( $unreadMessageCount > 0)
                     <span class="total-unread-badge">{{ $unreadMessageCount }}</span>
