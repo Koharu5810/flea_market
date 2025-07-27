@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Order;
 use App\Models\ChatRoom;
 use App\Models\Message;
+use App\Http\Requests\ChatRequest;
+
 
 class ChatController extends Controller
 {
@@ -26,7 +27,7 @@ class ChatController extends Controller
     }
 
 // メッセージ送信
-    public function send(Request $request, ChatRoom $chatRoom)
+    public function send(ChatRequest $request, ChatRoom $chatRoom)
     {
         $message = new Message();
         $message->chat_room_id = $chatRoom->id;

@@ -13,7 +13,7 @@ class ChatRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class ChatRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'content' => 'required|string|max:400',
+            'image_path' => 'nullable|mimes:png,jpg,jpeg',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'content.required' => '本文を入力してください',
+            'content.max' => '本文は400文字以内で入力してください',
+            'image_path.mimes' => '「.png」または「.jpeg」形式でアップロードしてください',
         ];
     }
 }

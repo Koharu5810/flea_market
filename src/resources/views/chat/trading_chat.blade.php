@@ -98,39 +98,53 @@
             @endforeach
 
     {{-- メッセージ送信フォーム --}}
-            <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
-                @csrf
-                <input
-                    type="text"
-                    name="content"
-                    value="{{ old('content') }}"
-                    placeholder="取引メッセージを記入してください"
-                    class="message-input"
-                />
+            <div>
+                <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
+                    @csrf
+                    <input
+                        type="text"
+                        name="content"
+                        value="{{ old('content') }}"
+                        placeholder="取引メッセージを記入してください"
+                        class="message-input"
+                    />
 
-                <div class="sell-image">
-                    <div class="image-preview-container">
-                        <img id="imagePreview" alt="プレビュー画像" class="image-preview" style="display: none;" />
+                    <div class="sell-image">
+                        <div class="image-preview-container">
+                            <img
+                                id="imagePreview"
+                                alt="プレビュー画像"
+                                class="image-preview"
+                                style="display: none;"
+                            />
+                        </div>
+                        <label for="fileInput" class="edit__red-button">画像を追加</label>
+                        <input type="file" name="image" id="fileInput" class="sell-image__input">
                     </div>
-                    <label for="fileInput" class="edit__red-button">画像を追加</label>
-                    <input type="file" name="image" id="fileInput" class="sell-image__input">
-                </div>
-                @error('image')
-                    <p class="error-message">
-                        {{ $message }}
-                    </p>
-                @enderror
 
-                <button type="submit"  class="message-send-button">
-                    <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
-                </button>
-            </form>
+                    <button type="submit"  class="message-send-button">
+                        <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
+                    </button>
+                </form>
+
+                @error('content')
+                    <span class="error-message">
+                        {{ $message }}
+                    </span>
+                @enderror
+                @error('image_path')
+                    <span class="error-message">
+                        {{ $message }}
+                    </span>
+                @enderror
+            </div>
 
         </div>
     </main>
 </div>
 
 <script>
+    // キャンセルボタン
     function cancelEdit() {
         const form = document.createElement('form');
         form.method = 'POST';
