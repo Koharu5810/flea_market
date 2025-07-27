@@ -38,13 +38,27 @@
                         <form action="{{ route('chat.completeOrder', ['chatRoom' => $chatRoom->id]) }}" method="POST">
                             @csrf
 
-                            {{-- ★★★★★ --}}
                             <div class="star-rating">
                                 @for ($i = 5; $i >= 1; $i--)
                                     <input type="radio" name="rating" id="star{{ $i }}" value="{{ $i }}">
                                     <label for="star{{ $i }}">★</label>
                                 @endfor
                             </div>
+
+                            @error('rating')
+                                <div class="error-message">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        {{-- バリデーション時にモーダルを再表示 --}}
+                            @if ($errors->has('rating'))
+                                <script>
+                                    window.addEventListener('DOMContentLoaded', function () {
+                                        document.getElementById('completeModal')?.classList.remove('hidden');
+                                    });
+                                </script>
+                            @endif
 
                             <hr class="section-divider">
 
@@ -53,7 +67,6 @@
                     </div>
                 </div>
             @endif
-
 
         </section>
 
