@@ -69,7 +69,6 @@ Route::middleware('auth', 'verified')->group(function () {
 
     // 取引完了機能（購入者）
     Route::post('/chat/{chatRoom}/complete', [ChatController::class, 'completeOrder'])->name('chat.completeOrder');
-    // Route::post('/chat/{chatRoom}/rate', [ChatController::class, 'rate'])->name('chat.rate');
 
 });
 
