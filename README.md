@@ -139,7 +139,20 @@ http://localhost:8025
 **一般ユーザのログイン**
 
 http://localhost/login へアクセス
-UsersTableSeederに記述のメールアドレス、パスワードを使用
+※ダミーユーザのパスワードはすべて「password」
+
+【ユーザ1】西 怜奈
+reina.n@coachtech.com
+ダミーデータ1〜5の商品を出品
+
+【ユーザ2】山田 太郎
+taro.y@coachtech.com
+ダミーデータ6〜10の商品を出品
+
+【ユーザ3】増田 一世
+issei.m@coachtech.com
+商品出品なし
+
 
 **商品購入処理実行時のStripe操作**
 
