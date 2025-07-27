@@ -28,6 +28,16 @@ class ChatController extends Controller
 
         $opponent = $isBuyer ? $item->user : $order->user;
 
+        // サイドバーに他の取引中の注文を取得（現在のチャットルーム以外）
+        $otherOrders = \App\Models\Order::where('id', '!=', $order->id)
+            ->where(function ($q) use ($user) {
+                $q->whereHas('item', fn($q2) => $q2->where('user_id', $user->id)) // 出品者
+                ->orWhere('user_id', $user->id); // 購入者
+            })
+            ->where('status', '!=', 'complete')
+            ->with(['item', 'chatRoom'])
+            ->get();
+
         // 未読メッセージの既読化（senderが自分でない && is_readがfalse）
         $chatRoom->messages()
             ->where('sender_id', '!=', $user->id)
@@ -44,6 +54,7 @@ class ChatController extends Controller
             'item',
             'user',
             'opponent',
+            'otherOrders',
             'isSeller',
             'isBuyer',
             'shouldShowRatingModal',

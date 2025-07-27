@@ -8,6 +8,16 @@
 {{-- サイドバー --}}
     <aside class="sidebar">
         <h3>その他の取引</h3>
+
+        @if ($otherOrders->isNotEmpty())
+            @foreach ($otherOrders as $other)
+                <div class="sidebar-item">
+                    <a href="{{ route('chat.show', ['chatRoom' => $other->chatRoom->id]) }}">
+                        {{ $other->item->name ?? '商品名なし' }} {{-- エラー対応 --}}
+                    </a>
+                </div>
+            @endforeach
+        @endif
     </aside>
 
 {{-- 取引相手表示 --}}
