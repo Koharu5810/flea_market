@@ -11,7 +11,7 @@
 
         @if ($otherOrders->isNotEmpty())
             @foreach ($otherOrders as $other)
-                <div class="sidebar-item">
+                <div class="sidebar__other-order">
                     <a href="{{ route('chat.show', ['chatRoom' => $other->chatRoom->id]) }}">
                         {{ $other->item->name ?? '取引中商品なし' }} {{-- エラー対応 --}}
                     </a>
@@ -174,7 +174,7 @@
                             <input type="text" name="content" value="{{ old('content', $message->content) }}" class="message-edit-input">
 
                             <div class="edit-buttons">
-                                <button type="submit" class="edit-button">更新</button>
+                                <button type="submit" class="update-button">更新</button>
                                 <button type="button" class="cancel-button" onclick="cancelEdit()">キャンセル</button>
                             </div>
                         </form>
@@ -188,7 +188,7 @@
 
             {{-- 自分のチャットには編集・削除ボタンを表示 --}}
                     @if ($isMine && session('edit_id') !== $message->id)
-                        <div class="message-actions">
+                        <div class="update-buttons">
                             <a href="{{ route('chat.edit', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" class="edit-button">編集</a>
                             <form action="{{ route('chat.delete', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" style="display:inline;">
                                 @csrf
@@ -223,7 +223,7 @@
                                 alt="プレビュー画像"
                                 class="preview-image"
                             />
-                            <button type="button" id="removeImageBtn" class="remove-image-btn">✕</button>
+                            <button type="button" id="removeImageBtn" class="remove-image-button">✕</button>
                         </div>
 
                         <textarea
@@ -235,7 +235,7 @@
                     </div>
 
                     <label for="fileInput" class="edit__red-button">画像を追加</label>
-                    <input type="file" name="image" id="fileInput" class="sell-image__input">
+                    <input type="file" name="image" id="fileInput" class="chat-image__input">
 
                     <button type="submit"  class="message-send-button">
                         <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />

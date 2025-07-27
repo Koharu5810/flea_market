@@ -7,22 +7,84 @@
 
 /* サイドバー */
 .sidebar {
-    width: 200px;
-    height: 100%;
-    background-color: #888;
-    color: white;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     flex-shrink: 0;
+    width: 260px;
+    height: 100%;
+    padding: 20px;
+    background-color: #868686;
+    color: #FFF;
 }
 .sidebar h3 {
-    font-size: 16px;
-    margin-bottom: 20px;
+    margin-top: 0;
+    margin-bottom: 55px;
+    font: normal 600 clamp(22px, 5vw, 30px) "Inter", sans-serif;
+}
+.sidebar__other-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 40px;
+    margin-bottom: 45px;
+    background-color: #EEEFEB;
+    border-radius: 5px;
+    font: normal 400 clamp(16px, 5vw, 24px) "Inter", sans-serif;
+}
+.sidebar__other-order a {
+    color: #000;
+    text-decoration: none;
 }
 
 main {
     margin: 0;
     padding: 0;
 }
+/* モーダル */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal.hidden {
+    display: none;
+}
+.modal-content {
+    background: #FDFCE6;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+.star-rating {
+    direction: rtl; /* 右から左に表示（5→1） */
+    font-size: 2rem;
+    unicode-bidi: bidi-override;
+    display: inline-flex;
+    gap: 4px;
+}
+.star-rating input[type="radio"] {
+    display: none;
+}
+.star-rating label {
+    color: #D9D9D9;
+    cursor: pointer;
+}
+.star-rating input:checked ~ label {
+    color: #FFF048;
+}
+/* ホバーでプレビュー */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #FFF048;
+}
+
+
 /* 取引先相手表示 */
 .main-area {
     flex: 1;
@@ -38,6 +100,7 @@ main {
     border-top: 1px solid #ddd;
 }
 
+/* 取引相手情報 */
 .user-info {
     display: flex;
     align-items: center;
@@ -87,6 +150,9 @@ main {
     display: flex;
     gap: 20px;
 }
+.item-image-container {
+
+}
 .item-image {
     max-width: 200px;
     height: auto;
@@ -99,6 +165,9 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.item-info {
+
 }
 .item-name {
     font-size: 18px;
@@ -128,6 +197,13 @@ main {
     align-items: flex-end;
     max-width: 60%;
 }
+.message-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ccc;
+    object-fit: cover;
+}
 .chat-message.theirs {
     align-items: flex-start;
     text-align: left;
@@ -136,35 +212,66 @@ main {
     align-items: flex-end;
     text-align: right;
 }
-.message-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #ccc;
-    object-fit: cover;
-}
 .user-name {
     font-size: 20px;
 }
+/* 送信済みチャット編集フォーム */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+.message-edit-input {
+    padding: 6px;
+    font-size: 14px;
+    flex: 1;
+}
+.edit-buttons,
+.update-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    border: 1px solid yellowgreen;
+}
+.edit-button,
+.update-button,
+.cancel-button,
+.delete-button {
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: transparent;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    border: none;
+    border: 1px solid yellow;
+}
+/* 送信済みチャット */
 .message-bubble {
     background-color: #f0f0f0;
     padding: 15px;
     border-radius: 15px;
     margin-bottom: 5px;
 }
+/* 送信済み画像 */
 .chat-image {
     max-width: 150px;
     height: auto;
     aspect-ratio: 1 / 1;  /* 縦横比を1：1に維持 */
 }
-.message-textarea {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    resize: none;
-    height: 60px;
-    width: 100%;
+.message-actions {
+
+}
+
+/* チャット送信フォーム部分 */
+.message-input-area {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+    border: 1px solid blue;
 }
 /* input内画像プレビュー */
 .textarea-with-preview {
@@ -189,13 +296,7 @@ main {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-.message-input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 14px;
-}
-.remove-image-btn {
+.remove-image-button {
     position: absolute;
     top: -5px;
     right: -5px;
@@ -208,53 +309,16 @@ main {
     cursor: pointer;
     font-size: 12px;
 }
-
-
-
-.message-edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.edit-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.edit-submit,
-.edit-cancel {
-    padding: 4px 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    background-color: white;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-}
-
-.edit-submit:hover,
-.edit-cancel:hover {
-    background-color: #f0f0f0;
-}
-
-
-.message-input-area {
-    display: flex;
-    align-items: center;
-    padding: 0px;
-    gap: 10px;
-    border: 1px solid blue;
-}
-.message-input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
+.message-textarea {
+    flex-grow: 1;
+    border: none;
     outline: none;
     font-size: 14px;
+    resize: none;
+    height: 60px;
+    width: 100%;
 }
-.sell-image__input {
+.chat-image__input {
     display: none;
 }
 .message-send-button {
@@ -268,80 +332,4 @@ main {
 .message-send-button img {
     width: 40px;
     height: auto;
-}
-.edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 1rem;
-}
-
-.edit-buttons {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-}
-
-.message-edit-input {
-    padding: 6px;
-    font-size: 14px;
-    flex: 1;
-}
-
-.edit-button,
-.cancel-button {
-    padding: 6px 12px;
-    border: 1px solid #999;
-    background-color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-
-
-/* モーダル用 */
-.modal {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.modal.hidden {
-    display: none;
-}
-.modal-content {
-    background: #FDFCE6;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-}
-.star-rating {
-    direction: rtl; /* 右から左に表示（5→1） */
-    font-size: 2rem;
-    unicode-bidi: bidi-override;
-    display: inline-flex;
-    gap: 4px;
-}
-
-.star-rating input[type="radio"] {
-    display: none;
-}
-
-.star-rating label {
-    color: #D9D9D9;
-    cursor: pointer;
-}
-
-.star-rating input:checked ~ label {
-    color: #FFF048;
-}
-
-/* ホバーでプレビュー */
-.star-rating label:hover,
-.star-rating label:hover ~ label {
-    color: #FFF048;
 }
