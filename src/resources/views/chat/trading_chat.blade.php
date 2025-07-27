@@ -22,9 +22,39 @@
                 <span class="trade-with-name">{{ $order->user->username }}さんとの取引画面</span>
             </div>
 
-            @if ($isBuyer)
-                <button class="complete-button">取引を完了する</button>
+    {{-- 取引完了モーダル --}}
+            @if ($isBuyer && $order->status !== 'complete')
+                {{-- ボタン --}}
+                <button class="complete-button" onclick="openCompleteModal()">取引を完了する</button>
+
+                {{-- モーダル --}}
+                <div id="completeModal" class="modal hidden">
+                    <div class="modal-content">
+                        <p>取引が完了しました。</p>
+
+                        <hr class="section-divider">
+
+                        <p>今回の取引相手はどうでしたか？</p>
+                        <form action="{{ route('chat.completeOrder', ['chatRoom' => $chatRoom->id]) }}" method="POST">
+                            @csrf
+
+                            {{-- ★★★★★ --}}
+                            <div class="star-rating">
+                                @for ($i = 5; $i >= 1; $i--)
+                                    <input type="radio" name="rating" id="star{{ $i }}" value="{{ $i }}">
+                                    <label for="star{{ $i }}">★</label>
+                                @endfor
+                            </div>
+
+                            <hr class="section-divider">
+
+                            <button type="submit">送信する</button>
+                        </form>
+                    </div>
+                </div>
             @endif
+
+
         </section>
 
         <hr class="section-divider">
@@ -185,6 +215,14 @@
     form.addEventListener('submit', () => {
         localStorage.removeItem(storageKey);
     });
+
+// モーダル開閉処理
+    function openCompleteModal() {
+        document.getElementById('completeModal').classList.remove('hidden');
+    }
+    function closeCompleteModal() {
+        document.getElementById('completeModal').classList.add('hidden');
+    }
 </script>
 
 @endsection

@@ -104,4 +104,41 @@ class ChatController extends Controller
 
         return back()->with('success', 'メッセージを削除しました');
     }
+
+// 取引完了（購入者）
+    public function completeOrder(Request $request, ChatRoom $chatRoom)
+    {
+        $order = $chatRoom->order;
+
+        // 購入者本人以外はアクセス不可
+        if (auth()->id() !== optional($order->user)->id) {
+            abort(403);
+        }
+
+        $order->status = 'complete';
+        $order->save();
+
+        return redirect()->route('home')
+                        ->with('success', '取引が完了しました');
+    }
+// 取引相手評価（購入者）
+    public function rate(Request $request, ChatRoom $chatRoom)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        $order = $chatRoom->order;
+
+        if (auth()->id() !== optional($order->user)->id) {
+            abort(403);
+        }
+
+        $order->rating = $request->input('rating');
+        $order->save();
+
+        return back()->with('success', '評価を送信しました');
+    }
+
+
 }

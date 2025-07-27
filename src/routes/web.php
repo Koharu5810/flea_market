@@ -64,8 +64,12 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/chat/{chatRoom}/{message}/edit', [ChatController::class, 'edit'])->name('chat.edit');
     Route::put('/chat/{chatRoom}/{message}', [ChatController::class, 'update'])->name('chat.update');
     Route::post('/chat/{chatRoom}/cancel-edit', [ChatController::class, 'cancelEdit'])->name('chat.cancelEdit');
-
     // チャット削除
     Route::delete('/chat/{chatRoom}/{message}', [ChatController::class, 'delete'])->name('chat.delete');
+
+    // 取引完了機能（購入者）
+    Route::post('/chat/{chatRoom}/complete', [ChatController::class, 'completeOrder'])->name('chat.completeOrder');
+    Route::post('/chat/{chatRoom}/rate', [ChatController::class, 'rate'])->name('chat.rate');
+
 });
 
