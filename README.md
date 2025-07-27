@@ -139,7 +139,7 @@ http://localhost:8025
 **一般ユーザのログイン**
 
 http://localhost/login へアクセス
-※ダミーユーザのパスワードはすべて「password」
+※ダミーユーザのログインパスワードはすべて「password」
 
 【ユーザ1】西 怜奈
 reina.n@coachtech.com
