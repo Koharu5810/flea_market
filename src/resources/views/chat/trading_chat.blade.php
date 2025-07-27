@@ -216,14 +216,16 @@
 
                 <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
                     @csrf
-                    <input
-                        type="text"
-                        name="content"
-                        id="chatInput"
-                        value="{{ old('content') }}"
-                        placeholder="取引メッセージを記入してください"
-                        class="message-input"
-                    />
+                    <div class="textarea-with-preview">
+                        <img id="imagePreview" class="preview-image" style="display: none;" />
+
+                        <textarea
+                            name="content"
+                            id="chatInput"
+                            placeholder="取引メッセージを記入してください"
+                            class="message-textarea"
+                        >{{ old('content') }}</textarea>
+                    </div>
 
                     <div class="sell-image">
                         <div class="image-preview-container">
@@ -286,6 +288,24 @@
     const form = chatInput.closest('form');
     form.addEventListener('submit', () => {
         localStorage.removeItem(storageKey);
+    });
+
+// 画像プレビュー
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('imagePreview');
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+            preview.style.display = 'none';
+        }
     });
 
 // 購入者・評価モーダル開閉処理

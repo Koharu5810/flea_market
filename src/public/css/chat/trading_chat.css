@@ -157,6 +157,43 @@ main {
     height: auto;
     aspect-ratio: 1 / 1;  /* 縦横比を1：1に維持 */
 }
+.message-textarea {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    resize: none;
+    height: 60px;
+    width: 100%;
+}
+/* input内画像プレビュー */
+.textarea-with-preview {
+    display: flex;
+    align-items: flex-start;
+    width: 60%;
+    gap: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid pink;
+}
+.preview-image {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.message-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+
+
 
 .message-edit-form {
     display: flex;
