@@ -99,11 +99,23 @@
 
     {{-- メッセージ送信フォーム --}}
             <div>
+                @error('content')
+                    <span class="error-message">
+                        {{ $message }}
+                    </span>
+                @enderror
+                @error('image_path')
+                    <span class="error-message">
+                        {{ $message }}
+                    </span>
+                @enderror
+
                 <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
                     @csrf
                     <input
                         type="text"
                         name="content"
+                        id="chatInput"
                         value="{{ old('content') }}"
                         placeholder="取引メッセージを記入してください"
                         class="message-input"
@@ -126,17 +138,6 @@
                         <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
                     </button>
                 </form>
-
-                @error('content')
-                    <span class="error-message">
-                        {{ $message }}
-                    </span>
-                @enderror
-                @error('image_path')
-                    <span class="error-message">
-                        {{ $message }}
-                    </span>
-                @enderror
             </div>
 
         </div>
@@ -144,7 +145,7 @@
 </div>
 
 <script>
-    // キャンセルボタン
+// 更新キャンセルボタン
     function cancelEdit() {
         const form = document.createElement('form');
         form.method = 'POST';
@@ -159,6 +160,29 @@
         document.body.appendChild(form);
         form.submit();
     }
+
+// チャット保持
+    const chatInput = document.getElementById('chatInput');
+    const storageKey = 'chat_draft_content';
+
+    // 画面読み込み時：保存されている内容があれば復元
+    document.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem(storageKey);
+        if (saved) {
+            chatInput.value = saved;
+        }
+    });
+
+    // 入力時に保存
+    chatInput.addEventListener('input', () => {
+        localStorage.setItem(storageKey, chatInput.value);
+    });
+
+    // フォーム送信時：保存内容をクリア
+    const form = chatInput.closest('form');
+    form.addEventListener('submit', () => {
+        localStorage.removeItem(storageKey);
+    });
 </script>
 
 @endsection
