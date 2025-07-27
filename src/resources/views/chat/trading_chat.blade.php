@@ -68,7 +68,7 @@
                 </div>
             @endif
 
-        {{-- 購入者評価後、出品者に評価モーダル表示 --}}
+    {{-- 購入者評価後、出品者に評価モーダル表示 --}}
             @if ($shouldShowRatingModal)
                 <script>
                     window.addEventListener('DOMContentLoaded', function () {
@@ -77,7 +77,7 @@
                 </script>
             @endif
 
-        {{-- 出品者用評価モーダル --}}
+    {{-- 出品者用評価モーダル --}}
             <div id="sellerModal" class="modal hidden">
                 <div class="modal-content">
                     <p>取引が完了しました。</p>
@@ -289,6 +289,9 @@
 // 出品者モーダル表示処理
     function openSellerModal() {
         document.getElementById('sellerModal')?.classList.remove('hidden');
+    }
+    function closeSellerModal() {
+        document.getElementById('sellerModal')?.classList.add('hidden');
     }
 </script>
 

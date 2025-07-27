@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ChatRoom;
 use App\Models\Message;
 use App\Http\Requests\ChatRequest;
+use App\Http\Requests\RateRequest;
 use App\Mail\SellerRated;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -120,15 +121,24 @@ class ChatController extends Controller
         return back()->with('success', 'メッセージを削除しました');
     }
 
-// 取引完了（購入者）
-    public function buyerRate(Request $request, ChatRoom $chatRoom)
+// 評価処理共通化
+    private function applyRatingToUser($user, int $rating): void
     {
-        $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-        ], [
-            'rating.required' => '★1以上で評価してください',
-        ]);
+        $user->rating_total += $rating;
+        $user->rating_count += 1;
+        $user->save();
+    }
+    private function updateOrderStatusAndRating($order, string $status, int $rating): void
+    {
+        $order->status = $status;
+        $order->rating = $rating;
+        $order->rated_at = now();
+        $order->save();
+    }
 
+// 取引完了（購入者）
+    public function buyerRate(RateRequest $request, ChatRoom $chatRoom)
+    {
         $order = $chatRoom->order;
 
         if (auth()->id() !== optional($order->user)->id) {
@@ -138,23 +148,12 @@ class ChatController extends Controller
             return back()->with('error', 'この取引はすでに評価されています');
         }
 
-        // 取引完了
-        $order->status = 'buyer_rated';
-
-        // 出品者に評価を加算
-        $seller = $order->item->user;
-        $seller->rating_total += $request->rating;
-        $seller->rating_count += 1;
-        $seller->save();
-
-        // 注文に評価記録
-        $order->rating = $request->rating;
-        $order->rated_at = now();
-        $order->save();
+        $this->applyRatingToUser($order->item->user, $request->rating);
+        $this->updateOrderStatusAndRating($order, 'buyer_rated', $request->rating);
 
         // 出品者へ取引完了メール送信
         try {
-            Mail::to($seller->email)->send(new SellerRated($order, $request->rating));
+            Mail::to($order->item->user->email)->send(new SellerRated($order, $request->rating));
         } catch (\Exception $e) {
             Log::error('評価通知メール送信失敗: ' . $e->getMessage());
         }
@@ -162,14 +161,8 @@ class ChatController extends Controller
         return redirect()->route('home')->with('success', '出品者を評価しました');
     }
 // 取引完了（出品者）
-    public function sellerRate(Request $request, ChatRoom $chatRoom)
+    public function sellerRate(RateRequest $request, ChatRoom $chatRoom)
     {
-        $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-        ], [
-            'rating.required' => '★1以上で評価してください',
-        ]);
-
         $order = $chatRoom->order;
 
         // 出品者かどうか確認
@@ -182,17 +175,9 @@ class ChatController extends Controller
             return back()->with('error', '評価できる状態ではありません。');
         }
 
-        // 購入者に評価を加算
-        $buyer = $order->user;
-        $buyer->rating_total += $request->rating;
-        $buyer->rating_count += 1;
-        $buyer->save();
-
-        // ステータスを「取引完了」に更新
-        $order->status = 'complete';
-        $order->save();
+        $this->applyRatingToUser($order->user, $request->rating);
+        $this->updateOrderStatusAndRating($order, 'complete', $request->rating);
 
         return redirect()->route('home')->with('success', '購入者を評価しました。');
     }
-
 }
