@@ -24,13 +24,26 @@ class UserController extends Controller
         $tab = $request->query('tab', 'sell');
 
         // 出品者 or 購入者として関わっている注文
-        $tradingOrders = Order::where('status', 'trading')
+        $tradingOrders = Order::where(function ($q) use ($user) {
+                $q->whereHas('item', function ($q) use ($user) {
+                        $q->where('user_id', $user->id); // 出品者
+                    })
+                    ->orWhere('user_id', $user->id);     // 購入者
+            })
             ->where(function ($q) use ($user) {
+                $q->where(function ($q) use ($user) {
+                    // 出品者として表示（購入者が評価済み、出品者が未評価の状態を含む）
                     $q->whereHas('item', fn($q) => $q->where('user_id', $user->id))
-                        ->orWhere('user_id', $user->id);
+                    ->whereNotIn('status', ['seller_rated', 'complete']);
                 })
-                ->with(['item', 'chatRoom.messages'])
-                ->get();
+                ->orWhere(function ($q) use ($user) {
+                    // 購入者として表示（出品者が評価済み、購入者が未評価の状態を含む）
+                    $q->where('user_id', $user->id)
+                    ->whereNotIn('status', ['buyer_rated', 'complete']);
+                });
+            })
+            ->with(['item', 'chatRoom.messages'])
+            ->get();
 
         // 全体の未読メッセージ総数（マイページ上部表示用）
         $unreadMessageCount = Message::whereHas('chatRoom.order', function ($q) use ($user) {

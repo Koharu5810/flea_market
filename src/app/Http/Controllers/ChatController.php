@@ -8,6 +8,7 @@ use App\Models\Message;
 use App\Http\Requests\ChatRequest;
 use App\Mail\SellerRated;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
@@ -125,7 +126,7 @@ class ChatController extends Controller
         }
 
         // 取引完了
-        $order->status = 'complete';
+        $order->status = 'buyer_rated';
 
         // 出品者に評価を加算
         $seller = $order->item->user;
@@ -139,9 +140,12 @@ class ChatController extends Controller
         $order->save();
 
         // 出品者へ取引完了メール送信
-        Mail::to($seller->email)->send(new SellerRated($order, $request->rating));
+        try {
+            Mail::to($seller->email)->send(new SellerRated($order, $request->rating));
+        } catch (\Exception $e) {
+            Log::error('評価通知メール送信失敗: ' . $e->getMessage());
+        }
 
         return redirect()->route('home')->with('success', '出品者を評価しました');
     }
-
 }
