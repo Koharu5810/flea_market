@@ -333,9 +333,6 @@ main {
     height: auto;
     aspect-ratio: 1 / 1;  /* 縦横比を1：1に維持 */
 }
-.message-actions {
-
-}
 
 /* チャット送信フォーム部分 */
 .message-input-area {
@@ -352,12 +349,8 @@ main {
     display: flex;
     align-items: flex-start;
     width: 60%;
-    gap: 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
     padding: 8px;
-    background-color: #fff;
-    border: 1px solid pink;
+    gap: 8px;
 }
 .image-preview-wrapper {
     position: relative;
@@ -385,25 +378,45 @@ main {
 }
 .message-textarea {
     flex-grow: 1;
-    border: none;
     outline: none;
-    font-size: 14px;
     resize: none;
-    height: 60px;
+    padding: 10px 20px;
     width: 100%;
+    /* height: 60px; */
+    min-height: 45px;
+    font: 700 clamp(12px, 5vw, 20px) "Inter", sans-serif;
+    border-radius: 4px;
+    border: 1px solid #5F5F5F;
+}
+.send-button {
+    display: inline-block;
+    text-align: center;
+    padding: 5px 10px;
+    height: 45px;
+    border: 2px solid #FF5555;
+    border-radius: 10px;
+    color: #FF5555;
+    font: 700 clamp(12px, 5vw, 20px) "Inter", sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+.send-button:hover {
+    background-color: #FF5555;
+    color: #FFF;
 }
 .chat-image__input {
     display: none;
 }
 .message-send-button {
-    width: 80px;
-    height: auto;
+    margin: 0;
+    padding: 0;
     background: none;
     border: none;
-    padding: 0;
     cursor: pointer;
 }
 .message-send-button img {
-    width: 40px;
+    margin: 0;
+    padding: 0;
+    width: 80px;
     height: auto;
 }

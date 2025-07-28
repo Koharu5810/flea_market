@@ -250,7 +250,7 @@
                     >{{ old('content') }}</textarea>
                 </div>
 
-                <label for="fileInput" class="edit__red-button">画像を追加</label>
+                <label for="fileInput" class="send-button">画像を追加</label>
                 <input type="file" name="image" id="fileInput" class="chat-image__input">
 
                 <button type="submit"  class="message-send-button">
