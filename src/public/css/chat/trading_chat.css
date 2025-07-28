@@ -187,16 +187,14 @@ main {
 
 /* 取引商品情報 */
 .item-area {
-    padding: 20px;
     display: flex;
-    gap: 20px;
-    border: 1px solid green;
+    padding-left: 20px;
+    gap: 40px;
 }
 .item-image-container {
     max-width: 200px;
     height: auto;
     aspect-ratio: 1 / 1;  /* 縦横比を1：1に維持 */
-    margin-right: 50px;
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -206,8 +204,13 @@ main {
     object-fit: cover;
 }
 .item-info {
-    border: 1px solid pink;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    margin: 0;
+    padding: 30px 0 20px;
+    box-sizing: border-box;
 }
 .item-name {
     margin: 0;
@@ -222,9 +225,9 @@ main {
 .chat-area {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    margin: 0;
+    padding: 0 20px;
     gap: 20px;
-    border: 1px solid orange;
 }
 .chat-message {
     display: flex;
