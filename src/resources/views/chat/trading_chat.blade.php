@@ -35,7 +35,7 @@
     {{-- 購入者取引完了モーダル --}}
             @if ($isBuyer && $order->status !== 'complete')
                 {{-- ボタン --}}
-                <button class="buyer-rate-button" onclick="openBuyerModal()">取引を完了する</button>
+                <button class="buyer-rate-button" onclick="openModal('buyerModal')" data-modal-trigger>取引を完了する</button>
 
                 {{-- モーダル --}}
                 <div id="buyerModal" class="modal hidden">
@@ -43,8 +43,8 @@
                         <h3>取引が完了しました。</h3>
 
                         <hr class="modal-divider">
-
                         <p class="rating-message">今回の取引相手はどうでしたか？</p>
+
                         <form action="{{ route('chat.buyerRate', ['chatRoom' => $chatRoom->id]) }}" method="POST">
                             @csrf
 
@@ -64,39 +64,28 @@
                                     </div>
                                 @enderror
 
-                            {{-- バリデーション時にモーダルを再表示 --}}
-                                @if ($errors->has('rating') && $isBuyer)
-                                    <script>
-                                        window.addEventListener('DOMContentLoaded', function () {
-                                            document.getElementById('buyerModal')?.classList.remove('hidden');
-                                        });
-                                    </script>
-                                @endif
-
                                 <button type="submit" class="rating-submit-button">送信する</button>
                             </div>
                         </form>
                     </div>
                 </div>
-            @endif
 
-    {{-- 購入者評価後、出品者に評価モーダル表示 --}}
-            @if ($shouldShowRatingModal)
-                <script>
-                    window.addEventListener('DOMContentLoaded', function () {
-                        openSellerModal();
-                    });
-                </script>
+            {{-- バリデーション時にモーダルを再表示 --}}
+                @if ($errors->has('rating') && $isBuyer)
+                    <script>
+                        window.addEventListener('DOMContentLoaded', () => openModal('buyerModal'));
+                    </script>
+                @endif
             @endif
 
     {{-- 出品者用評価モーダル --}}
             <div id="sellerModal" class="modal hidden">
                 <div class="modal-content">
-                    <p>取引が完了しました。</p>
+                    <h3>取引が完了しました。</h3>
 
                     <hr class="modal-divider">
+                    <p class="rating-message">今回の取引相手はどうでしたか？</p>
 
-                    <p>今回の取引相手はどうでしたか？</p>
                     <form action="{{ route('chat.sellerRate', ['chatRoom' => $chatRoom->id]) }}" method="POST">
                         @csrf
 
@@ -107,28 +96,34 @@
                             @endfor
                         </div>
 
-                        @error('rating')
-                            <div class="error-message">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                    {{-- バリデーション時にモーダルを再表示 --}}
-                        @if ($errors->has('buyer_rated') && $isSeller)
-                            <script>
-                                window.addEventListener('DOMContentLoaded', function () {
-                                    document.getElementById('sellerModal')?.classList.remove('hidden');
-                                });
-                            </script>
-                        @endif
-
                         <hr class="modal-divider">
 
-                        <button type="submit">送信する</button>
+                        <div class="rating-button-container">
+                            @error('rating')
+                                <div class="rating-error-message">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                            <button type="submit" class="rating-submit-button">送信する</button>
+                        </div>
                     </form>
                 </div>
             </div>
 
+    {{-- 購入者評価後、出品者に評価モーダル表示 --}}
+            @if ($shouldShowRatingModal)
+                <script>
+                    window.addEventListener('DOMContentLoaded', () => openModal('sellerModal'));
+                </script>
+            @endif
+
+        {{-- バリデーション時にモーダルを再表示 --}}
+            @if ($errors->has('buyer_rated') && $isSeller)
+                <script>
+                    window.addEventListener('DOMContentLoaded', () => openModal('sellerModal'));
+                </script>
+            @endif
         </section>
 
         <hr class="section-divider">
@@ -156,7 +151,7 @@
                     @endphp
 
                     <div class="chat-message {{ $isMine ? 'mine' : 'theirs' }}">
-                        <div class="message-meta" {{ $isMine ? 'mine' : 'theirs' }}>
+                        <div class="message-meta {{ $isMine ? 'mine' : 'theirs' }}">
 
                     {{-- 自分：名前 → アイコン --}}
                             @if ($isMine)
@@ -365,20 +360,28 @@
         });
     });
 
-// 購入者・評価モーダル開閉処理
-    function openBuyerModal() {
-        document.getElementById('buyerModal')?.classList.remove('hidden');
+// モーダルを開く（id指定）
+    function openModal(id) {
+        document.getElementById(id)?.classList.remove('hidden');
     }
-    function closeBuyerModal() {
-        document.getElementById('buyerModal')?.classList.add('hidden');
+// モーダルを閉じる（id指定）
+    function closeModal(id) {
+        document.getElementById(id)?.classList.add('hidden');
     }
-// 出品者モーダル表示処理
-    function openSellerModal() {
-        document.getElementById('sellerModal')?.classList.remove('hidden');
-    }
-    function closeSellerModal() {
-        document.getElementById('sellerModal')?.classList.add('hidden');
-    }
+// モーダル外をクリックしたら閉じる
+    document.addEventListener('click', function (e) {
+        const openModals = document.querySelectorAll('.modal:not(.hidden)');
+
+        openModals.forEach(modal => {
+            const content = modal.querySelector('.modal-content');
+            if (!content.contains(e.target) &&
+                !e.target.closest('[data-modal-trigger]')
+            ) {
+                modal.classList.add('hidden');
+            }
+        });
+    });
+
 </script>
 
 @endsection
