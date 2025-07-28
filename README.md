@@ -45,7 +45,7 @@ MAIL_FROM_NAME="${flea_market}"
 php artisan key:generate
 
 php artisan config:clear
-php artisan cache:clear
+c
 ```
 
 5. Stripe連携の設定をする
@@ -72,6 +72,7 @@ php artisan serve
 
 ```bash
 php artisan storage:link
+mkdir -p storage/app/public/dummy
 cp public/images/*.jpg storage/app/public/dummy/
 
 php artisan migrate --seed
@@ -95,7 +96,7 @@ cp .env.example .env.testing
 
 APP_ENV=test
 
-DB_CONNECTION=mysql_test
+DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=test_database
