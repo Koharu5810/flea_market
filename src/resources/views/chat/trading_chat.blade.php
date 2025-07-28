@@ -185,7 +185,7 @@
                             <form action="{{ route('chat.update', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" class="edit-form">
                                 @csrf
                                 @method('PUT')
-                                <input type="text" name="content" value="{{ old('content', $message->content) }}" oninput="resizeInput(this)" class="message-edit-input">
+                                <textarea name="content" id="" oninput="autoResize(this)" class="message-edit-textarea">{{ old('content', $message->content) }}</textarea>
 
                                 <div class="edit-buttons">
                                     <button type="submit" class="update-button">更新</button>
@@ -278,16 +278,40 @@
         document.body.appendChild(form);
         form.submit();
     }
-// 編集チャットの文字数に合わせてinput幅を変える
-    function resizeInput(input) {
-        input.style.width = '1px'; // いったんリセット
-        input.style.width = (input.scrollWidth + 2) + 'px'; // 内容に応じた幅
-    }
+// 編集チャットの文字数に合わせてtextarea高さを変える
+    function autoResize(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = Math.min(textarea.scrollHeight, 300) + 'px';
+
+        // 横幅自動調整（文字数に応じて幅を変更）
+        const dummy = document.createElement('span');
+        dummy.style.visibility = 'hidden';
+        dummy.style.whiteSpace = 'pre';
+        dummy.style.font = getComputedStyle(textarea).font;
+        dummy.textContent = textarea.value || textarea.placeholder || '';
+        document.body.appendChild(dummy);
+
+        const padding = 32; // paddingの考慮（左右合計）
+        const minWidth = 200;
+        const maxWidth = textarea.closest('.edit-form')?.clientWidth || 600;
+        const contentWidth = dummy.offsetWidth + padding;
+        const appliedWidth = Math.min(Math.max(contentWidth, minWidth), maxWidth);
+
+        textarea.style.width = appliedWidth + 'px';
+        document.body.removeChild(dummy);
+        }
+        // 編集フォーム読み込み時にも反映させる
+        document.addEventListener('DOMContentLoaded', () => {
+        const textarea = document.querySelector('.message-edit-textarea');
+        if (textarea) {
+            autoResize(textarea);
+            textarea.addEventListener('input', () => autoResize(textarea));
+        }
+    });
 
 // チャット保持
     const chatInput = document.getElementById('chatInput');
     const storageKey = 'chat_draft_content';
-
     // 画面読み込み時：保存されている内容があれば復元
     document.addEventListener('DOMContentLoaded', () => {
         const saved = localStorage.getItem(storageKey);
@@ -295,12 +319,10 @@
             chatInput.value = saved;
         }
     });
-
     // 入力時に保存
     chatInput.addEventListener('input', () => {
         localStorage.setItem(storageKey, chatInput.value);
     });
-
     // フォーム送信時：保存内容をクリア
     const form = chatInput.closest('form');
     form.addEventListener('submit', () => {
