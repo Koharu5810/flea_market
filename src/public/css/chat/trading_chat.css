@@ -3,11 +3,27 @@ html, body {
     margin: 0;
     overflow: hidden; /* ブラウザ全体でのスクロールを防ぐ */
 }
+main {
+    margin: 0;
+    padding: 0;
+}
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 82px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
 .chat-container {
     display: flex;
-    flex: 1;
+    width: 100%;
+    height: calc(100vh - 82px); /* ← ヘッダー分を引いた高さを指定 */
     margin-top: 82px;
-    height: 100vh; /* 画面全体に広げる */
+    border: 2px solid orange;
 }
 
 /* サイドバー */
@@ -94,14 +110,14 @@ html, body {
 
 /* メインコンテンツ */
 .main-area {
-    margin: 0;
-    padding: 0;
     flex: 1;
-    overflow-y: auto; /* ← メイン部分独立して縦スクロール */
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    margin: 10px 0 0 10px ;
+    padding: 10px 0 0 10px;
+    border: 3px solid red;
 }
 .section-divider {
     margin: 20px 0;
@@ -112,6 +128,8 @@ html, body {
 
 /* 取引相手情報 */
 .user-info {
+    flex-shrink: 0;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -154,6 +172,19 @@ html, body {
     background-color: #FF5252;
 }
 
+/* スクロール領域 */
+.scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 0;
+    padding: 0;
+    -webkit-overflow-scrolling: touch; /* iOS滑らかスクロール */
+    border: 2px solid lightblue;
+}
+
 /* 取引商品情報 */
 .item-area {
     padding: 20px;
@@ -191,7 +222,6 @@ html, body {
 .chat-area {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
     padding: 20px;
     gap: 20px;
     border: 1px solid orange;
@@ -283,6 +313,8 @@ html, body {
 
 /* チャット送信フォーム部分 */
 .message-input-area {
+    flex-shrink: 0;
+    z-index: 1;
     display: flex;
     align-items: center;
     padding: 0px;

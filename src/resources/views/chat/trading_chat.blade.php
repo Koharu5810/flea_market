@@ -21,7 +21,7 @@
     </aside>
 
 {{-- 取引相手表示 --}}
-    <main class="main-area">
+    <div class="main-area">
         <section class="user-info">
             <div class="user-meta">
                 @if ($order->user->profile_image_url)
@@ -131,120 +131,122 @@
 
         <hr class="section-divider">
 
+        <div class="scrollable-content">
 {{-- 取引商品表示 --}}
-        <section class="item-area">
-            <div class="item-image-container">
-                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
-            </div>
-            <div class="item-info">
-                <h3 class="item-name">{{ $item->name }}</h3>
-                <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span> (税込)</p>
-            </div>
-        </section>
-
-        <hr class="section-divider">
-
-{{-- チャット欄 --}}
-        <section class="chat-area">
-            @foreach($messages as $message)
-                @php
-                    $isMine = $message->sender_id === auth()->id();
-                    $sender = $message->sender;
-                @endphp
-
-                <div class="chat-message {{ $isMine ? 'mine' : 'theirs' }}">
-                    <div class="message-meta">
-            {{-- アイコン --}}
-                        @if ($sender->profile_image_url)
-                            <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
-                        @else
-                            <div class="message-icon default-icon"></div>
-                        @endif
-
-            {{-- ユーザー名 --}}
-                        <span class="sender-name">{{ $sender->username }}</span>
-                    </div>
-
-            {{-- 自分のチャットには更新・更新キャンセルボタンを表示（編集時） --}}
-                    @if (session('edit_id') === $message->id)
-
-                        <form action="{{ route('chat.update', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" class="edit-form">
-                            @csrf
-                            @method('PUT')
-                            <input type="text" name="content" value="{{ old('content', $message->content) }}" class="message-edit-input">
-
-                            <div class="edit-buttons">
-                                <button type="submit" class="update-button">更新</button>
-                                <button type="button" class="cancel-button" onclick="cancelEdit()">キャンセル</button>
-                            </div>
-                        </form>
-
-                    @else
-                        <div class="message-bubble">{{ $message->content }}</div>
-                        @if ($message->image_path)
-                            <img src="{{ asset('storage/' . $message->image_path) }}" alt="画像" class="chat-image" />
-                        @endif
-                    @endif
-
-            {{-- 自分のチャットには編集・削除ボタンを表示 --}}
-                    @if ($isMine && session('edit_id') !== $message->id)
-                        <div class="update-buttons">
-                            <a href="{{ route('chat.edit', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" class="edit-button">編集</a>
-                            <form action="{{ route('chat.delete', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="delete-button" onclick="return confirm('削除してもよろしいですか？')">削除</button>
-                            </form>
-                        </div>
-                    @endif
-
+            <section class="item-area">
+                <div class="item-image-container">
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" />
                 </div>
-            @endforeach
+                <div class="item-info">
+                    <h3 class="item-name">{{ $item->name }}</h3>
+                    <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span> (税込)</p>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+    {{-- チャット欄 --}}
+            <section class="chat-area">
+                @foreach($messages as $message)
+                    @php
+                        $isMine = $message->sender_id === auth()->id();
+                        $sender = $message->sender;
+                    @endphp
+
+                    <div class="chat-message {{ $isMine ? 'mine' : 'theirs' }}">
+                        <div class="message-meta">
+                {{-- アイコン --}}
+                            @if ($sender->profile_image_url)
+                                <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
+                            @else
+                                <div class="message-icon default-icon"></div>
+                            @endif
+
+                {{-- ユーザー名 --}}
+                            <span class="sender-name">{{ $sender->username }}</span>
+                        </div>
+
+                {{-- 自分のチャットには更新・更新キャンセルボタンを表示（編集時） --}}
+                        @if (session('edit_id') === $message->id)
+
+                            <form action="{{ route('chat.update', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" class="edit-form">
+                                @csrf
+                                @method('PUT')
+                                <input type="text" name="content" value="{{ old('content', $message->content) }}" class="message-edit-input">
+
+                                <div class="edit-buttons">
+                                    <button type="submit" class="update-button">更新</button>
+                                    <button type="button" class="cancel-button" onclick="cancelEdit()">キャンセル</button>
+                                </div>
+                            </form>
+
+                        @else
+                            <div class="message-bubble">{{ $message->content }}</div>
+                            @if ($message->image_path)
+                                <img src="{{ asset('storage/' . $message->image_path) }}" alt="画像" class="chat-image" />
+                            @endif
+                        @endif
+
+                {{-- 自分のチャットには編集・削除ボタンを表示 --}}
+                        @if ($isMine && session('edit_id') !== $message->id)
+                            <div class="update-buttons">
+                                <a href="{{ route('chat.edit', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" class="edit-button">編集</a>
+                                <form action="{{ route('chat.delete', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="delete-button" onclick="return confirm('削除してもよろしいですか？')">削除</button>
+                                </form>
+                            </div>
+                        @endif
+
+                    </div>
+                @endforeach
+            </section>
+        </div>
 
     {{-- メッセージ送信フォーム --}}
-            <div>
-                @error('content')
-                    <span class="error-message">
-                        {{ $message }}
-                    </span>
-                @enderror
-                @error('image_path')
-                    <span class="error-message">
-                        {{ $message }}
-                    </span>
-                @enderror
+        <div>
+            @error('content')
+                <span class="error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+            @error('image_path')
+                <span class="error-message">
+                    {{ $message }}
+                </span>
+            @enderror
 
-                <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
-                    @csrf
-                    <div class="textarea-with-preview">
-                        <div class="image-preview-wrapper" id="previewWrapper">
-                            <img
-                                id="imagePreview"
-                                alt="プレビュー画像"
-                                class="preview-image"
-                            />
-                            <button type="button" id="removeImageBtn" class="remove-image-button">✕</button>
-                        </div>
-
-                        <textarea
-                            name="content"
-                            id="chatInput"
-                            placeholder="取引メッセージを記入してください"
-                            class="message-textarea"
-                        >{{ old('content') }}</textarea>
+            <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
+                @csrf
+                <div class="textarea-with-preview">
+                    <div class="image-preview-wrapper" id="previewWrapper">
+                        <img
+                            id="imagePreview"
+                            alt="プレビュー画像"
+                            class="preview-image"
+                        />
+                        <button type="button" id="removeImageBtn" class="remove-image-button">✕</button>
                     </div>
 
-                    <label for="fileInput" class="edit__red-button">画像を追加</label>
-                    <input type="file" name="image" id="fileInput" class="chat-image__input">
+                    <textarea
+                        name="content"
+                        id="chatInput"
+                        placeholder="取引メッセージを記入してください"
+                        class="message-textarea"
+                    >{{ old('content') }}</textarea>
+                </div>
 
-                    <button type="submit"  class="message-send-button">
-                        <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
-                    </button>
-                </form>
-            </div>
+                <label for="fileInput" class="edit__red-button">画像を追加</label>
+                <input type="file" name="image" id="fileInput" class="chat-image__input">
 
+                <button type="submit"  class="message-send-button">
+                    <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
+                </button>
+            </form>
         </div>
-    </main>
+    </div>
+
 </div>
 
 <script>
