@@ -40,11 +40,11 @@
                 {{-- モーダル --}}
                 <div id="buyerModal" class="modal hidden">
                     <div class="modal-content">
-                        <p>取引が完了しました。</p>
+                        <h3>取引が完了しました。</h3>
 
                         <hr class="modal-divider">
 
-                        <p>今回の取引相手はどうでしたか？</p>
+                        <p class="rating-message">今回の取引相手はどうでしたか？</p>
                         <form action="{{ route('chat.buyerRate', ['chatRoom' => $chatRoom->id]) }}" method="POST">
                             @csrf
 
@@ -55,24 +55,26 @@
                                 @endfor
                             </div>
 
-                            @error('rating')
-                                <div class="error-message">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        {{-- バリデーション時にモーダルを再表示 --}}
-                            @if ($errors->has('rating') && $isBuyer)
-                                <script>
-                                    window.addEventListener('DOMContentLoaded', function () {
-                                        document.getElementById('buyerModal')?.classList.remove('hidden');
-                                    });
-                                </script>
-                            @endif
-
                             <hr class="modal-divider">
 
-                            <button type="submit">送信する</button>
+                            <div class="rating-button-container">
+                                @error('rating')
+                                    <div class="rating-error-message">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+
+                            {{-- バリデーション時にモーダルを再表示 --}}
+                                @if ($errors->has('rating') && $isBuyer)
+                                    <script>
+                                        window.addEventListener('DOMContentLoaded', function () {
+                                            document.getElementById('buyerModal')?.classList.remove('hidden');
+                                        });
+                                    </script>
+                                @endif
+
+                                <button type="submit" class="rating-submit-button">送信する</button>
+                            </div>
                         </form>
                     </div>
                 </div>
