@@ -58,6 +58,10 @@ main {
     color: #000;
     text-decoration: none;
 }
+.sidebar__other-order:hover {
+    background-color: #DDD;
+    cursor: pointer;
+}
 
 /* モーダル */
 .modal {
@@ -344,7 +348,8 @@ main {
 .textarea-with-preview {
     display: flex;
     align-items: flex-start;
-    width: 60%;
+    flex-grow: 1;
+    min-width: 0;
     padding: 8px;
     gap: 8px;
     border: 1px solid orange;
@@ -360,7 +365,6 @@ main {
     max-width: 50px;
     max-height: 50px;
     object-fit: contain;
-    border: 1px solid green;
 }
 .remove-image-button {
     position: absolute;
