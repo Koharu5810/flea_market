@@ -187,14 +187,14 @@
                                 @method('PUT')
                                 <textarea name="content" id="" oninput="autoResize(this)" class="message-edit-textarea">{{ old('content', $message->content) }}</textarea>
 
-                                <div class="edit-buttons">
+                                <div class="update-buttons">
                                     <button type="submit" class="update-button">更新</button>
                                     <button type="button" class="cancel-button" onclick="cancelEdit()">キャンセル</button>
                                 </div>
                             </form>
 
                         @else
-                            <div class="message-bubble">{{ $message->content }}</div>
+                            <div class="message-bubble">{!! nl2br(e(rtrim($message->content))) !!}</div>
                             @if ($message->image_path)
                                 <img src="{{ asset('storage/' . $message->image_path) }}" alt="画像" class="chat-image" />
                             @endif
@@ -202,7 +202,7 @@
 
                 {{-- 自分のチャットには編集・削除ボタンを表示 --}}
                         @if ($isMine && session('edit_id') !== $message->id)
-                            <div class="update-buttons">
+                            <div class="edit-buttons">
                                 <a href="{{ route('chat.edit', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" class="edit-button">編集</a>
                                 <form action="{{ route('chat.delete', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" style="display:inline;">
                                     @csrf
