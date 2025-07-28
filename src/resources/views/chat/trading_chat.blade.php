@@ -154,16 +154,29 @@
                     @endphp
 
                     <div class="chat-message {{ $isMine ? 'mine' : 'theirs' }}">
-                        <div class="message-meta">
-                {{-- アイコン --}}
-                            @if ($sender->profile_image_url)
-                                <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
+                        <div class="message-meta" {{ $isMine ? 'mine' : 'theirs' }}>
+
+                    {{-- 自分：名前 → アイコン --}}
+                            @if ($isMine)
+                                <span class="sender-name">{{ $sender->username }}</span>
+
+                                @if ($sender->profile_image_url)
+                                    <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
+                                @else
+                                    <div class="message-icon default-icon"></div>
+                                @endif
+
+                    {{-- 相手：アイコン → 名前 --}}
                             @else
-                                <div class="message-icon default-icon"></div>
+                                @if ($sender->profile_image_url)
+                                    <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
+                                @else
+                                    <div class="message-icon default-icon"></div>
+                                @endif
+
+                                <span class="sender-name">{{ $sender->username }}</span>
                             @endif
 
-                {{-- ユーザー名 --}}
-                            <span class="sender-name">{{ $sender->username }}</span>
                         </div>
 
                 {{-- 自分のチャットには更新・更新キャンセルボタンを表示（編集時） --}}
@@ -172,7 +185,7 @@
                             <form action="{{ route('chat.update', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" class="edit-form">
                                 @csrf
                                 @method('PUT')
-                                <input type="text" name="content" value="{{ old('content', $message->content) }}" class="message-edit-input">
+                                <input type="text" name="content" value="{{ old('content', $message->content) }}" oninput="resizeInput(this)" class="message-edit-input">
 
                                 <div class="edit-buttons">
                                     <button type="submit" class="update-button">更新</button>
@@ -264,6 +277,11 @@
         form.appendChild(csrf);
         document.body.appendChild(form);
         form.submit();
+    }
+// 編集チャットの文字数に合わせてinput幅を変える
+    function resizeInput(input) {
+        input.style.width = '1px'; // いったんリセット
+        input.style.width = (input.scrollWidth + 2) + 'px'; // 内容に応じた幅
     }
 
 // チャット保持
