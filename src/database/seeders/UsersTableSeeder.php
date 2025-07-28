@@ -20,12 +20,6 @@ class UsersTableSeeder extends Seeder
             ['id' => 1, 'username' => '西 怜奈', 'email' => 'reina.n@coachtech.com'],
             ['id' => 2, 'username' => '山田 太郎', 'email' => 'taro.y@coachtech.com'],
             ['id' => 3, 'username' => '増田 一世', 'email' => 'issei.m@coachtech.com'],
-            ['id' => 4, 'username' => '山本 敬吉', 'email' => 'keikichi.y@coachtech.com'],
-            ['id' => 5, 'username' => '秋田 朋美', 'email' => 'tomomi.a@coachtech.com'],
-            ['id' => 6, 'username' => '中西 教夫', 'email' => 'norio.n@coachtech.com'],
-            ['id' => 7, 'username' => '山田 花子', 'email' => 'hanako.y@coachtech.com'],
-            ['id' => 8, 'username' => '松本 四郎', 'email' => 'shiro.m@coachtech.com'],
-            ['id' => 9, 'username' => '小川 七美', 'email' => 'nanami.o@coachtech.com'],
         ];
 
         foreach ($users as $user) {

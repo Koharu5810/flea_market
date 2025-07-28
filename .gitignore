@@ -9,10 +9,12 @@ docker-compose.override.yml
 /node_modules
 /src/.env
 /src/.env.*
-src/.env.testing
+/src/.env.testing
 
 # storage 配下
 /storage/*.log
+/src/storage/app/public/chat_images/*
+!/src/storage/app/public/chat_images/.gitkeep
 /src/storage/app/public/items/*
 !/src/storage/app/public/items/.gitkeep
 /src/storage/app/public/dummy/*

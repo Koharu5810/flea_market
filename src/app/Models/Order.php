@@ -20,7 +20,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);  // 購入者
     }
     public function item()
     {
@@ -29,6 +29,10 @@ class Order extends Model
     public function address()
     {
         return $this->belongsTo(UserAddress::class);
+    }
+    public function chatRoom()
+    {
+        return $this->hasOne(ChatRoom::class);
     }
 
         protected static function boot()

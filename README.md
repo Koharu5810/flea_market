@@ -45,7 +45,7 @@ MAIL_FROM_NAME="${flea_market}"
 php artisan key:generate
 
 php artisan config:clear
-php artisan cache:clear
+c
 ```
 
 5. Stripe連携の設定をする
@@ -72,6 +72,7 @@ php artisan serve
 
 ```bash
 php artisan storage:link
+mkdir -p storage/app/public/dummy
 cp public/images/*.jpg storage/app/public/dummy/
 
 php artisan migrate --seed
@@ -95,7 +96,7 @@ cp .env.example .env.testing
 
 APP_ENV=test
 
-DB_CONNECTION=mysql_test
+DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=test_database
@@ -139,7 +140,20 @@ http://localhost:8025
 **一般ユーザのログイン**
 
 http://localhost/login へアクセス
-UsersTableSeederに記述のメールアドレス、パスワードを使用
+※ダミーユーザのログインパスワードはすべて「password」
+
+【ユーザ1】西 怜奈
+reina.n@coachtech.com
+ダミーデータ1〜5の商品を出品
+
+【ユーザ2】山田 太郎
+taro.y@coachtech.com
+ダミーデータ6〜10の商品を出品
+
+【ユーザ3】増田 一世
+issei.m@coachtech.com
+商品出品なし
+
 
 **商品購入処理実行時のStripe操作**
 

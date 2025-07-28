@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Item;
-use App\Models\User;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -20,13 +19,16 @@ class ItemsTableSeeder extends Seeder
 
         $items = [
             [
+                'user_id' => 1,
                 'name' => '腕時計',
                 'price' => '15000',
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
                 'image' => 'dummy/clock.jpg',
                 'categories' => ['メンズ', 'ファッション', 'アクセサリー'],
+                'is_sold' => true,
             ],
             [
+                'user_id' => 1,
                 'name' => 'HDD',
                 'price' => '5000',
                 'description' => '高速で信頼性の高いハードディスク',
@@ -34,13 +36,16 @@ class ItemsTableSeeder extends Seeder
                 'categories' => ['家電'],
             ],
             [
+                'user_id' => 1,
                 'name' => '玉ねぎ3束',
                 'price' => '300',
                 'description' => '新鮮な玉ねぎの3束セット',
                 'image' => 'dummy/onion.jpg',
                 'categories' => ['キッチン'],
+                'is_sold' => true,
             ],
             [
+                'user_id' => 1,
                 'name' => '革靴',
                 'price' => '4000',
                 'description' => 'クラシックなデザインの革靴',
@@ -48,13 +53,16 @@ class ItemsTableSeeder extends Seeder
                 'categories' => ['ファッション', 'メンズ'],
             ],
             [
+                'user_id' => 1,
                 'name' => 'ノートPC',
                 'price' => '45000',
                 'description' => '高性能なノートパソコン',
                 'image' => 'dummy/PC.jpg',
                 'categories' => ['家電'],
+                'is_sold' => true,
             ],
             [
+                'user_id' => 2,
                 'name' => 'マイク',
                 'price' => '8000',
                 'description' => '高音質のレコーディング用マイク',
@@ -62,6 +70,7 @@ class ItemsTableSeeder extends Seeder
                 'categories' => ['家電'],
             ],
             [
+                'user_id' => 2,
                 'name' => 'ショルダーバッグ',
                 'price' => '3500',
                 'description' => 'おしゃれなショルダーバッグ',
@@ -69,6 +78,7 @@ class ItemsTableSeeder extends Seeder
                 'categories' => ['ファッション', 'レディース'],
             ],
             [
+                'user_id' => 2,
                 'name' => 'タンブラー',
                 'price' => '500',
                 'description' => '使いやすいタンブラー',
@@ -76,6 +86,7 @@ class ItemsTableSeeder extends Seeder
                 'categories' => ['キッチン'],
             ],
             [
+                'user_id' => 2,
                 'name' => 'コーヒーミル',
                 'price' => '4000',
                 'description' => '手動のコーヒーミル',
@@ -83,6 +94,7 @@ class ItemsTableSeeder extends Seeder
                 'categories' => ['キッチン', 'インテリア'],
             ],
             [
+                'user_id' => 2,
                 'name' => 'メイクセット',
                 'price' => '2500',
                 'description' => '便利なメイクアップセット',
@@ -93,10 +105,8 @@ class ItemsTableSeeder extends Seeder
 
         // 各アイテムに1〜4のコンディションを順番に挿入するための初期値設定
         $conditionId = 1;
-        $users = User::all();
 
         foreach ($items as $item) {
-            $randomUser = $users->random();
             $randomBrand = $brands[array_rand($brands)];
 
             // itemsテーブルへ挿入
@@ -106,9 +116,10 @@ class ItemsTableSeeder extends Seeder
                 'description' => $item['description'],
                 'image' => $item['image'],
                 'item_condition' => $conditionId,
-                'user_id' => $randomUser->id,
+                'user_id' => $item['user_id'],
                 'address_id' => null,
                 'brand' => $randomBrand,
+                'is_sold' => $item['is_sold'] ?? false,
             ]);
 
             // アイテムのコンディションIDを設定（1〜4でローテーション）

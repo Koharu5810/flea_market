@@ -21,13 +21,10 @@
             </div>
 
             @php
-                $hideOnPages = request()->is('register') ||
-                            request()->is('login') ||
-                            request()->is('verify*') ||
-                            request()->is('email/verify*');
+                $hideOnPages = $hideOnPages ?? false;
             @endphp
 
-            {{-- ログイン・会員登録画面では非表示 --}}
+            {{-- ログイン・会員登録・メール認証・チャット画面では非表示 --}}
             @if (!$hideOnPages)
                 <div class="header-center">
                     {{-- 検索フォーム --}}

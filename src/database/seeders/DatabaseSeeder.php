@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             ItemsTableSeeder::class,
             FavoritesTableSeeder::class,
             CommentsTableSeeder::class,
+            ChatRoomsTableSeeder::class,
+            MessagesTableSeeder::class,
         ]);
     }
 }

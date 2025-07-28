@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Auth\VerificationController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
@@ -54,5 +55,19 @@ Route::middleware('auth', 'verified')->group(function () {
     // プロフィール編集画面
     Route::get('/mypage/profile', [UserController::class, 'showProfileForm'])->name('profile.edit');
     Route::post('/mypage/profile', [UserController::class, 'save'])->name('profile.save');
-});
 
+    // 商品取引チャット画面
+    Route::get('/chat/{chatRoom}', [ChatController::class, 'show'])->name('chat.show');
+    // チャット送信
+    Route::post('/chat/{chatRoom}/send', [ChatController::class, 'send'])->name('chat.send');
+    // チャット修正
+    Route::get('/chat/{chatRoom}/{message}/edit', [ChatController::class, 'edit'])->name('chat.edit');
+    Route::put('/chat/{chatRoom}/{message}', [ChatController::class, 'update'])->name('chat.update');
+    Route::post('/chat/{chatRoom}/cancel-edit', [ChatController::class, 'cancelEdit'])->name('chat.cancelEdit');
+    // チャット削除
+    Route::delete('/chat/{chatRoom}/{message}', [ChatController::class, 'delete'])->name('chat.delete');
+
+    // 取引完了機能（購入者）
+    Route::post('/chat/{chatRoom}/buyer-rate', [ChatController::class, 'buyerRate'])->name('chat.buyerRate');
+    Route::post('/chat/{chatRoom}/seller-rate', [ChatController::class, 'sellerRate'])->name('chat.sellerRate');
+});

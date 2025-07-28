@@ -15,7 +15,7 @@
     margin-bottom: 70px;
 }
 .profile__image {
-    background-color: #f0f0f0;
+    background-color: #D9D9D9;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -30,8 +30,28 @@
     object-fit: cover;
 }
 .profile__username {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
     margin-right: clamp(7px, 2vw, 40px);
     font: normal 700 clamp(24px, 5vw, 36px) "Inter", sans-serif;
+}
+.username {
+    margin-bottom: auto; /* 上側に押し上げる */
+}
+.star-display {
+    margin-top: auto; /* 下に寄せる */
+    white-space: nowrap;
+    display: inline-block;
+    gap: 4px;
+    font-size: 40px;
+}
+.filled {
+    color: #FFF048;
+}
+.empty {
+    color: #D9D9D9;
 }
 
 .item__header {
@@ -55,6 +75,23 @@
 .item__tab.active {
     color: #FF0000;
 }
+.item-title-with-badge {
+    display: inline-flex;
+    align-items: center; /* 高さを揃える */
+    gap: 6px;
+}
+.total-unread-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    background-color: #FF0000;
+    color: #FFF;
+    font: normal 700 clamp(16px, 5vw, 22px) "Inter", sans-serif;
+    border-radius: 10px;
+}
+
 /* 水平線のスタイル */
 .item__divider {
     width: 100vw;
@@ -102,6 +139,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     background-color: #f0f0f0;
     overflow: hidden;
 }
@@ -114,4 +152,20 @@
     width: 100%;
     text-align: left;
     font: normal 400 clamp(17px, 5vw, 25px) "Inter", sans-serif;
+}
+.unread-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    z-index: 2;
+    top: 4px;
+    left: 4px;
+    background-color: #FF0000;
+    color: white;
+    font: normal 700 10px "Inter", sans-serif;
+    border-radius: 50%;
 }
