@@ -50,10 +50,10 @@ c
 
 5. Stripe連携の設定をする
 
-https://stripe.com/jp にアクセスし、アカウントを用意の上サインインする
-Stripeダッシュボードの画面左にある「開発者>APIキー」へアクセスし、以下をコピーし.envに記述する
-　・公開可能キー：pk_test_から始まるトークン
-　・シークレットキー：sk_test_から始まるトークン
+https://stripe.com/jp にアクセスし、アカウントを用意の上サインインする  
+Stripeダッシュボードの画面左にある「開発者>APIキー」へアクセスし、以下をコピーし.envに記述する  
+　・公開可能キー：pk_test_から始まるトークン  
+　・シークレットキー：sk_test_から始まるトークン  
 
 ```text
 STRIPE_KEY=pk_test_あなたの公開可能キー
@@ -139,20 +139,20 @@ http://localhost:8025
 
 **一般ユーザのログイン**
 
-http://localhost/login へアクセス
-※ダミーユーザのログインパスワードはすべて「password」
-
-【ユーザ1】西 怜奈
-reina.n@coachtech.com
-ダミーデータ1〜5の商品を出品
-
-【ユーザ2】山田 太郎
-taro.y@coachtech.com
-ダミーデータ6〜10の商品を出品
-
-【ユーザ3】増田 一世
-issei.m@coachtech.com
-商品出品なし
+http://localhost/login へアクセス  
+※ダミーユーザのログインパスワードはすべて「password」  
+<br>
+【ユーザ1】西 怜奈  
+reina.n@coachtech.com  
+ダミーデータ1〜5の商品を出品  
+<br>
+【ユーザ2】山田 太郎  
+taro.y@coachtech.com  
+ダミーデータ6〜10の商品を出品  
+<br>
+【ユーザ3】増田 一世  
+issei.m@coachtech.com  
+商品出品なし  
 
 
 **商品購入処理実行時のStripe操作**
@@ -165,10 +165,10 @@ issei.m@coachtech.com
 
 ## トラブルシューティング
 
-・GDなどPHP拡張はDockerfileに記述済みのため、別途インストール不要です
-・php artisan storage:linkを忘れると画像が404になります
-・.envのAPP_KEY生成を忘れるとエラーが出ます
-・Stripeのキーを間違えると購入画面でエラーとなります
+・GDなどPHP拡張はDockerfileに記述済みのため、別途インストール不要です  
+・php artisan storage:linkを忘れると画像が404になります  
+・.envのAPP_KEY生成を忘れるとエラーが出ます  
+・Stripeのキーを間違えると購入画面でエラーとなります  
 
 
 ## 使用技術(実行環境)
