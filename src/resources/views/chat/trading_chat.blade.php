@@ -228,7 +228,7 @@
                 </span>
             @enderror
             @error('image_path')
-                <span class="send__error-message">
+                <span class="send-form__error-message">
                     {{ $message }}
                 </span>
             @enderror
@@ -256,7 +256,7 @@
                 </div>
 
                 <label for="fileInput" class="image-send-button">画像を追加</label>
-                <input type="file" name="image" id="fileInput" class="chat-image__input">
+                <input type="file" name="image_path" id="fileInput" class="chat-image__input">
 
                 <button type="submit"  class="message-send-button">
                     <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
