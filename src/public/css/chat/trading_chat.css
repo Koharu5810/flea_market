@@ -23,7 +23,6 @@ main {
     width: 100%;
     height: calc(100vh - 82px); /* ← ヘッダー分を引いた高さを指定 */
     margin-top: 82px;
-    border: 2px solid orange;
 }
 
 /* サイドバー */
@@ -117,7 +116,6 @@ main {
     height: 100%;
     overflow: hidden;
     padding: 10px 0 0;
-    border: 3px solid red;
 }
 .section-divider {
     margin: 20px 0;
@@ -182,7 +180,6 @@ main {
     margin-top: 0;
     padding: 0;
     -webkit-overflow-scrolling: touch; /* iOS滑らかスクロール */
-    border: 3px solid lightblue;
 }
 
 /* 取引商品情報 */
@@ -315,15 +312,14 @@ main {
     background-color: #D9D9D9;
 }
 .message-edit-textarea {
-    resize: none;      /* マニュアルリサイズ禁止（見た目スッキリ） */
-    overflow: hidden;  /* 自動高さ調整用 */
+    resize: none;
     display: block;
     align-self: flex-end;
     padding: 7px 10px;
     width: auto;
     min-width: 400px;
     max-width: 100%;
-    max-height: 300px;
+    max-height: 150px;
     box-sizing: border-box;
     border: 1px solid #D9D9D9;
 }
@@ -335,7 +331,7 @@ main {
 }
 
 /* チャット送信フォーム部分 */
-.message-input-area {
+.message-send-form {
     flex-shrink: 0;
     z-index: 1;
     display: flex;
@@ -351,17 +347,20 @@ main {
     width: 60%;
     padding: 8px;
     gap: 8px;
+    border: 1px solid orange;
 }
 .image-preview-wrapper {
+    display: flex;
     position: relative;
     display: none;
+    align-items: center;
+    justify-content: center;
 }
 .preview-image {
     max-width: 50px;
     max-height: 50px;
     object-fit: contain;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid green;
 }
 .remove-image-button {
     position: absolute;
@@ -380,15 +379,16 @@ main {
     flex-grow: 1;
     outline: none;
     resize: none;
-    padding: 10px 20px;
+    padding: 5px 20px;
     width: 100%;
-    /* height: 60px; */
-    min-height: 45px;
-    font: 700 clamp(12px, 5vw, 20px) "Inter", sans-serif;
+    min-height: auto;
+    max-height: 150px;
+    line-height: 1.4;
+    font: 700 20px "Inter", sans-serif;
     border-radius: 4px;
     border: 1px solid #5F5F5F;
 }
-.send-button {
+.image-send-button {
     display: inline-block;
     text-align: center;
     padding: 5px 10px;
@@ -400,7 +400,7 @@ main {
     text-decoration: none;
     cursor: pointer;
 }
-.send-button:hover {
+.image-send-button:hover {
     background-color: #FF5555;
     color: #FFF;
 }
@@ -419,4 +419,9 @@ main {
     padding: 0;
     width: 80px;
     height: auto;
+}
+.send-form__error-message{
+    margin-left: 20px;
+    color: #FF5555;
+    font: normal 400 clamp(10px, 5vw, 16px) "Inter", sans-serif;
 }

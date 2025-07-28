@@ -185,7 +185,13 @@
                             <form action="{{ route('chat.update', ['chatRoom' => $chatRoom->id, 'message' => $message->id]) }}" method="POST" class="edit-form">
                                 @csrf
                                 @method('PUT')
-                                <textarea name="content" id="" oninput="autoResize(this)" class="message-edit-textarea">{{ old('content', $message->content) }}</textarea>
+                                <textarea
+                                    name="content"
+                                    id=""
+                                    oninput="autoResize(this)"
+                                    rows="1"
+                                    class="message-edit-textarea"
+                                >{{ old('content', $message->content) }}</textarea>
 
                                 <div class="update-buttons">
                                     <button type="submit" class="update-button">更新</button>
@@ -220,17 +226,17 @@
     {{-- メッセージ送信フォーム --}}
         <div>
             @error('content')
-                <span class="error-message">
+                <span class="send-form__error-message">
                     {{ $message }}
                 </span>
             @enderror
             @error('image_path')
-                <span class="error-message">
+                <span class="send__error-message">
                     {{ $message }}
                 </span>
             @enderror
 
-            <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-input-area">
+            <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-send-form">
                 @csrf
                 <div class="textarea-with-preview">
                     <div class="image-preview-wrapper" id="previewWrapper">
@@ -247,10 +253,12 @@
                         id="chatInput"
                         placeholder="取引メッセージを記入してください"
                         class="message-textarea"
+                        rows="1"
+                        oninput="autoResize(this)"
                     >{{ old('content') }}</textarea>
                 </div>
 
-                <label for="fileInput" class="send-button">画像を追加</label>
+                <label for="fileInput" class="image-send-button">画像を追加</label>
                 <input type="file" name="image" id="fileInput" class="chat-image__input">
 
                 <button type="submit"  class="message-send-button">
@@ -258,8 +266,8 @@
                 </button>
             </form>
         </div>
-    </div>
 
+    </div>
 </div>
 
 <script>
