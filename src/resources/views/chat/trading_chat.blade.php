@@ -34,7 +34,7 @@
             </div>
 
             @if ($isBuyer && $order->status !== 'complete')
-                {{-- ボタン --}}
+                {{-- 購入者取引完了ボタン --}}
                 <button class="buyer-rate-button" onclick="openModal('buyerModal')" data-modal-trigger>取引を完了する</button>
             @endif
 

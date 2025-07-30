@@ -524,3 +524,18 @@ main {
         flex-direction: column;
     }
 }
+
+@media (max-width: 864px) {
+    .user-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .user-meta {
+        order: 2;
+    }
+    .buyer-rate-button {
+        order: 1;  /* ボタン要素の順番を最初に変更 */
+        align-self: flex-end;
+        margin: 0 8px 0 0;
+    }
+}
