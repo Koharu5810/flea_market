@@ -312,6 +312,22 @@ main {
     height: auto;
     aspect-ratio: 1 / 1;  /* 縦横比を1：1に維持 */
 }
+.existing-image-wrapper {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    border: 1px solid red;
+}
+.chat-message.mine .existing-image-wrapper {
+    align-self: flex-end;
+    margin-left: auto;   /* 右側に寄せる */
+}
+.chat-message.theirs .existing-image-wrapper {
+    align-self: flex-start;
+    margin-left: auto;   /* 左側に寄せる */
+}
 
 /* チャット送信フォーム部分 */
 .message-send-form {

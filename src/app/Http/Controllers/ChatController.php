@@ -125,17 +125,9 @@ class ChatController extends Controller
         $message->content = $request->input('content');
 
         // 画像削除
-        if ($request->has('delete_image') && $message->image_path) {
+        if ($request->input('delete_image') === '1' && $message->image_path) {
             \Storage::disk('public')->delete($message->image_path);
             $message->image_path = null;
-        }
-        // 新しい画像がアップロードされた場合は差し替え
-        if ($request->hasFile('image')) {
-            if ($message->image_path) {
-                \Storage::disk('public')->delete($message->image_path);
-            }
-            $path = $request->file('image')->store('chat_images', 'public');
-            $message->image_path = $path;
         }
 
         $message->save();

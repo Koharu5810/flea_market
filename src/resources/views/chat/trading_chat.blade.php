@@ -119,13 +119,15 @@
 
                                 {{-- 既存画像がある場合はプレビュー表示/削除可能 --}}
                                 @if ($message->image_path)
-                                    <div class="existing-image">
-                                        <img src="{{ asset('storage/' . $message->image_path) }}"
-                                            alt="送信済み画像" class="chat-image-preview">
-                                        <label>
-                                            <input type="checkbox" name="delete_image" value="1">
-                                            この画像を削除
-                                        </label>
+                                    <div class="existing-image-wrapper" id="existingPreviewWrapper-{{ $message->id }}">
+                                        <img
+                                            src="{{ asset('storage/' . $message->image_path) }}"
+                                            alt="送信済み画像"
+                                            class="chat-image"
+                                            id="existingImagePreview-{{ $message->id }}"
+                                        />
+                                        <button type="button" data-message-id="{{ $message->id }}" class="remove-image-button">✕</button>
+                                        <input type="hidden" name="delete_image" id="deleteImageInput-{{ $message->id }}" value="0">
                                     </div>
                                 @endif
 
@@ -138,7 +140,11 @@
                         @else
                             <div class="message-bubble">{!! nl2br(e(rtrim($message->content))) !!}</div>
                             @if ($message->image_path)
-                                <img src="{{ asset('storage/' . $message->image_path) }}" alt="画像" class="chat-image" />
+                                <img
+                                    src="{{ asset('storage/' . $message->image_path) }}"
+                                    alt="送信済み画像"
+                                    class="chat-image"
+                                />
                             @endif
                         @endif
 
@@ -255,6 +261,25 @@
             autoResize(textarea);
             textarea.addEventListener('input', () => autoResize(textarea));
         }
+    });
+// 送信済み画像削除
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.remove-image-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const messageId = e.target.dataset.messageId;
+
+                // プレビューを非表示
+                const wrapper = document.getElementById(`existingPreviewWrapper-${messageId}`);
+                const image = document.getElementById(`existingImagePreview-${messageId}`);
+                const deleteInput = document.getElementById(`deleteImageInput-${messageId}`);
+
+                if (wrapper && image && deleteInput) {
+                    wrapper.style.display = 'none';
+                    image.src = '';
+                    deleteInput.value = '1'; // 削除フラグを立てる
+                }
+            });
+        });
     });
 
 // チャット保持
