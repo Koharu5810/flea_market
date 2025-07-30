@@ -144,17 +144,19 @@
         </div>
 
     {{-- メッセージ送信フォーム --}}
-        <div>
-            @error('content')
-                <span class="send-form__error-message">
-                    {{ $message }}
-                </span>
-            @enderror
-            @error('image_path')
-                <span class="send-form__error-message">
-                    {{ $message }}
-                </span>
-            @enderror
+        <section>
+            <div class="error-container">
+                @error('content')
+                    <span class="send-form__error-message">
+                        {{ $message }}
+                    </span>
+                @enderror
+                @error('image_path')
+                    <span class="send-form__error-message">
+                        {{ $message }}
+                    </span>
+                @enderror
+            </div>
 
             <form action="{{ route('chat.send', ['chatRoom' => $chatRoom->id]) }}" method="POST" enctype="multipart/form-data" class="message-send-form">
                 @csrf
@@ -178,14 +180,16 @@
                     >{{ old('content') }}</textarea>
                 </div>
 
-                <label for="fileInput" class="image-send-button">画像を追加</label>
-                <input type="file" name="image_path" id="fileInput" class="chat-image__input">
+                <div class="send-button-wrapper">
+                    <label for="fileInput" class="image-send-button">画像を追加</label>
+                    <input type="file" name="image_path" id="fileInput" class="chat-image__input">
 
-                <button type="submit"  class="message-send-button">
-                    <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
-                </button>
+                    <button type="submit"  class="message-send-button">
+                        <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />
+                    </button>
+                </div>
             </form>
-        </div>
+        </section>
 
     </div>
 </div>
