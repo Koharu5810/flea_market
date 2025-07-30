@@ -117,6 +117,18 @@
                                     class="message-edit-textarea"
                                 >{{ old('content', $message->content) }}</textarea>
 
+                                {{-- 既存画像がある場合はプレビュー表示/削除可能 --}}
+                                @if ($message->image_path)
+                                    <div class="existing-image">
+                                        <img src="{{ asset('storage/' . $message->image_path) }}"
+                                            alt="送信済み画像" class="chat-image-preview">
+                                        <label>
+                                            <input type="checkbox" name="delete_image" value="1">
+                                            この画像を削除
+                                        </label>
+                                    </div>
+                                @endif
+
                                 <div class="update-buttons">
                                     <button type="submit" class="update-button">更新</button>
                                     <button type="button" class="cancel-button" onclick="cancelEdit()">キャンセル</button>
@@ -186,7 +198,7 @@
 
                 <div class="send-button-wrapper">
                     <label for="fileInput" class="image-send-button">画像を追加</label>
-                    <input type="file" name="image_path" id="fileInput" class="chat-image__input">
+                    <input type="file" name="image" id="fileInput" class="chat-image__input">
 
                     <button type="submit"  class="message-send-button">
                         <img src="{{ asset('images/app/input-button.jpg') }}" alt="送信" />

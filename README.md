@@ -45,7 +45,7 @@ MAIL_FROM_NAME="${flea_market}"
 php artisan key:generate
 
 php artisan config:clear
-c
+php artisan cache:clear
 ```
 
 5. Stripe連携の設定をする
