@@ -24,6 +24,15 @@ main {
     height: calc(100vh - 82px); /* ← ヘッダー分を引いた高さを指定 */
     margin-top: 82px;
 }
+.hamburger {
+    display: none; /* PCでは非表示 */
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #FFF;
+    z-index: 1100;
+}
 
 /* サイドバー */
 .sidebar {
@@ -474,4 +483,34 @@ main {
     margin-left: 20px;
     color: #FF5555;
     font: normal 400 clamp(10px, 5vw, 16px) "Inter", sans-serif;
+}
+
+
+/* ===== タブレット以下 ===== */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    /* サイドバーはデフォルト非表示にする */
+    .sidebar {
+        position: fixed;
+        top: 82px; /* ヘッダーの下から */
+        left: -100%;
+        width: 260px;
+        height: calc(100% - 82px);
+        background-color: #868686;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+    /* 開いたとき */
+    .sidebar.open {
+        left: 0;
+    }
+
+    /* メインコンテンツは常に全幅使用 */
+    .chat-container {
+        flex-direction: column;
+    }
 }

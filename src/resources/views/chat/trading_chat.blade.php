@@ -1,12 +1,27 @@
 {{-- チャット画面 --}}
 @extends('layouts.chat')
 
-@section('content')
+{{-- サイドバー --}}
+@section('sidebar')
+<h3>その他の取引</h3>
 
+@if ($otherOrders->isNotEmpty())
+    @foreach ($otherOrders as $other)
+        <div class="sidebar__other-order">
+            <a href="{{ route('chat.show', ['chatRoom' => $other->chatRoom->id]) }}">
+                {{ $other->item->name ?? '取引中商品なし' }} {{-- エラー対応 --}}
+            </a>
+        </div>
+    @endforeach
+@endif
+
+@endsection
+
+@section('content')
 <div class="chat-container">
 
 {{-- サイドバー --}}
-    <aside class="sidebar">
+    {{-- <aside class="sidebar">
         <h3>その他の取引</h3>
 
         @if ($otherOrders->isNotEmpty())
@@ -14,11 +29,11 @@
                 <div class="sidebar__other-order">
                     <a href="{{ route('chat.show', ['chatRoom' => $other->chatRoom->id]) }}">
                         {{ $other->item->name ?? '取引中商品なし' }} {{-- エラー対応 --}}
-                    </a>
+                    {{-- </a>
                 </div>
             @endforeach
         @endif
-    </aside>
+    </aside> -- --}}
 
 {{-- 取引相手表示 --}}
     <div class="main-area">

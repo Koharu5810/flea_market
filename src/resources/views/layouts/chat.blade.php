@@ -13,6 +13,11 @@
 <body>
     <header>
         <div class="header">
+        {{-- ハンバーガーボタン --}}
+            <button class="hamburger" id="hamburgerBtn">
+                &#9776; {{-- 三本線アイコン --}}
+            </button>
+
         {{-- ロゴ表示 --}}
             <div class="header-left">
                 <a href="{{ route('home') }}">
@@ -22,11 +27,22 @@
         </div>
     </header>
 
+    {{-- サイドバー --}}
+    <aside class="sidebar" id="sidebar">
+        @yield('sidebar')
+    </aside>
+
     <main>
         @yield('content')
     </main>
 
-    </body>
+    <script>
+        document.getElementById('hamburgerBtn').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('open');
+        });
+    </script>
+
+</body>
 
 </html>
 
