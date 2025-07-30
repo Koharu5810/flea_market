@@ -158,7 +158,7 @@
                                 <span class="sender-name">{{ $sender->username }}</span>
 
                                 @if ($sender->profile_image_url)
-                                    <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
+                                    <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-icon" />
                                 @else
                                     <div class="message-icon default-icon"></div>
                                 @endif
@@ -166,7 +166,7 @@
                     {{-- 相手：アイコン → 名前 --}}
                             @else
                                 @if ($sender->profile_image_url)
-                                    <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-avatar" />
+                                    <img src="{{ $sender->profile_image_url }}" alt="アイコン" class="message-icon" />
                                 @else
                                     <div class="message-icon default-icon"></div>
                                 @endif
