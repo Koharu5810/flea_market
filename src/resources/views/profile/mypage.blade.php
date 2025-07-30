@@ -19,22 +19,25 @@
                 <div class="profile__image"></div>
             @endif
         </div>
-        <div class="profile__username">
-            <p class="username">{{ $user->username }}</p>
+        <div class="profile__meta">
+            <div class="profile__user">
+                <p class="username">{{ $user->username }}</p>
 
-            @if ($user->rating_count > 0)
-                @php
-                    $average = round($user->rating_total / $user->rating_count);
-                @endphp
+                @if ($user->rating_count > 0)
+                    @php
+                        $average = round($user->rating_total / $user->rating_count);
+                    @endphp
 
-                <div class="star-display">
-                    @for ($i = 1; $i <= 5; $i++)
-                        <span class="{{ $i <= $average ? 'filled' : 'empty' }}">★</span>
-                    @endfor
-                </div>
-            @endif
+                    <div class="star-display">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <span class="{{ $i <= $average ? 'filled' : 'empty' }}">★</span>
+                        @endfor
+                    </div>
+                @endif
+            </div>
+
+            <a href="{{ route('profile.edit') }}" class="edit__red-button edit-button">プロフィールを編集</a>
         </div>
-        <a href="{{ route('profile.edit') }}" class="edit__red-button">プロフィールを編集</a>
     </div>
 
 {{-- タブ表示 --}}
