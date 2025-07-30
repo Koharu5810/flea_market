@@ -13,14 +13,14 @@ docker-compose.override.yml
 
 # storage 配下
 /storage/*.log
-!/src/storage/app/public
-/src/storage/app/public/chat_images/*
-!/src/storage/app/public/chat_images/.gitkeep
-/src/storage/app/public/dummy/*
-/src/storage/app/public/items/*
-!/src/storage/app/public/items/.gitkeep
-/src/storage/app/public/profile_image/*
-!/src/storage/app/public/profile_image/.gitkeep
+!src/storage/app/public
+src/storage/app/public/chat_images/*
+!src/storage/app/public/chat_images/.gitkeep
+src/storage/app/public/dummy/*
+src/storage/app/public/items/*
+!src/storage/app/public/items/.gitkeep
+src/storage/app/public/profile_image/*
+!src/storage/app/public/profile_image/.gitkeep
 
 /src/storage/framework/cache/*
 /src/storage/framework/sessions/*
