@@ -1,11 +1,9 @@
 html, body {
     height: 100%;
     margin: 0;
-    overflow: hidden; /* ブラウザ全体でのスクロールを防ぐ */
-}
-main {
-    margin: 0;
     padding: 0;
+    /* overflow: hidden; */
+     /* ブラウザ全体でのスクロールを防ぐ */
 }
 .header {
     position: fixed;
@@ -18,12 +16,6 @@ main {
     align-items: center;
     padding: 0 20px;
 }
-.chat-container {
-    display: flex;
-    width: 100%;
-    height: calc(100vh - 82px); /* ← ヘッダー分を引いた高さを指定 */
-    margin-top: 82px;
-}
 .hamburger {
     display: none; /* PCでは非表示 */
     background: none;
@@ -32,6 +24,11 @@ main {
     cursor: pointer;
     color: #FFF;
     z-index: 1100;
+}
+
+.layout-container {
+    display: flex;
+    flex-direction: row;
 }
 
 /* サイドバー */
@@ -72,6 +69,19 @@ main {
     cursor: pointer;
 }
 
+main {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}
+.chat-container {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 82px); /* ← ヘッダー分を引いた高さを指定 */
+    min-height: 0;
+    margin-top: 82px;
+    border: 3px solid orange;
+}
 /* モーダル */
 .modal {
     position: fixed;
@@ -169,7 +179,9 @@ main {
 
 /* メインコンテンツ */
 .main-area {
-    flex: 1;
+    /* flex: 1; */
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     width: 100%;

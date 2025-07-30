@@ -20,21 +20,6 @@
 @section('content')
 <div class="chat-container">
 
-{{-- サイドバー --}}
-    {{-- <aside class="sidebar">
-        <h3>その他の取引</h3>
-
-        @if ($otherOrders->isNotEmpty())
-            @foreach ($otherOrders as $other)
-                <div class="sidebar__other-order">
-                    <a href="{{ route('chat.show', ['chatRoom' => $other->chatRoom->id]) }}">
-                        {{ $other->item->name ?? '取引中商品なし' }} {{-- エラー対応 --}}
-                    {{-- </a>
-                </div>
-            @endforeach
-        @endif
-    </aside> -- --}}
-
 {{-- 取引相手表示 --}}
     <div class="main-area">
         <section class="user-info">

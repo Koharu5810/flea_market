@@ -27,14 +27,17 @@
         </div>
     </header>
 
-    {{-- サイドバー --}}
-    <aside class="sidebar" id="sidebar">
-        @yield('sidebar')
-    </aside>
+    <div class="layout-container">
+        {{-- サイドバー --}}
+        <aside class="sidebar" id="sidebar">
+            @yield('sidebar')
+        </aside>
 
-    <main>
-        @yield('content')
-    </main>
+        {{-- メインエリア --}}
+        <main>
+            @yield('content')
+        </main>
+    </div>
 
     <script>
         document.getElementById('hamburgerBtn').addEventListener('click', function() {
