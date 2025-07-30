@@ -30,7 +30,9 @@
                     <div class="default-icon"></div>
                 @endif
 
-                <span class="trade-with-name">{{ $order->user->username }}さんとの取引画面</span>
+                <span class="trade-with-name">
+                    <span class="trade-username">{{ $order->user->username }}さん</span>
+                    <span class="trade-text">との取引画面</span>
             </div>
 
             @if ($isBuyer && $order->status !== 'complete')
@@ -53,7 +55,11 @@
                 </div>
                 <div class="item-info">
                     <h3 class="item-name">{{ $item->name }}</h3>
-                    <p class="item-price">&yen;<span>{{ number_format($item->price) }}</span> (税込)</p>
+                    <p class="item-price">
+                        &yen;
+                        <span>{{ number_format($item->price) }}</span>
+                        <span class="price-tax"> (税込)</span>
+                    </p>
                 </div>
             </section>
 
