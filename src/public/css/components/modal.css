@@ -92,3 +92,36 @@
     color: #FF5555;
     font: normal 400 clamp(10px, 5vw, 16px) "Inter", sans-serif;
 }
+
+
+@media (max-width: 580px) {
+    .modal-content {
+        width: 400px;
+    }
+    .star-rating {
+        font-size: 60px;
+    }
+}
+
+@media (max-width: 425px) {
+    .modal-content {
+        width: 280px;
+    }
+    .modal-content h3 {
+        font-size: 22px;
+    }
+    .rating-message{
+        font-size: 14px;
+    }
+    .star-rating {
+        font-size: 40px;
+    }
+    .rating-submit-button {
+        width: 90px;
+        height: 30px;
+        font-size: 16px;
+    }
+    .rating-error-message {
+        font-size: 12px;
+    }
+}
