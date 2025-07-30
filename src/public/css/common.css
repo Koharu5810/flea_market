@@ -259,3 +259,30 @@ main {
         width: 100%;
     }
 }
+
+
+@media (max-width: 1024px) {
+    .header {
+        flex-wrap: wrap; /* 要素を複数段にできるようにする */
+        height: auto;
+        padding: 10px;
+    }
+    .header-center {
+        order: 3; /* 下段に移動 */
+        width: 100%;
+        display: flex;
+        margin-top: 10px;
+        flex: none;
+    }
+    .header-left {
+        flex: 1;
+        justify-content: flex-start;
+    }
+    .header-right {
+        flex: 1;
+        justify-content: flex-end;
+    }
+    .header__search-input {
+        width: 50%;
+    }
+}
