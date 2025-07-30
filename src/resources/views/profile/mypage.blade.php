@@ -43,18 +43,21 @@
 {{-- タブ表示 --}}
     <div class="item__header">
         <a href="{{ route('profile.mypage', ['tab' => 'sell']) }}" class="item__tab {{ $tab === 'sell' ? 'active' : '' }}">
-            <h2>出品した商品</h2>
+            <h2 class="pc-text">出品した商品</h2>
+            <h2 class="sp-text">出品</h2>
         </a>
         <a href="{{ route('profile.mypage', ['tab' => 'buy']) }}" class="item__tab {{ $tab === 'buy' ? 'active' : '' }}">
-            <h2>購入した商品</h2>
+            <h2 class="pc-text">購入した商品</h2>
+            <h2 class="sp-text">購入</h2>
         </a>
         <a href="{{ route('profile.mypage', ['tab' => 'trading']) }}" class="item__tab {{ $tab === 'trading' ? 'active' : '' }}">
-            <h2 class="item-title-with-badge">
-                取引中の商品
+            <span class="item-title-with-badge">
+                <h2 class="pc-text">取引中の商品</h2>
+                <h2 class="sp-text">取引中</h2>
                 @if ( $unreadMessageCount > 0)
                     <span class="total-unread-badge">{{ $unreadMessageCount }}</span>
                 @endif
-            </h2>
+            </span>
         </a>
     </div>
 

@@ -81,10 +81,14 @@
     color: #000;
     text-decoration: none;
 }
-.item__header h2 {
+.pc-text {
+    display: inline-block;
     margin: 0;
     line-height: 2;
-    font: normal 700 clamp(16px, 5vw, 24px) "Inter", sans-serif;
+    font: 700 clamp(16px, 5vw, 24px) "Inter", sans-serif;
+}
+.sp-text {
+    display: none;
 }
 .item__tab.active {
     color: #FF0000;
@@ -216,6 +220,15 @@
     }
     .edit__red-button {
         align-self: center;
+    }
+}
+
+@media (max-width: 760px) {
+    .pc-text {
+        display: none;
+    }
+    .sp-text {
+        display: inline-block;
     }
 }
 
