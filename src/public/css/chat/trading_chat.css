@@ -227,6 +227,7 @@ main {
     display: inline-block;
 }
 .trade-with-name {
+    white-space: nowrap;
     font: 700 clamp(24px, 5vw, 36px) "Inter", sans-serif;
 }
 .buyer-rate-button {

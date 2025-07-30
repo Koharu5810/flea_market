@@ -29,12 +29,17 @@
                 @else
                     <div class="default-icon"></div>
                 @endif
+
                 <span class="trade-with-name">{{ $order->user->username }}さんとの取引画面</span>
             </div>
 
+            @if ($isBuyer && $order->status !== 'complete')
+                {{-- ボタン --}}
+                <button class="buyer-rate-button" onclick="openModal('buyerModal')" data-modal-trigger>取引を完了する</button>
+            @endif
+
             @include('components.modals.buyer-modal')
             @include('components.modals.seller-modal')
-
 
         </section>
 
