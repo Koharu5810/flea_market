@@ -55,7 +55,9 @@
                 <h2 class="pc-text">取引中の商品</h2>
                 <h2 class="sp-text">取引中</h2>
                 @if ( $unreadMessageCount > 0)
-                    <span class="total-unread-badge">{{ $unreadMessageCount }}</span>
+                    <span class="total-unread-badge" data-count="{{ $unreadMessageCount }}">
+                        {{ $unreadMessageCount > 99 ? '99+' : $unreadMessageCount }}
+                    </span>
                 @endif
             </span>
         </a>
@@ -92,7 +94,9 @@
 
                             {{-- 未読バッジ --}}
                             @if (($unreadCount ?? 0) > 0)
-                                <span class="unread-badge">{{ $unreadCount }}</span>
+                                <span class="unread-badge {{ ($unreadCount ?? 0) > 99 ? 'large-count' : '' }}">
+                                    {{ ($unreadCount ?? 0) > 99 ? '99+' : $unreadCount }}
+                                </span>
                             @endif
                         </div>
 

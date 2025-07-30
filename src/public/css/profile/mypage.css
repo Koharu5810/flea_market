@@ -109,6 +109,22 @@
     font: normal 700 clamp(16px, 5vw, 22px) "Inter", sans-serif;
     border-radius: 10px;
 }
+/* 2桁以上のときフォントサイズを縮小 */
+.total-unread-badge[data-count^="1"][data-count*=""] { /* ダミー防止 */
+    /* ここは無視される */
+}
+/* 数値が2桁(10以上)の場合 */
+.total-unread-badge[data-count^="1"],
+.total-unread-badge[data-count^="2"],
+.total-unread-badge[data-count^="3"],
+.total-unread-badge[data-count^="4"],
+.total-unread-badge[data-count^="5"],
+.total-unread-badge[data-count^="6"],
+.total-unread-badge[data-count^="7"],
+.total-unread-badge[data-count^="8"],
+.total-unread-badge[data-count^="9"] {
+    font-size: 16px;
+}
 
 /* 水平線のスタイル */
 .item__divider {
@@ -187,7 +203,10 @@
     font: normal 700 10px "Inter", sans-serif;
     border-radius: 50%;
 }
-
+/* 99+の時だけ縮小 */
+.unread-badge.large-count {
+    font-size: 8px;
+}
 
 @media (max-width: 960px) {
     .profile__meta {
