@@ -1,0 +1,94 @@
+/* モーダル */
+.modal {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal.hidden {
+    display: none;
+}
+.modal-content {
+    background-color: #FDFCE6;
+    width: 600px;
+    height: auto;
+    border-radius: 15px;
+    border: 1px solid #000;
+}
+.modal-content h3 {
+    margin: 0;
+    padding: 20px;
+    font: 400 clamp(24px, 5vw, 35px) "Inter", sans-serif;
+}
+.modal-divider {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border-top: 1px solid #000;
+}
+.rating-message {
+    margin: 0;
+    padding: 20px;
+    padding-bottom: 0;
+    font: 400 clamp(12px, 5vw, 20px) "Inter", sans-serif;
+    color: #868686;
+}
+.star-rating {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    direction: rtl; /* 右から左に表示（5→1） */
+    unicode-bidi: bidi-override;
+    padding: 0 20px;
+    width: 100%;
+    font-size: 100px;
+    gap: 4px;
+}
+.star-rating input[type="radio"] {
+    display: none;
+}
+.star-rating label {
+    color: #D9D9D9;
+    cursor: pointer;
+}
+.star-rating input:checked ~ label {
+    color: #D9D9D9;
+    color: #FFF048;
+}
+/* ホバーで★プレビュー */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #FFF048;
+}
+.rating-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.rating-submit-button {
+    width: 130px;
+    height: 50px;
+    margin: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #FF8282;
+    color: #FFF;
+    font: 400 24px "Inter", sans-serif;
+    cursor: pointer;
+}
+.rating-submit-button:hover {
+    background-color: #FF5252;
+}
+.rating-error-message {
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-right: 20px;
+    color: #FF5555;
+    font: normal 400 clamp(10px, 5vw, 16px) "Inter", sans-serif;
+}

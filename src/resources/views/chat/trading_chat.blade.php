@@ -1,6 +1,10 @@
 {{-- チャット画面 --}}
 @extends('layouts.chat')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/components/modal.css') }}" />
+@endsection
+
 {{-- サイドバー --}}
 @section('sidebar')
 <h3>その他の取引</h3>
