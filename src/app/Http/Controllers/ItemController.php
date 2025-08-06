@@ -29,9 +29,11 @@ class ItemController extends Controller
             if (auth()->check()) {
                 $userId = auth()->id();
 
-                // 認証ユーザはお気に入りリストを取得
-                $items = auth()->user()->favorites()
-                    ->where('items.user_id', '!=', $userId);
+                // 認証ユーザがお気に入りした商品を取得し、自分の出品は除外
+                $items = Item::whereHas('favoriteBy', function ($q) use ($userId) {
+                        $q->where('user_id', $userId);
+                    })
+                    ->where('user_id', '!=', $userId);
 
                 if (!empty($query)) {
                     $items->where('name', 'like', '%' . $query . '%');
@@ -44,7 +46,9 @@ class ItemController extends Controller
             }
         } else {
             // 全商品一覧を取得
-            $items = Item::where('user_id', '!=', Auth::id());
+            $items = Item::when(Auth::check(), function ($q) {
+                    $q->where('user_id', '!=', Auth::id());
+                });
 
             if (!empty($query)) {
                 $items->where('name', 'like', '%' . $query . '%');

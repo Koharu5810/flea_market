@@ -72,7 +72,6 @@ php artisan serve
 
 ```bash
 php artisan storage:link
-mkdir -p storage/app/public/dummy
 cp public/images/*.jpg storage/app/public/dummy/
 
 php artisan migrate --seed

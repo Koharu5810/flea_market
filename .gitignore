@@ -18,6 +18,7 @@ docker-compose.override.yml
 src/storage/app/public/chat_images/*
 !src/storage/app/public/chat_images/.gitkeep
 src/storage/app/public/dummy/*
+!src/storage/app/public/dummy/.gitkeep
 src/storage/app/public/items/*
 !src/storage/app/public/items/.gitkeep
 src/storage/app/public/profile_image/*

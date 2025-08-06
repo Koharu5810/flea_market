@@ -29,13 +29,23 @@ class ShowMylistTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->get(route('home', ['tab' => 'mylist']));
+
         $response->assertStatus(200);
+        $response->assertSeeText($items[0]->name);
+        $response->assertSeeText($items[1]->name);
+
+        // お気に入り登録していない商品が表示されないことを確認
+        $nonFavorite = Item::factory()->create();
+        $response = $this->get(route('home', ['tab' => 'mylist']));
+        $response->assertDontSeeText($nonFavorite->name);
     }
     public function test_guest_cannot_see_mylist_items()
     {
         $response = $this->get(route('home', ['tab' => 'mylist']));
         $response->assertStatus(200);
+
         $response->assertDontSeeText('お気に入り登録した商品がありません');
+        $response->assertDontSee('<div class="item-container"', false);
     }
 
     public function test_sold_items_are_marked_as_sold_in_mylist()
@@ -91,8 +101,8 @@ class ShowMylistTest extends TestCase
         $html = $response->getContent();
 
         // お気に入り商品がない場合のメッセージが表示されていないことを確認
-        $this->assertStringNotContainsString('お気に入り登録した商品がありません', $html);
+        $response->assertDontSeeText('お気に入り登録した商品がありません');
         // 商品のリストが一切表示されていないことを確認
-        $this->assertStringNotContainsString('<div class="item-container"', $html);
+        $response->assertDontSee('<div class="item-container"', false);
     }
 }
