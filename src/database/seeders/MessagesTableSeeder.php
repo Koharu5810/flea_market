@@ -20,12 +20,12 @@ class MessagesTableSeeder extends Seeder
     {
         $itemMessages = [
             1 => [
-                ['sender' => 'seller', 'content' => 'ご購入ありがとうございます！'],
+                ['sender' => 'seller', 'content' => 'ご購入ありがとうございます！', 'is_read' => true],
                 ['sender' => 'buyer', 'content' => '短い間ですがよろしくお願いします'],
                 ['sender' => 'buyer', 'content' => '入金いたしましたのでご確認をお願いします'],
             ],
             3 => [
-                ['sender' => 'seller', 'content' => 'ご購入ありがとうございます！'],
+                ['sender' => 'seller', 'content' => 'ご購入ありがとうございます！', 'is_read' => true],
                 ['sender' => 'buyer', 'content' => 'スムーズにお取引できればと思います'],
             ],
             5 => [
@@ -62,7 +62,7 @@ class MessagesTableSeeder extends Seeder
                     'chat_room_id' => $chatRoom->id,
                     'sender_id' => $senderId,
                     'content' => $message['content'],
-                    'is_read' => false,
+                    'is_read' => $message['is_read'] ?? false,
                     'created_at' => $messageTime,
                     'updated_at' => $messageTime,
                 ]);

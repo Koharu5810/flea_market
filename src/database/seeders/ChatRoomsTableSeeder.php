@@ -40,7 +40,7 @@ class ChatRoomsTableSeeder extends Seeder
                 ],
                 [
                     'address_id' => $addressId,
-                    'payment_method' => 'credit_card',
+                    'payment_method' => 'card',
                     'purchased_at' => now(),
                     'status' => 'trading',
                     'created_at' => now(),
