@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Order;
 use App\Models\Item;
 use App\Models\UserAddress;
+use App\Models\ChatRoom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -88,8 +89,10 @@ class PurchaseController extends Controller
                 return redirect()->route('home')->with('error', 'この商品は既に購入されています。');
             }
 
+            $order = null;
+
             // トランザクションを使用することで処理が失敗した場合ロールバック
-            DB::transaction(function () use ($item, $session) {
+            DB::transaction(function () use ($item, $session, &$order) {
                 $address = auth()->user()->user_address;
 
                 if (!$address) {
@@ -99,7 +102,7 @@ class PurchaseController extends Controller
                 $addressId = $address->id;
 
                 // Ordersテーブルにデータを挿入
-                Order::create([
+                $order = Order::create([
                     'uuid' => (string) Str::uuid(),
                     'user_id' => auth()->id(),
                     'item_id' => $item->id,
@@ -113,7 +116,17 @@ class PurchaseController extends Controller
                     'is_sold' => true,
                     'address_id' => $addressId,  // 購入者の住所をitemsテーブルに挿入
                 ]);
+
             });
+                // 取引用ChatRoom作成
+            if ($order) {
+                ChatRoom::firstOrCreate(
+                ['order_id' => $order->id],
+                [
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
 
             return redirect()->route('home')->with('success', '購入が完了しました。');
         }
